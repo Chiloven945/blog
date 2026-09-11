@@ -20,10 +20,26 @@
   "footer": {
     "rights": "保留所有权利。"
   },
+  "blog": {
+    "type": {
+      "article": "文章",
+      "novel": "小说"
+    }
+  },
+  "post": {
+    "toc": "目录",
+    "readingTime": "{minutes} 分钟阅读",
+    "updated": "更新于",
+    "previous": "上一篇",
+    "next": "下一篇",
+    "license": "许可协议",
+    "comments": "评论"
+  },
   "error": {
     "notFoundEyebrow": "404 / 迷失",
     "notFoundTitle": "你走错路了。",
     "backHome": "返回首页",
-    "genericTitle": "出了点问题"
+    "genericTitle": "出了点问题",
+    "postNotFound": "找不到这篇文章"
   }
 }

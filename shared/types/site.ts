@@ -11,5 +11,6 @@ export interface SiteConfig {
     domain: string
     since: number
     defaultLocale: string
+    defaultLicense: string
     social: SocialLink[]
 }

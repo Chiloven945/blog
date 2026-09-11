@@ -20,10 +20,26 @@
   "footer": {
     "rights": "All rights reserved."
   },
+  "blog": {
+    "type": {
+      "article": "Article",
+      "novel": "Novel"
+    }
+  },
+  "post": {
+    "toc": "Contents",
+    "readingTime": "{minutes} min read",
+    "updated": "Updated",
+    "previous": "Previous",
+    "next": "Next",
+    "license": "License",
+    "comments": "Comments"
+  },
   "error": {
     "notFoundEyebrow": "404 / LOST",
     "notFoundTitle": "You took a wrong turn.",
     "backHome": "Back home",
-    "genericTitle": "Something went wrong"
+    "genericTitle": "Something went wrong",
+    "postNotFound": "Post not found"
   }
 }

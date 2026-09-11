@@ -24,6 +24,35 @@ export const postSchema = z.object({
 
 export type PostFrontmatter = z.input<typeof postSchema>
 
+export interface TocLinkLike {
+    id: string
+    text: string
+    depth: number
+    children?: TocLinkLike[]
+}
+
+export interface PostDocument {
+    path: string
+    title: string
+    description?: string
+    body?: {
+        value?: unknown
+        toc?: { links: TocLinkLike[] }
+    }
+    date: string
+    updated?: string
+    type?: string
+    categories?: string[]
+    tags?: string[]
+    cover?: string
+    coverAlt?: string
+    license?: string
+    comments?: boolean
+    toc?: boolean
+    draft?: boolean
+    featured?: boolean
+}
+
 export const homeSchema = z.object({
     hero: z.object({
         eyebrow: z.string(),
