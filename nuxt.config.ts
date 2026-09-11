@@ -1,3 +1,5 @@
+import {siteConfig} from './shared/config/site'
+
 export default defineNuxtConfig({
     compatibilityDate: '2026-09-11',
     devtools: {enabled: true},
@@ -33,13 +35,21 @@ export default defineNuxtConfig({
     },
 
     site: {
-        url: 'https://www.chiloven.top',
-        name: "Chiloven's Blog",
+        url: siteConfig.domain,
+        name: siteConfig.name,
+    },
+
+    nitro: {
+        prerender: {
+            // Nav targets land in M6/M8; drop these once the pages exist.
+            ignore: ['/blog', '/archives', '/friends'],
+        },
     },
 
     i18n: {
         strategy: 'prefix_except_default',
         defaultLocale: 'zh-cn',
+        baseUrl: siteConfig.domain,
         locales: [
             {
                 code: 'zh-cn',

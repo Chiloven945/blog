@@ -32,6 +32,26 @@
     .toc-column {
         width: var(--toc-width);
     }
+
+    /* Skip-to-content link: off-screen until focused (ROADMAP §37.1). */
+    .skip-link {
+        position: fixed;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 100;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        color: var(--ui-text-highlighted);
+        background-color: var(--ui-bg);
+        border: 1px solid var(--ui-border);
+        border-radius: var(--ui-radius);
+        transform: translateY(-200%);
+        transition: transform var(--duration-fast, 120ms) var(--ease-out, ease-out);
+    }
+
+    .skip-link:focus {
+        transform: translateY(0);
+    }
 }
 
 @layer utilities {

@@ -9,5 +9,21 @@
     "archives": "归档",
     "friends": "友链",
     "search": "搜索"
+  },
+  "common": {
+    "skipToContent": "跳到正文",
+    "theme": "切换主题",
+    "language": "语言",
+    "menu": "菜单",
+    "backHome": "返回首页"
+  },
+  "footer": {
+    "rights": "保留所有权利。"
+  },
+  "error": {
+    "notFoundEyebrow": "404 / 迷失",
+    "notFoundTitle": "你走错路了。",
+    "backHome": "返回首页",
+    "genericTitle": "出了点问题"
   }
 }

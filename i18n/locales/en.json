@@ -9,5 +9,21 @@
     "archives": "Archives",
     "friends": "Friends",
     "search": "Search"
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "theme": "Toggle theme",
+    "language": "Language",
+    "menu": "Menu",
+    "backHome": "Back home"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "error": {
+    "notFoundEyebrow": "404 / LOST",
+    "notFoundTitle": "You took a wrong turn.",
+    "backHome": "Back home",
+    "genericTitle": "Something went wrong"
   }
 }

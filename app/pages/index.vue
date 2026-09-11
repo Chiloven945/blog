@@ -1,10 +1,17 @@
+<script lang="ts" setup>
+definePageMeta({layout: 'home'})
+</script>
+
 <template>
-  <main class="mx-auto max-w-3xl p-8">
-    <h1 class="text-3xl font-bold">
-      Chiloven's Blog
-    </h1>
-    <p class="text-muted mt-2">
-      M0 baseline. Nuxt 4 + Nuxt UI 4 + Nuxt Content 3.
-    </p>
-  </main>
+    <section class="container-page py-16 lg:py-24">
+        <p class="font-mono text-xs uppercase tracking-[0.3em] text-muted">
+            PERSONAL SPACE / 001
+        </p>
+        <h1 class="mt-6 text-5xl font-bold tracking-tight text-highlighted sm:text-7xl">
+            {{ $t('site.title') }}
+        </h1>
+        <p class="mt-4 max-w-xl text-muted">
+            {{ $t('site.description') }}
+        </p>
+    </section>
 </template>
