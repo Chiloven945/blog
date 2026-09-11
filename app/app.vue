@@ -14,5 +14,7 @@ useHead(() => ({
         <NuxtLayout>
             <NuxtPage/>
         </NuxtLayout>
+
+        <SearchModal/>
     </UApp>
 </template>

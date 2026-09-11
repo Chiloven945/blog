@@ -33,6 +33,19 @@
       "novel": "Novel"
     }
   },
+  "search": {
+    "label": "SEARCH / 003",
+    "title": "Search",
+    "description": "Find keywords across posts and pages in the current language.",
+    "placeholder": "Search posts and pages…",
+    "loading": "Building the index…",
+    "startTyping": "Type a keyword to start searching.",
+    "noResults": "No results for “{query}”.",
+    "results": "{count} results",
+    "hintNavigate": "navigate",
+    "hintSelect": "open",
+    "hintClose": "close"
+  },
   "post": {
     "toc": "Contents",
     "readingTime": "{minutes} min read",

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const {t} = useI18n()
+const {open} = useSearchModal()
 </script>
 
 <template>
@@ -8,6 +9,7 @@ const {t} = useI18n()
             color="neutral"
             icon="i-lucide-search"
             variant="ghost"
+            @click="open()"
     >
         <span class="hidden md:inline">{{ t('nav.search') }}</span>
         <span class="hidden items-center gap-0.5 md:inline-flex">

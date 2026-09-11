@@ -33,6 +33,19 @@
       "novel": "小說"
     }
   },
+  "search": {
+    "label": "搜尋 / 003",
+    "title": "搜尋",
+    "description": "在當前語言的文章與頁面正文中尋找關鍵詞。",
+    "placeholder": "搜尋文章與頁面…",
+    "loading": "正在建立索引…",
+    "startTyping": "輸入關鍵詞開始搜尋。",
+    "noResults": "找不到與「{query}」相關的內容。",
+    "results": "{count} 個結果",
+    "hintNavigate": "選擇",
+    "hintSelect": "開啟",
+    "hintClose": "關閉"
+  },
   "post": {
     "toc": "目錄",
     "readingTime": "{minutes} 分鐘閱讀",

@@ -33,6 +33,19 @@
       "novel": "小说"
     }
   },
+  "search": {
+    "label": "搜索 / 003",
+    "title": "搜索",
+    "description": "在当前语言的文章与页面正文中查找关键词。",
+    "placeholder": "搜索文章与页面…",
+    "loading": "正在建立索引…",
+    "startTyping": "输入关键词开始搜索。",
+    "noResults": "没有找到与 “{query}” 相关的内容。",
+    "results": "{count} 个结果",
+    "hintNavigate": "选择",
+    "hintSelect": "打开",
+    "hintClose": "关闭"
+  },
   "post": {
     "toc": "目录",
     "readingTime": "{minutes} 分钟阅读",
