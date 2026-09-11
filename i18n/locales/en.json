@@ -21,6 +21,13 @@
     "rights": "All rights reserved."
   },
   "blog": {
+    "label": "WRITING / 002",
+    "title": "Writing",
+    "description": "Technical writing, essays, and fiction.",
+    "all": "All",
+    "empty": "Nothing here yet.",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "Try another category, or check back later.",
     "type": {
       "article": "Article",
       "novel": "Novel"

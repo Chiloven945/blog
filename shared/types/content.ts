@@ -53,6 +53,19 @@ export interface PostDocument {
     featured?: boolean
 }
 
+export interface PostCardItem {
+    path: string
+    title: string
+    description?: string
+    date: string
+    type?: string
+    categories?: string[]
+    tags?: string[]
+    cover?: string
+    coverAlt?: string
+    draft?: boolean
+}
+
 export const homeSchema = z.object({
     hero: z.object({
         eyebrow: z.string(),

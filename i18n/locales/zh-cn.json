@@ -21,6 +21,13 @@
     "rights": "保留所有权利。"
   },
   "blog": {
+    "label": "写作 / 002",
+    "title": "写作",
+    "description": "技术文章、随笔与小说。",
+    "all": "全部",
+    "empty": "这里还没有内容。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "换个分类看看，或稍后再来。",
     "type": {
       "article": "文章",
       "novel": "小说"

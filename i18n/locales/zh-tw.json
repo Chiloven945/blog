@@ -21,6 +21,13 @@
     "rights": "保留所有權利。"
   },
   "blog": {
+    "label": "寫作 / 002",
+    "title": "寫作",
+    "description": "技術文章、隨筆與小說。",
+    "all": "全部",
+    "empty": "這裡還沒有內容。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "換個分類看看，或稍後再來。",
     "type": {
       "article": "文章",
       "novel": "小說"

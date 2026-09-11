@@ -91,8 +91,8 @@ export default defineNuxtConfig({
 
     nitro: {
         prerender: {
-            // Nav targets land in M6/M8; drop these once the pages exist.
-            ignore: ['/blog', '/archives', '/friends'],
+            // Nav targets land in M8; drop these once the pages exist.
+            ignore: ['/archives', '/friends'],
         },
     },
 
