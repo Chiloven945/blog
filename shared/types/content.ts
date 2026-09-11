@@ -66,6 +66,38 @@ export interface PostCardItem {
     draft?: boolean
 }
 
+export const pageNavigationSchema = z.union([
+    z.boolean(),
+    z.object({
+        title: z.string().optional(),
+        icon: z.string().optional(),
+        order: z.number().default(50),
+    }),
+])
+
+export const pageSchema = z.object({
+    navigation: pageNavigationSchema.optional(),
+
+    cover: z.string().optional(),
+    coverAlt: z.string().optional(),
+})
+
+export interface CustomPageNavigation {
+    title?: string
+    icon?: string
+    order?: number
+}
+
+export interface CustomPageDocument {
+    path: string
+    title: string
+    description?: string
+    body?: { value?: unknown }
+    navigation?: boolean | CustomPageNavigation
+    cover?: string
+    coverAlt?: string
+}
+
 export const homeSchema = z.object({
     hero: z.object({
         eyebrow: z.string(),

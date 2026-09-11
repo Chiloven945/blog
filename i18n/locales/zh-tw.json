@@ -46,6 +46,20 @@
     "hintSelect": "開啟",
     "hintClose": "關閉"
   },
+  "archives": {
+    "label": "歸檔 / 004",
+    "title": "歸檔",
+    "description": "依年份與月份回顧全部文章。",
+    "empty": "還沒有可歸檔的文章。",
+    "emptyEyebrow": "EMPTY / 000"
+  },
+  "friends": {
+    "label": "友鏈 / 005",
+    "title": "友鏈",
+    "description": "值得一去的人和站點。",
+    "empty": "還沒有友鏈。",
+    "emptyEyebrow": "EMPTY / 000"
+  },
   "post": {
     "toc": "目錄",
     "readingTime": "{minutes} 分鐘閱讀",
@@ -60,6 +74,7 @@
     "notFoundTitle": "你走錯路了。",
     "backHome": "返回首頁",
     "genericTitle": "出了點問題",
-    "postNotFound": "找不到這篇文章"
+    "postNotFound": "找不到這篇文章",
+    "pageNotFound": "找不到這個頁面"
   }
 }

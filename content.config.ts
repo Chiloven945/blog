@@ -1,5 +1,5 @@
 import {defineCollection, defineContentConfig} from '@nuxt/content'
-import {friendsSchema, homeSchema, postSchema} from './shared/types/content'
+import {friendsSchema, homeSchema, pageSchema, postSchema} from './shared/types/content'
 
 export default defineContentConfig({
     collections: {
@@ -24,16 +24,19 @@ export default defineContentConfig({
         pagesZhCn: defineCollection({
             type: 'page',
             source: {include: 'pages/zh-cn/**/*.md', prefix: '/'},
+            schema: pageSchema,
         }),
 
         pagesZhTw: defineCollection({
             type: 'page',
             source: {include: 'pages/zh-tw/**/*.md', prefix: '/zh-tw'},
+            schema: pageSchema,
         }),
 
         pagesEn: defineCollection({
             type: 'page',
             source: {include: 'pages/en/**/*.md', prefix: '/en'},
+            schema: pageSchema,
         }),
 
         home: defineCollection({

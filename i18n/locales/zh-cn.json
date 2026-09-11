@@ -46,6 +46,20 @@
     "hintSelect": "打开",
     "hintClose": "关闭"
   },
+  "archives": {
+    "label": "归档 / 004",
+    "title": "归档",
+    "description": "按年份与月份回顾全部文章。",
+    "empty": "还没有可归档的文章。",
+    "emptyEyebrow": "EMPTY / 000"
+  },
+  "friends": {
+    "label": "友链 / 005",
+    "title": "友链",
+    "description": "值得一去的人和站点。",
+    "empty": "还没有友链。",
+    "emptyEyebrow": "EMPTY / 000"
+  },
   "post": {
     "toc": "目录",
     "readingTime": "{minutes} 分钟阅读",
@@ -60,6 +74,7 @@
     "notFoundTitle": "你走错路了。",
     "backHome": "返回首页",
     "genericTitle": "出了点问题",
-    "postNotFound": "找不到这篇文章"
+    "postNotFound": "找不到这篇文章",
+    "pageNotFound": "找不到这个页面"
   }
 }

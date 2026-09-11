@@ -46,6 +46,20 @@
     "hintSelect": "open",
     "hintClose": "close"
   },
+  "archives": {
+    "label": "ARCHIVE / 004",
+    "title": "Archives",
+    "description": "Every post, grouped by year and month.",
+    "empty": "Nothing archived yet.",
+    "emptyEyebrow": "EMPTY / 000"
+  },
+  "friends": {
+    "label": "LINKS / 005",
+    "title": "Friends",
+    "description": "People and places worth visiting.",
+    "empty": "No friends listed yet.",
+    "emptyEyebrow": "EMPTY / 000"
+  },
   "post": {
     "toc": "Contents",
     "readingTime": "{minutes} min read",
@@ -60,6 +74,7 @@
     "notFoundTitle": "You took a wrong turn.",
     "backHome": "Back home",
     "genericTitle": "Something went wrong",
-    "postNotFound": "Post not found"
+    "postNotFound": "Post not found",
+    "pageNotFound": "Page not found"
   }
 }

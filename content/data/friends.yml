@@ -1,1 +1,20 @@
-items: []
+items:
+  - id: example
+    name: Example
+    url: https://example.com
+    avatar: /images/friends/example.png
+    description:
+      zh-cn: 一个示例友链，用于验证网格布局与多语言描述。
+      zh-tw: 一個範例友鏈，用於驗證網格佈局與多語言描述。
+      en: An example friend used to verify the grid and locale descriptions.
+    order: 10
+
+  - id: nuxt
+    name: Nuxt
+    url: https://nuxt.com
+    avatar: /images/friends/nuxt.png
+    description:
+      zh-cn: 本站所使用的框架。
+      zh-tw: 本站所使用的框架。
+      en: The framework powering this site.
+    order: 20

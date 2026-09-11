@@ -89,11 +89,11 @@ export default defineNuxtConfig({
         name: siteConfig.name,
     },
 
-    nitro: {
-        prerender: {
-            // Nav targets land in M8; drop these once the pages exist.
-            ignore: ['/archives', '/friends'],
-        },
+    image: {
+        // Third-party friend avatars stay remote (ROADMAP §31.4). Add their
+        // hosts here to route them through Nuxt Image; other remote avatars
+        // are rendered with <img> so nothing is mirrored without permission.
+        domains: [],
     },
 
     i18n: {
