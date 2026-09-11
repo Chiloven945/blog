@@ -1,0 +1,29 @@
+hero:
+  eyebrow: PERSONAL SPACE / 001
+  title:
+    - CHI
+    - LOV
+    - EN
+  number: "945"
+  description: >
+    記錄工程、寫作與日常的長期筆記。
+
+manifesto:
+  title: About
+  body: >
+    內容優先，設計克制。
+
+interests:
+  - Java
+  - Nuxt
+  - Writing
+  - Music
+
+now:
+  building: 個人部落格 v1
+  learning: Nuxt 4 與 Nuxt Content
+  reading: 技術文件
+  listening: 待補充
+
+writing:
+  limit: 3

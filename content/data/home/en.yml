@@ -1,0 +1,29 @@
+hero:
+  eyebrow: PERSONAL SPACE / 001
+  title:
+    - CHI
+    - LOV
+    - EN
+  number: "945"
+  description: >
+    Long-form notes on engineering, writing, and everyday life.
+
+manifesto:
+  title: About
+  body: >
+    Content first, restrained design.
+
+interests:
+  - Java
+  - Nuxt
+  - Writing
+  - Music
+
+now:
+  building: Personal blog v1
+  learning: Nuxt 4 and Nuxt Content
+  reading: Technical documentation
+  listening: To be added
+
+writing:
+  limit: 3
