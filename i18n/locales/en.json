@@ -1,0 +1,13 @@
+{
+  "site": {
+    "title": "Chiloven's Blog",
+    "description": "Personal homepage and technical writing archive"
+  },
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "archives": "Archives",
+    "friends": "Friends",
+    "search": "Search"
+  }
+}

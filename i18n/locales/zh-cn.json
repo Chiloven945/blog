@@ -1,0 +1,13 @@
+{
+  "site": {
+    "title": "Chiloven's Blog",
+    "description": "个人主页与技术文章归档"
+  },
+  "nav": {
+    "home": "首页",
+    "blog": "博客",
+    "archives": "归档",
+    "friends": "友链",
+    "search": "搜索"
+  }
+}
