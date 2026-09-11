@@ -1,0 +1,41 @@
+/* ==========================================================================
+   motion.css — durations, easings, reduced motion
+   ROADMAP §22 Motion / 动画规范
+   ========================================================================== */
+
+:root {
+    /* Normal UI — 120–220ms */
+    --duration-fast: 120ms;
+    --duration-base: 160ms;
+    --duration-slow: 220ms;
+
+    /* Home art — 500–900ms */
+    --duration-art-fast: 500ms;
+    --duration-art: 700ms;
+    --duration-art-slow: 900ms;
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Only opacity / transform / border-color / background-color. ROADMAP §22.2 */
+@layer utilities {
+    .transition-ui {
+        transition-property: opacity, transform, border-color, background-color, color;
+        transition-duration: var(--duration-base);
+        transition-timing-function: var(--ease-out);
+    }
+}
+
+/* ROADMAP §22.5 — reduced motion is mandatory. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

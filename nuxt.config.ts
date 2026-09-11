@@ -15,6 +15,23 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
+    ui: {
+        theme: {
+            colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'],
+        },
+    },
+
+    fonts: {
+        providers: {
+            adobe: false,
+            fontshare: false,
+            fontsource: false,
+            google: false,
+            googleicons: false,
+            npm: false,
+        },
+    },
+
     site: {
         url: 'https://www.chiloven.top',
         name: "Chiloven's Blog",

@@ -1,0 +1,118 @@
+/* ==========================================================================
+   typography.css — HarmonyOS Sans + type scale
+   ROADMAP §6.3 Typography before decoration · §20 字体与 Typography
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HarmonyOS Sans (local, self-hosted).
+   v1 loads Regular + Bold only; italics are synthesized by the browser.
+   Files live in public/fonts/harmonyos/ and are never all preloaded.
+   ROADMAP §20.2 · §20.3
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: "HarmonyOS Sans SC";
+    src: url("/fonts/harmonyos/HarmonyOS-Sans-SC-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "HarmonyOS Sans SC";
+    src: url("/fonts/harmonyos/HarmonyOS-Sans-SC-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "HarmonyOS Sans TC";
+    src: url("/fonts/harmonyos/HarmonyOS-Sans-TC-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "HarmonyOS Sans TC";
+    src: url("/fonts/harmonyos/HarmonyOS-Sans-TC-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   Font tokens — Latin + CJK fall back to the same HarmonyOS glyphs.
+   ROADMAP §20.1 · §20.6
+   -------------------------------------------------------------------------- */
+@theme {
+    --font-sans: "HarmonyOS Sans SC", "HarmonyOS Sans TC", ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans SC", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "Cascadia Code", "JetBrains Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
+}
+
+/* Traditional Chinese prefers TC glyphs first. */
+:root[lang^="zh-TW"] {
+    --font-sans: "HarmonyOS Sans TC", "HarmonyOS Sans SC", ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans TC", sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Base type
+   -------------------------------------------------------------------------- */
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        -webkit-text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.75;
+        color: var(--ui-text);
+        background-color: var(--ui-bg);
+        font-synthesis: style; /* allow synthetic italic (no italic file loaded) */
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--ui-text-highlighted);
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    code,
+    pre,
+    kbd,
+    samp {
+        font-family: var(--font-mono);
+        font-feature-settings: "liga" 0;
+    }
+
+    /* Links — brand colored, underline on hover. ROADMAP §19.5 */
+    a {
+        color: var(--ui-primary);
+        text-decoration: none;
+        text-underline-offset: 0.2em;
+        transition: color var(--duration-fast, 120ms) var(--ease-out, ease-out);
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}

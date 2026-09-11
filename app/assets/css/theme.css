@@ -1,0 +1,136 @@
+/* ==========================================================================
+   theme.css — design tokens, color system, light / dark themes
+   ROADMAP §19 视觉系统 · §21 响应式设计
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Brand palette — a single, quiet brand color.
+   Assigned to the `primary` semantic color in app/app.config.ts.
+   Base hue preserves the legacy accent (#34495e).
+   -------------------------------------------------------------------------- */
+@theme static {
+    --color-brand-50: #f3f6f9;
+    --color-brand-100: #e6ecf2;
+    --color-brand-200: #c9d6e3;
+    --color-brand-300: #a3b8cd;
+    --color-brand-400: #7493b1;
+    --color-brand-500: #527398;
+    --color-brand-600: #3f5b7a;
+    --color-brand-700: #34495e;
+    --color-brand-800: #2b3b4b;
+    --color-brand-900: #25313d;
+    --color-brand-950: #171f27;
+}
+
+/* --------------------------------------------------------------------------
+   Global layout variables (Nuxt UI + project)
+   Hard-coded in the design system, never exposed as user options.
+   ROADMAP §6.6 · §19.2 · §21.2
+   -------------------------------------------------------------------------- */
+:root,
+:host,
+.light {
+    /* Nuxt UI global layout variables */
+    --ui-radius: 0.25rem; /* 4px → radius-sm / md / lg derive from this */
+    --ui-container: 80rem; /* 1280px max content width */
+    --ui-header-height: 4rem; /* 64px sticky header */
+
+    /* Project aliases */
+    --header-height: var(--ui-header-height);
+    --container-max: var(--ui-container);
+    --post-width: 45rem; /* 720px reading column */
+    --toc-width: 14rem; /* 224px table of contents */
+
+    /* Light — quiet editorial neutral (zinc) */
+    --ui-text-dimmed: #a1a1aa;
+    --ui-text-muted: #71717a;
+    --ui-text-toned: #52525b;
+    --ui-text: #3f3f46;
+    --ui-text-highlighted: #18181b;
+    --ui-text-inverted: #ffffff;
+
+    --ui-bg: #ffffff;
+    --ui-bg-muted: #fafafa;
+    --ui-bg-elevated: #f4f4f5;
+    --ui-bg-accented: #e4e4e7;
+    --ui-bg-inverted: #18181b;
+
+    --ui-border: #e4e4e7;
+    --ui-border-muted: #e4e4e7;
+    --ui-border-accented: #d4d4d8;
+    --ui-border-inverted: #18181b;
+
+    color-scheme: light;
+}
+
+.dark {
+    /* Dark — same neutral ramp, inverted */
+    --ui-text-dimmed: #71717a;
+    --ui-text-muted: #a1a1aa;
+    --ui-text-toned: #d4d4d8;
+    --ui-text: #e4e4e7;
+    --ui-text-highlighted: #ffffff;
+    --ui-text-inverted: #18181b;
+
+    --ui-bg: #18181b;
+    --ui-bg-muted: #27272a;
+    --ui-bg-elevated: #27272a;
+    --ui-bg-accented: #3f3f46;
+    --ui-bg-inverted: #fafafa;
+
+    --ui-border: #27272a;
+    --ui-border-muted: #3f3f46;
+    --ui-border-accented: #3f3f46;
+    --ui-border-inverted: #fafafa;
+
+    color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   Global focus — accessible brand-colored ring.
+   Sits in the base layer so component utilities (Nuxt UI rings) win.
+   -------------------------------------------------------------------------- */
+@layer base {
+    :focus-visible {
+        outline: 2px solid var(--ui-primary);
+        outline-offset: 2px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Selection
+   -------------------------------------------------------------------------- */
+::selection {
+    background-color: color-mix(in oklab, var(--ui-primary) 22%, transparent);
+    color: var(--ui-text-highlighted);
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar (optional)
+   -------------------------------------------------------------------------- */
+@supports (scrollbar-width: thin) {
+    :root {
+        scrollbar-width: thin;
+        scrollbar-color: var(--ui-border-accented) transparent;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--ui-border-accented);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ui-text-dimmed);
+}
