@@ -29,7 +29,10 @@
     "@nuxtjs/robots": "^6.2.2",
     "@nuxtjs/sitemap": "^8.5.0",
     "better-sqlite3": "^13.0.3",
+    "katex": "^0.18.7",
     "nuxt": "^4.5.2",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "tailwindcss": "^4.3.3",
     "zod": "^3.25.76"
   },

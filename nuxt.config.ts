@@ -17,6 +17,56 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
+    content: {
+        renderer: {
+            alias: {
+                // Nuxt UI maps `::callout` to ProseCallout; use our own
+                // component so `type`/`title` match ROADMAP §26.3.
+                callout: 'Callout',
+            },
+        },
+        build: {
+            markdown: {
+                // Light + dark Shiki themes (ROADMAP §28.1). The `dark` key
+                // matches Nuxt UI's `.dark` class on <html>.
+                highlight: {
+                    theme: {
+                        default: 'github-light',
+                        dark: 'github-dark',
+                    },
+                    langs: [
+                        'java',
+                        'kotlin',
+                        'groovy',
+                        'javascript',
+                        'jsx',
+                        'tsx',
+                        'json',
+                        'css',
+                        'markdown',
+                        'yaml',
+                        'xml',
+                        'sql',
+                        'python',
+                        'diff',
+                        'shell',
+                        'toml',
+                    ],
+                },
+                // Math (ROADMAP §28.4): $inline$ / $$block$$ → KaTeX.
+                remarkPlugins: {
+                    'remark-math': {},
+                },
+                rehypePlugins: {
+                    'rehype-katex': {},
+                    // External link target/rel is handled by ProseA so the
+                    // attributes stay valid (`rel` as a space-separated list).
+                    'rehype-external-links': false,
+                },
+            },
+        },
+    },
+
     ui: {
         theme: {
             colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'],

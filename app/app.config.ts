@@ -32,5 +32,21 @@ export default defineAppConfig({
                 content: (base: string) => base.replace('rounded-lg', 'rounded-md'),
             },
         },
+
+        // Prose (ROADMAP §27): quiet editorial defaults, sharper radii.
+        prose: {
+            blockquote: {
+                base: (base: string) => base.replace('border-s-4', 'border-s-2').replace('italic', 'not-italic'),
+            },
+            table: {
+                slots: {
+                    root: (base: string) => base.replace('rounded-md', 'rounded-sm'),
+                    base: (base: string) => base.replace('rounded-md', 'rounded-sm'),
+                },
+            },
+            code: {
+                base: (base: string) => base.replace('rounded-md', 'rounded-sm'),
+            },
+        },
     },
 })
