@@ -1,30 +1,96 @@
 ---
 title: 連結
-description: 我的其他連結與長期推薦。
 navigation:
   title: 連結
   icon: i-lucide-link
-  order: 50
+  order: 60
 ---
-
-這裡收集我在網際網路上的其他落腳點，以及一些長期推薦。
-
-## 我的站點
 
 ::link-card
 ---
-href: https://www.chiloven.top
-title: Chiloven's Blog
-description: 你現在正在瀏覽的站點。
-icon: i-lucide-house
+href: https://github.com/Chiloven945
+title: "GitHub"
+description: "我的 GitHub 首頁。"
+image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
 ---
 ::
 
-## 推薦
+::link-card
+---
+href: https://chiloven.bsky.social
+title: "Bluesky - @chiloven.bsky.social"
+description: "我的 Bluesky 首頁。"
+image: "/images/links/bluesky.png"
+---
+::
 
-- [Nuxt](https://nuxt.com) —— 本站使用的框架。
-- [Nuxt Content](https://content.nuxt.com) —— 驅動本站內容層。
+::link-card
+---
+href: https://space.bilibili.com/630677026
+title: "Bilibili"
+description: "我的 Bilibili 帳戶，偶爾發影片。"
+image: "/images/links/bilibili.png"
+---
+::
 
-::callout{type="info" title="說明"}
-如果你想交換友鏈，可以在 [友鏈](/zh-tw/friends) 頁面找到更多資訊。
+::link-card
+---
+href: https://weibo.com/u/7497491648
+title: "Sina Weibo"
+description: "我的新浪微博帳戶。"
+image: "/images/links/weibo.png"
+---
+::
+
+::link-card
+---
+href: https://open.spotify.com/user/31aagy6vodynowvbf5uzlpopjvwq
+title: "Spotify"
+description: "我的 Spotify 帳戶。"
+image: "/images/links/spotify.png"
+---
+::
+
+::link-card
+---
+href: https://www.instagram.com/clovenbugle/
+title: "Instagram"
+description: "基本上什麼也沒有。"
+image: "/images/links/instagram.png"
+---
+::
+
+::link-card
+---
+href: https://www.facebook.com/100093362991435
+title: "Facebook"
+description: "你可以在這裡加我好友。"
+image: "/images/links/facebook.png"
+---
+::
+
+::link-card
+---
+href: https://t.me/chiloven945
+title: "Telegram"
+description: "我的 Telegram 帳戶，歡迎聯絡我！"
+image: "/images/links/telegram.png"
+---
+::
+
+::link-card
+---
+href: https://qm.qq.com/q/aivFy2XQcw
+title: "QQ"
+description: "我的 QQ，歡迎擴列！"
+image: "/images/links/qq.png"
+---
+::
+
+::link-card
+---
+href: https://underground.chiloven.top
+title: "Underground"
+description: "Secret basement."
+---
 ::

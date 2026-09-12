@@ -36,8 +36,10 @@ const formatted = computed(() => formatPostDate(props.post.date, locale.value))
             <div
                     class="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-4 sm:pt-1"
             >
-                <time :datetime="post.date"
-                      class="font-mono text-xs tracking-[0.2em] text-muted uppercase">
+                <time
+                        :datetime="post.date"
+                        class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+                >
                     {{ formatted }}
                 </time>
                 <span

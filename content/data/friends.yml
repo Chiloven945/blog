@@ -1,20 +1,37 @@
 items:
-  - id: example
-    name: Example
-    url: https://example.com
-    avatar: /images/friends/example.png
+  - id: hill233
+    name: Hill233的小窝
+    url: https://suki.ink/
+    avatar: https://suki.ink/upload/g.jpg
     description:
-      zh-cn: 一个示例友链，用于验证网格布局与多语言描述。
-      zh-tw: 一個範例友鏈，用於驗證網格佈局與多語言描述。
-      en: An example friend used to verify the grid and locale descriptions.
+      zh-cn: 只是一个普普通通的 blog 罢了
+      zh-tw: 只是一個普普通通的 blog 罷了
+      en: 只是一个普普通通的 blog 罢了
     order: 10
-
-  - id: nuxt
-    name: Nuxt
-    url: https://nuxt.com
-    avatar: /images/friends/nuxt.png
+  - id: localsauce
+    name: localsauce
+    url: https://www.pixiv.net/users/49092680
+    avatar: /images/friends/localsauce.png
     description:
-      zh-cn: 本站所使用的框架。
-      zh-tw: 本站所使用的框架。
-      en: The framework powering this site.
+      zh-cn: 都给我去看山雨欲来风满楼口牙！！！
+      zh-tw: 都給我去看山雨欲來風滿樓口牙！！！
+      en: 都给我去看山雨欲来风满楼口牙！！！
     order: 20
+  - id: luigid
+    name: Luigid
+    url: https://x.com/Luigid215
+    avatar: /images/friends/luigid.jpg
+    description:
+      zh-cn: 努力养oc的音游吃
+      zh-tw: 努力養oc的音游吃
+      en: 努力养oc的音游吃
+    order: 30
+  - id: xphost008
+    name: xphost008
+    url: https://xphost008.github.io/
+    avatar: /images/friends/xphost.png
+    description:
+      zh-cn: 那就这个了
+      zh-tw: 那就這個了
+      en: 那就这个了
+    order: 40

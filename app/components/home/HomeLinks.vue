@@ -15,8 +15,12 @@ function isExternal(to: string) {
         <HomeSectionLabel :label="t('home.sections.links')"/>
 
         <ul class="mt-8 divide-y divide-default border-y">
-            <li v-for="(link, index) in links" :key="link.label" v-reveal="index * 60"
-                class="reveal">
+            <li
+                    v-for="(link, index) in links"
+                    :key="link.label"
+                    v-reveal="index * 60"
+                    class="reveal"
+            >
                 <a
                         :href="link.to"
                         :rel="isExternal(link.to) ? 'noopener noreferrer' : undefined"

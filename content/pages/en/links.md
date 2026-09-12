@@ -1,30 +1,96 @@
 ---
 title: Links
-description: My other corners of the internet and a few long-term recommendations.
 navigation:
   title: Links
   icon: i-lucide-link
-  order: 50
+  order: 60
 ---
-
-A collection of my other corners of the internet, plus a few long-term recommendations.
-
-## My sites
 
 ::link-card
 ---
-href: https://www.chiloven.top
-title: Chiloven's Blog
-description: The site you are reading right now.
-icon: i-lucide-house
+href: https://github.com/Chiloven945
+title: "GitHub"
+description: "My GitHub profile."
+image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
 ---
 ::
 
-## Recommendations
+::link-card
+---
+href: https://chiloven.bsky.social
+title: "Bluesky - @chiloven.bsky.social"
+description: "My Bluesky profile."
+image: "/images/links/bluesky.png"
+---
+::
 
-- [Nuxt](https://nuxt.com) — the framework behind this site.
-- [Nuxt Content](https://content.nuxt.com) — the content layer that drives it.
+::link-card
+---
+href: https://space.bilibili.com/630677026
+title: "Bilibili"
+description: "My Bilibili account, post videos sometimes."
+image: "/images/links/bilibili.png"
+---
+::
 
-::callout{type="info" title="Note"}
-If you would like to exchange links, see the [Friends](/en/friends) page for more.
+::link-card
+---
+href: https://weibo.com/u/7497491648
+title: "Sina Weibo"
+description: "My Sina Weibo account."
+image: "/images/links/weibo.png"
+---
+::
+
+::link-card
+---
+href: https://open.spotify.com/user/31aagy6vodynowvbf5uzlpopjvwq
+title: "Spotify"
+description: "My Spotify account."
+image: "/images/links/spotify.png"
+---
+::
+
+::link-card
+---
+href: https://www.instagram.com/clovenbugle/
+title: "Instagram"
+description: "Nothing much here."
+image: "/images/links/instagram.png"
+---
+::
+
+::link-card
+---
+href: https://www.facebook.com/100093362991435
+title: "Facebook"
+description: "You can friend me here."
+image: "/images/links/facebook.png"
+---
+::
+
+::link-card
+---
+href: https://t.me/chiloven945
+title: "Telegram"
+description: "My Telegram account, feel free to contact me."
+image: "/images/links/telegram.png"
+---
+::
+
+::link-card
+---
+href: https://qm.qq.com/q/aivFy2XQcw
+title: "QQ"
+description: "My QQ account, feel free to friend me."
+image: "/images/links/qq.png"
+---
+::
+
+::link-card
+---
+href: https://underground.chiloven.top
+title: "Underground"
+description: "Secret basement."
+---
 ::
