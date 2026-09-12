@@ -17,10 +17,12 @@ export interface ActiveContentCollection {
     pages: PageCollectionName
 }
 
+export function resolveContentCollection(locale: string): ActiveContentCollection {
+    return contentCollections[locale as ContentLocale] ?? contentCollections['zh-cn']
+}
+
 export function useActiveContentCollection(): ComputedRef<ActiveContentCollection> {
     const {locale} = useI18n()
 
-    return computed(
-        () => contentCollections[locale.value as ContentLocale] ?? contentCollections['zh-cn'],
-    )
+    return computed(() => resolveContentCollection(locale.value))
 }
