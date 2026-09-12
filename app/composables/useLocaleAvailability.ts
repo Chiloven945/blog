@@ -25,7 +25,9 @@ export function stripLocalePrefix(path: string, locale: ContentLocale): string {
     const prefix = localePrefixes[locale] ?? ''
     let relative = path
 
-    if (prefix && (relative === prefix || relative.startsWith(`${prefix}/`))) {
+    if (prefix &&
+        (relative === prefix || relative.startsWith(`${prefix}/`))
+    ) {
         relative = relative.slice(prefix.length) || '/'
     }
 
@@ -50,11 +52,18 @@ export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
             const entries = await Promise.all(
                 codes.map(async (code) => {
                     const collections = contentCollections[code]
-                    const [posts, pages] = await Promise.all([
-                        queryCollection(collections.posts).select('path').all(),
+                    const [articles, novels, series, pages] = await Promise.all([
+                        queryCollection(collections.articles).select('path').all(),
+                        queryCollection(collections.novels).select('path').all(),
+                        queryCollection(collections.series).select('path').all(),
                         queryCollection(collections.pages).select('path').all(),
                     ])
-                    const paths = [...posts, ...pages].map(item => (item as { path: string }).path)
+                    const paths = [
+                        ...articles,
+                        ...novels,
+                        ...series,
+                        ...pages
+                    ].map(item => (item as { path: string }).path,)
                     return [code, paths] as const
                 }),
             )

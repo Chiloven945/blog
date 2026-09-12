@@ -1,5 +1,5 @@
-export function isDraft(item: { draft?: boolean }): boolean {
-    return item.draft === true
+export function isDraft(item: { status?: string }): boolean {
+    return item.status === 'draft'
 }
 
 export function draftsEnabled(): boolean {
@@ -8,7 +8,7 @@ export function draftsEnabled(): boolean {
         : useRoute().query.drafts === '1';
 }
 
-export function filterDrafts<T extends { draft?: boolean }>(items: T[]): T[] {
+export function filterDrafts<T extends { status?: string }>(items: T[]): T[] {
     return draftsEnabled()
         ? items
         : items.filter(item => !isDraft(item))

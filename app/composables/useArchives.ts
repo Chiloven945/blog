@@ -1,3 +1,4 @@
+import type {Kind} from '#shared/config/kinds'
 import {parseDate} from '~/utils/date'
 import {resolveDateLocale} from '~/utils/locale'
 
@@ -6,7 +7,8 @@ export interface ArchivePost {
     title: string
     date: string
     day: number
-    type?: string
+    kind: Kind
+    subtype?: string
 }
 
 export interface ArchiveMonthGroup {
@@ -21,14 +23,21 @@ export interface ArchiveYearGroup {
     months: ArchiveMonthGroup[]
 }
 
-function monthLabel(year: number, month: number, locale: string): string {
+function monthLabel(
+    year: number,
+    month: number,
+    locale: string
+): string {
     return new Intl.DateTimeFormat(resolveDateLocale(locale), {
         month: 'short',
         timeZone: 'UTC',
     }).format(new Date(Date.UTC(year, month, 1)))
 }
 
-export function groupArchives(posts: ArchivePost[], locale: string): ArchiveYearGroup[] {
+export function groupArchives(
+    posts: ArchivePost[],
+    locale: string
+): ArchiveYearGroup[] {
     const years = new Map<number, Map<number, ArchivePost[]>>()
 
     for (const post of posts) {
@@ -56,46 +65,74 @@ export function groupArchives(posts: ArchivePost[], locale: string): ArchiveYear
 
     return [...years.entries()]
         .sort((a, b) => b[0] - a[0])
-        .map(([year, months]) => ({
-            year,
-            months: [...months.entries()]
-                .sort((a, b) => b[0] - a[0])
-                .map(([month, items]) => ({
-                    key: `${year}-${month}`,
-                    month,
-                    label: monthLabel(year, month, locale),
-                    posts: items
-                        .slice()
-                        .sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime()),
-                })),
-        }))
+        .map(([year, months]) => (
+            {
+                year,
+                months: [...months.entries()]
+                    .sort((a, b) => b[0] - a[0])
+                    .map(([month, items]) => (
+                        {
+                            key: `${year}-${month}`,
+                            month,
+                            label: monthLabel(year, month, locale),
+                            posts: items
+                                .slice()
+                                .sort((a, b) =>
+                                    parseDate(b.date).getTime() - parseDate(a.date).getTime()
+                                ),
+                        }
+                    )),
+            }
+        ))
 }
 
 export async function useArchives() {
     const {locale} = useI18n()
     const active = useActiveContentCollection()
-    const collection = computed(() => active.value.posts)
+    const key = computed(() =>
+        `${active.value.articles}-${active.value.novels}-${locale.value}`)
 
     const {data} = await useAsyncData(
-        () => `archives-${collection.value}-${locale.value}`,
-        () =>
-            queryCollection(collection.value)
-                .select('path', 'title', 'date', 'type', 'draft')
-                .order('date', 'DESC')
-                .all(),
+        () => `archives-${key.value}`,
+        async () => {
+            const [articles, novels] = await Promise.all([
+                queryCollection(active.value.articles)
+                    .select('path', 'title', 'date', 'subtype', 'status')
+                    .order('date', 'DESC')
+                    .all(),
+                queryCollection(active.value.novels)
+                    .select('path', 'title', 'date', 'subtype', 'status')
+                    .order('date', 'DESC')
+                    .all(),
+            ])
+
+            return [
+                ...articles.map(item => (
+                    {...item, kind: 'article' as const}
+                )),
+                ...novels.map(item => (
+                    {...item, kind: 'novel' as const}
+                )),
+            ]
+        },
     )
 
     const posts = computed<ArchivePost[]>(() =>
-        filterDrafts(data.value ?? []).map(post => ({
-            path: post.path,
-            title: post.title,
-            date: post.date,
-            day: parseDate(post.date).getUTCDate(),
-            type: post.type,
-        })),
+        filterDrafts(data.value ?? [])
+            .map(post => (
+                {
+                    path: post.path,
+                    title: post.title,
+                    date: post.date,
+                    day: parseDate(post.date).getUTCDate(),
+                    kind: post.kind,
+                    subtype: post.subtype,
+                }
+            )),
     )
 
-    const years = computed(() => groupArchives(posts.value, locale.value))
+    const years = computed(() =>
+        groupArchives(posts.value, locale.value))
 
-    return {collection, posts, years}
+    return {posts, years}
 }

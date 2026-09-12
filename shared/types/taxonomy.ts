@@ -1,0 +1,5 @@
+export type {ArticleSubtype} from '../config/article-subtypes'
+export type {Kind} from '../config/kinds'
+export type {LicenseKey} from '../config/licenses'
+export type {NovelSubtype} from '../config/novel-subtypes'
+export type {ArticleStatus, NovelStatus, SeriesStatus} from '../config/statuses'

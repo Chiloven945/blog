@@ -11,7 +11,8 @@ type RawSearchSection = {
     titles?: unknown
     level?: unknown
     content?: unknown
-    type?: unknown
+    subtype?: unknown
+    status?: unknown
     categories?: unknown
     tags?: unknown
     date?: unknown
@@ -21,7 +22,10 @@ function toStringArray(value: unknown): string[] | undefined {
     return Array.isArray(value) ? value.map(String) : undefined
 }
 
-function toSearchSection(raw: RawSearchSection): SearchSection {
+function toSearchSection(
+    raw: RawSearchSection,
+    kind?: 'article' | 'novel'
+): SearchSection {
     const id = typeof raw.id === 'string' ? raw.id : ''
     const hash = id.indexOf('#')
 
@@ -33,17 +37,20 @@ function toSearchSection(raw: RawSearchSection): SearchSection {
         titles: toStringArray(raw.titles) ?? [],
         level: typeof raw.level === 'number' ? raw.level : 1,
         content: typeof raw.content === 'string' ? raw.content : '',
-        type: typeof raw.type === 'string' ? raw.type : undefined,
+        kind,
+        subtype: typeof raw.subtype === 'string' ? raw.subtype : undefined,
         categories: toStringArray(raw.categories),
         tags: toStringArray(raw.tags),
         date: typeof raw.date === 'string' ? raw.date : undefined,
     }
 }
 
+const extraFields = ['subtype', 'categories', 'tags', 'date'] as const
+
 /**
  * Search sections for the active locale.
- * The index is built lazily in the browser from the posts + pages collections
- * and scored locally with a simple first-version ranking.
+ * The index is built lazily in the browser from the article + novel + pages
+ * collections and scored locally with a simple first-version ranking.
  */
 export function useSearch() {
     const {locale} = useI18n()
@@ -54,24 +61,33 @@ export function useSearch() {
     const query = ref('')
 
     async function buildIndex(): Promise<SearchSection[]> {
-        const postsCollection = active.value.posts
-        const pagesCollection = active.value.pages
-
-        const [postSections, pageSections] = await Promise.all([
-            queryCollectionSearchSections(postsCollection, {
+        const [articleSections, novelSections, pageSections] = await Promise.all([
+            queryCollectionSearchSections(active.value.articles, {
                 minHeading: 'h2',
                 maxHeading: 'h4',
-                extraFields: ['type', 'categories', 'tags', 'date'],
+                extraFields: [...extraFields],
             }),
-            queryCollectionSearchSections(pagesCollection, {
+            queryCollectionSearchSections(active.value.novels, {
+                minHeading: 'h2',
+                maxHeading: 'h4',
+                extraFields: [...extraFields],
+            }),
+            queryCollectionSearchSections(active.value.pages, {
                 minHeading: 'h2',
                 maxHeading: 'h4',
             }),
         ])
 
         return [
-            ...postSections.map(section => toSearchSection(section as unknown as RawSearchSection)),
-            ...pageSections.map(section => toSearchSection(section as unknown as RawSearchSection)),
+            ...articleSections.map(section =>
+                toSearchSection(section as unknown as RawSearchSection, 'article'),
+            ),
+            ...novelSections.map(section =>
+                toSearchSection(section as unknown as RawSearchSection, 'novel'),
+            ),
+            ...pageSections.map(section =>
+                toSearchSection(section as unknown as RawSearchSection),
+            ),
         ]
     }
 
@@ -91,7 +107,14 @@ export function useSearch() {
         }
     }
 
-    const results = computed<SearchResultItem[]>(() => searchSections(sections.value, query.value))
+    const results = computed<SearchResultItem[]>(() =>
+        searchSections(sections.value, query.value))
 
-    return {query, results, sections, status, ensureIndex}
+    return {
+        query,
+        results,
+        sections,
+        status,
+        ensureIndex
+    }
 }

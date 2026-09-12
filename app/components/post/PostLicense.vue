@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
+import {type LicenseKey, licenses} from '#shared/config/licenses'
 
 const props = defineProps<{
     license?: string
@@ -7,13 +7,9 @@ const props = defineProps<{
 
 const {t} = useI18n()
 
-const license = computed(() => props.license || siteConfig.defaultLicense)
-
-const licenseUrl = computed(() =>
-    /^CC BY/i.test(license.value)
-        ? 'https://creativecommons.org/licenses/by-nc-sa/4.0/'
-        : null,
-)
+const entry = computed(() => licenses[(props.license ?? 'cc-by-nc-sa-4.0') as LicenseKey] ?? licenses['cc-by-nc-sa-4.0'])
+const label = computed(() => t(entry.value.labelKey))
+const licenseUrl = computed(() => ('url' in entry.value ? entry.value.url : null))
 </script>
 
 <template>
@@ -29,8 +25,8 @@ const licenseUrl = computed(() =>
                 rel="noopener noreferrer"
                 target="_blank"
         >
-            {{ license }}
+            {{ label }}
         </a>
-        <span v-else class="ml-3">{{ license }}</span>
+        <span v-else class="ml-3">{{ label }}</span>
     </div>
 </template>

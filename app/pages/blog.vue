@@ -7,50 +7,61 @@ const router = useRouter()
 const {t} = useI18n()
 
 const active = useActiveContentCollection()
-const collection = computed(() => active.value.posts)
 
 const {data: postsData} = await useAsyncData(
-    () => `blog-posts-${collection.value}`,
-    () =>
-        queryCollection(collection.value)
-            .select(
-                'path',
-                'title',
-                'description',
-                'date',
-                'type',
-                'categories',
-                'tags',
-                'cover',
-                'coverAlt',
-                'draft',
-            )
-            .order('date', 'DESC')
-            .all(),
+    () => `blog-posts-${active.value.articles}-${active.value.novels}`,
+    async () => {
+        const fields = [
+            'path',
+            'title',
+            'description',
+            'date',
+            'subtype',
+            'status',
+            'categories',
+            'tags',
+            'cover',
+            'coverAlt',
+        ] as const
+
+        const [articles, novels] = await Promise.all([
+            queryCollection(active.value.articles).select(...fields).order('date', 'DESC').all(),
+            queryCollection(active.value.novels).select(...fields).order('date', 'DESC').all(),
+        ])
+
+        return [
+            ...articles.map(item => ({...item, kind: 'article' as const})),
+            ...novels.map(item => ({...item, kind: 'novel' as const})),
+        ]
+    },
 )
 
 const posts = computed(() => filterDrafts(postsData.value ?? []))
-const typeOptions = usePostTypes()
+const kindOptions = useKinds()
 
-const availableTypes = computed(() => {
-    const present = new Set(posts.value.map(post => post.type ?? 'article'))
-    return typeOptions.value.filter(option => present.has(option.value))
+const availableKinds = computed(() => {
+    const present = new Set(posts.value.map(post => post.kind))
+    return kindOptions.value.filter(option => present.has(option.value))
 })
 
 const activeType = computed(() => {
-    const value = typeof route.query.type === 'string' ? route.query.type : 'all'
-    return availableTypes.value.some(option => option.value === value) ? value : 'all'
+    const value = typeof route.query.type === 'string'
+        ? route.query.type
+        : 'all'
+    return availableKinds.value.some(option => option.value === value)
+        ? value
+        : 'all'
 })
 
 const tabs = computed(() => [
     {value: 'all', label: t('blog.all'), icon: 'i-lucide-layout-grid'},
-    ...availableTypes.value,
+    ...availableKinds.value,
 ])
 
 const filteredPosts = computed(() =>
     activeType.value === 'all'
         ? posts.value
-        : posts.value.filter(post => (post.type ?? 'article') === activeType.value),
+        : posts.value.filter(post => post.kind === activeType.value),
 )
 
 function setType(value: string) {
@@ -69,8 +80,12 @@ if (import.meta.client) {
     watch(
         activeType,
         value => {
-            const current = typeof route.query.type === 'string' ? route.query.type : undefined
-            const next = value === 'all' ? undefined : value
+            const current = typeof route.query.type === 'string'
+                ? route.query.type
+                : undefined
+            const next = value === 'all'
+                ? undefined
+                : value
 
             if (current === next) {
                 return

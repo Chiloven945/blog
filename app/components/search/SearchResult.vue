@@ -12,7 +12,7 @@ defineEmits<{ select: [] }>()
 
 const {t} = useI18n()
 
-const typeConfig = computed(() => resolvePostType(props.item.type ?? 'article'))
+const typeConfig = computed(() => resolveKind(props.item.kind ?? 'article'))
 const titleSegments = computed(() => highlightSegments(props.item.title, props.terms))
 const snippetSegments = computed(() => highlightSegments(props.item.snippet, props.terms))
 const breadcrumb = computed(() => props.item.titles.join(' / '))

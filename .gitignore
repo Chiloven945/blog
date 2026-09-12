@@ -26,8 +26,12 @@ blob-report
 playwright/.cache
 .playwright-mcp
 
+# Temporary screenshots
+tmp-screenshots/
+
 # Development-only planning
 ROADMAP.md
+blog-ROADMAP-v2.md
 
 # IDE / OS
 .DS_Store

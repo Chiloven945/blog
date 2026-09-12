@@ -1,19 +1,48 @@
 <script lang="ts" setup>
+import type {Kind} from '#shared/config/kinds'
+import type {PostDocument} from '#shared/types/content'
+
 definePageMeta({layout: 'post'})
 
 const route = useRoute()
 const {t} = useI18n()
 
 const active = useActiveContentCollection()
-const collection = computed(() => active.value.posts)
 const path = computed(() => route.path)
 
-const {data: post} = await useAsyncData(
-    () => `post-${collection.value}-${path.value}`,
-    () => queryCollection(collection.value).path(path.value).first(),
+const {data: article} = await useAsyncData(
+    () => `article-${active.value.articles}-${path.value}`,
+    () => queryCollection(active.value.articles).path(path.value).first(),
 )
 
-if (!post.value || (isDraft(post.value) && !draftsEnabled())) {
+const {data: novel} = await useAsyncData(
+    () => `novel-${active.value.novels}-${path.value}`,
+    () => queryCollection(active.value.novels).path(path.value).first(),
+)
+
+const kind = computed<Kind>(() => (
+    article.value
+        ? 'article'
+        : 'novel'
+))
+const source = computed(() => article.value ?? novel.value ?? null)
+const collection = computed(() => (
+    article.value
+        ? active.value.articles
+        : active.value.novels
+))
+
+// Unified document for the transitional unified reader (split into
+// ArticleReader / NovelReader in a later milestone).
+const post = computed<PostDocument | null>(() =>
+    source.value
+        ? {...source.value, kind: kind.value} as PostDocument
+        : null,
+)
+
+if (!post.value
+    || (isDraft(post.value) && !draftsEnabled())
+) {
     throw createError({statusCode: 404, statusMessage: t('error.postNotFound')})
 }
 
@@ -29,8 +58,8 @@ const {data: surround} = await useAsyncData(
     },
 )
 
-const typeConfig = computed(() => resolvePostType(post.value?.type ?? 'article'))
-const variant = computed(() => typeConfig.value.card)
+const kindConfig = computed(() => resolveKind(post.value?.kind ?? 'article'))
+const variant = computed(() => kindConfig.value.card)
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? [])
 const showToc = computed(() => post.value?.toc !== false && tocLinks.value.length > 0)
 const readingTime = computed(() => getReadingTime(post.value?.body))
@@ -39,14 +68,20 @@ const shellClass = computed(() => {
     const literary = variant.value === 'literary'
 
     if (showToc.value) {
-        return literary ? 'post-shell--literary' : 'post-shell--editorial'
+        return literary
+            ? 'post-shell--literary'
+            : 'post-shell--editorial'
     }
 
-    return literary ? 'post-column--literary' : 'post-column'
+    return literary
+        ? 'post-column--literary'
+        : 'post-column'
 })
 
 const bodyClass = computed(() =>
-    variant.value === 'literary' ? 'post-body--literary' : 'post-body--editorial',
+    variant.value === 'literary'
+        ? 'post-body--literary'
+        : 'post-body--editorial',
 )
 
 usePageMeta({

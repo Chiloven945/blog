@@ -34,6 +34,55 @@
       "novel": "小说"
     }
   },
+  "article": {
+    "subtype": {
+      "note": "笔记",
+      "essay": "随笔",
+      "journal": "日志",
+      "documentation": "文档",
+      "tutorial": "教程",
+      "translation": "翻译",
+      "reference": "参考",
+      "experiment": "实验"
+    },
+    "status": {
+      "draft": "草稿",
+      "published": "已发布",
+      "wip": "撰写中",
+      "deprecated": "已过时",
+      "archived": "已归档"
+    }
+  },
+  "novel": {
+    "subtype": {
+      "shortStory": "短篇",
+      "vignette": "小品",
+      "novella": "中短篇",
+      "serial": "连载",
+      "prose": "散文",
+      "fragment": "片段"
+    },
+    "status": {
+      "draft": "草稿",
+      "wip": "创作中",
+      "complete": "已完成",
+      "paused": "已暂停",
+      "abandoned": "已弃坑"
+    }
+  },
+  "series": {
+    "status": {
+      "planned": "计划中",
+      "ongoing": "连载中",
+      "complete": "已完成",
+      "paused": "已暂停",
+      "abandoned": "已停更"
+    }
+  },
+  "license": {
+    "ccByNcSa": "CC BY-NC-SA 4.0",
+    "allRightsReserved": "保留所有权利"
+  },
   "search": {
     "label": "搜索 / 003",
     "title": "搜索",

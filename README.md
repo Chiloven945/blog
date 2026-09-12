@@ -67,14 +67,16 @@ app/
   pages/          home, blog, search, archives, friends, custom pages, posts
   utils/          date, post, search, locale, and content helpers
 content/
-  posts/<locale>/    Markdown posts
-  pages/<locale>/    custom pages
-  data/home/         homepage copy per locale
-  data/friends.yml   friend links
+  articles/<locale>/  article Markdown
+  novels/<locale>/    novel Markdown
+  series/<locale>/    series Markdown
+  pages/<locale>/     custom pages
+  data/home/          homepage copy per locale
+  data/friends.yml    friend links
 i18n/locales/     UI strings per locale
 public/           fonts, images, and other static assets
 server/           RSS feed routes
-shared/           site/post-type configuration and shared types
+shared/           site/kind/subtype config and shared schemas/types
 tests/            unit (Vitest) and e2e (Playwright) tests
 tools/            content validation and the Hugo migration script
 ```
@@ -85,37 +87,43 @@ rendering.
 
 ## Content
 
-Posts live in `content/posts/<locale>/<slug>.md`, where `<slug>` is both the filename and the URL
-segment (`/p/<slug>`). The same slug is used across locales so a post can be switched between
-languages.
+Articles live in `content/articles/<locale>/<slug>.md` and novels in
+`content/novels/<locale>/<slug>.md`, where `<slug>` is both the filename and the URL segment
+(`/p/<slug>`). The same slug is used across locales, and a slug must be unique across articles and
+novels within a locale. Series descriptions live in `content/series/<locale>/<slug>.md`.
 
 ```yaml
 ---
 title: My post
 description: A short summary.
 date: "2026-09-11"
-type: article        # article | novel
+subtype: tutorial        # article subtype (shared/config/article-subtypes.ts)
+status: published        # article status (shared/config/statuses.ts)
 categories: [ Java ]
 tags: [ JEP ]
 cover: /images/posts/my-post/cover.png
 comments: true
 toc: true
-draft: false
+featured: false
 ---
 ```
 
-| Field        | Default      | Notes                                         |
-|--------------|--------------|-----------------------------------------------|
-| `date`       | required     | `YYYY-MM-DD` or an ISO timestamp              |
-| `type`       | `article`    | `article` or `novel`; drives the card style   |
-| `categories` | `[]`         |                                               |
-| `tags`       | `[]`         |                                               |
-| `cover`      | –            | Path under `public/`                          |
-| `license`    | site default | `CC BY-NC-SA 4.0` unless overridden           |
-| `comments`   | `true`       | Set to `false` to hide Giscus                 |
-| `toc`        | `true`       | Novels default to `false`                     |
-| `draft`      | `false`      | Drafts are excluded from the production build |
-| `featured`   | `false`      |                                               |
+| Field        | Default        | Notes                                               |
+|--------------|----------------|-----------------------------------------------------|
+| `date`       | required       | `YYYY-MM-DD` or an ISO timestamp                    |
+| `subtype`    | required       | Article or novel subtype (per collection)           |
+| `status`     | `published`    | Articles: `published`; novels default to `complete` |
+| `categories` | `[]`           | Topics shown in the UI                              |
+| `tags`       | `[]`           | Free-form tags                                      |
+| `cover`      | –              | Path under `public/`                                |
+| `license`    | per kind       | Key from `shared/config/licenses.ts`                |
+| `comments`   | `true`         | Set to `false` to hide Giscus                       |
+| `toc`        | `true`/`false` | Articles `true`; novels default to `false`          |
+| `series`     | –              | Series slug; set `seriesOrder` alongside it         |
+| `featured`   | `false`        |                                                     |
+
+Articles default to `license: cc-by-nc-sa-4.0`; novels default to `all-rights-reserved`. Production
+hides `status: draft` (develop with `?drafts=1`).
 
 Custom pages live in `content/pages/<locale>/<slug>.md` and can join the navigation through
 frontmatter:
@@ -139,7 +147,8 @@ Before publishing, validate everything:
 bun run content:check
 ```
 
-This checks the frontmatter schema, post types, slug format, duplicate slugs, ISO dates, cover
+This checks the frontmatter schema, article/novel subtypes and statuses, license keys, slug format,
+article/novel slug collisions, series references and ordering, duplicate tags, ISO dates, cover
 images, and missing translations.
 
 ## Internationalization

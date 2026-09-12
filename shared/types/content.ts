@@ -1,28 +1,5 @@
 import {z} from 'zod'
-
-export const postSchema = z.object({
-    date: z.string(),
-
-    updated: z.string().optional(),
-
-    type: z.string().min(1).default('article'),
-
-    categories: z.array(z.string()).default([]),
-    tags: z.array(z.string()).default([]),
-
-    cover: z.string().optional(),
-    coverAlt: z.string().optional(),
-
-    license: z.string().optional(),
-
-    comments: z.boolean().default(true),
-    toc: z.boolean().default(true),
-
-    draft: z.boolean().default(false),
-    featured: z.boolean().default(false),
-})
-
-export type PostFrontmatter = z.input<typeof postSchema>
+import type {Kind} from '../config/kinds'
 
 export interface TocLinkLike {
     id: string
@@ -31,6 +8,22 @@ export interface TocLinkLike {
     children?: TocLinkLike[]
 }
 
+/** Unified list item shape used by the transitional merged listings. */
+export interface PostCardItem {
+    path: string
+    title: string
+    description?: string
+    date: string
+    kind: Kind
+    subtype?: string
+    status?: string
+    categories?: string[]
+    tags?: string[]
+    cover?: string
+    coverAlt?: string
+}
+
+/** Unified document shape used by the transitional unified reader. */
 export interface PostDocument {
     path: string
     title: string
@@ -41,29 +34,19 @@ export interface PostDocument {
     }
     date: string
     updated?: string
-    type?: string
+    kind: Kind
+    subtype?: string
+    status?: string
     categories?: string[]
     tags?: string[]
+    series?: string
+    seriesOrder?: number
     cover?: string
     coverAlt?: string
     license?: string
     comments?: boolean
     toc?: boolean
-    draft?: boolean
     featured?: boolean
-}
-
-export interface PostCardItem {
-    path: string
-    title: string
-    description?: string
-    date: string
-    type?: string
-    categories?: string[]
-    tags?: string[]
-    cover?: string
-    coverAlt?: string
-    draft?: boolean
 }
 
 export const pageNavigationSchema = z.union([

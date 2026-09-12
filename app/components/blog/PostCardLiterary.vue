@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const {t, locale} = useI18n()
 
-const typeConfig = computed(() => resolvePostType(props.post.type ?? 'novel'))
+const typeConfig = computed(() => resolveKind(props.post.kind ?? 'novel'))
 const formatted = computed(() => formatPostDate(props.post.date, locale.value))
 </script>
 

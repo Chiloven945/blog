@@ -7,7 +7,6 @@ interface HomeDocument extends HomeData {
 export async function useHomeData() {
     const {locale} = useI18n()
     const active = useActiveContentCollection()
-    const postsCollection = computed(() => active.value.posts)
 
     const homeAsync = useAsyncData(
         () => `home-data-${locale.value}`,
@@ -15,23 +14,41 @@ export async function useHomeData() {
     )
 
     const postsAsync = useAsyncData(
-        () => `home-writing-${postsCollection.value}`,
-        () =>
-            queryCollection(postsCollection.value)
-                .select(
-                    'path',
-                    'title',
-                    'description',
-                    'date',
-                    'type',
-                    'categories',
-                    'tags',
-                    'cover',
-                    'coverAlt',
-                    'draft',
-                )
-                .order('date', 'DESC')
-                .all(),
+        () => `home-writing-${active.value.articles}-${active.value.novels}`,
+        async () => {
+            const fields = [
+                'path',
+                'title',
+                'description',
+                'date',
+                'subtype',
+                'status',
+                'categories',
+                'tags',
+                'cover',
+                'coverAlt',
+            ] as const
+
+            const [articles, novels] = await Promise.all([
+                queryCollection(active.value.articles)
+                    .select(...fields)
+                    .order('date', 'DESC')
+                    .all(),
+                queryCollection(active.value.novels)
+                    .select(...fields)
+                    .order('date', 'DESC')
+                    .all(),
+            ])
+
+            return [
+                ...articles.map(item => (
+                    {...item, kind: 'article' as const}
+                )),
+                ...novels.map(item => (
+                    {...item, kind: 'novel' as const}
+                )),
+            ]
+        },
     )
 
     const {data: homeList} = await homeAsync
@@ -40,13 +57,16 @@ export async function useHomeData() {
     const home = computed<HomeData | null>(() => {
         const list = homeList.value ?? []
 
-        return list.find(item => item.stem?.endsWith(`/${locale.value}`)) ?? list[0] ?? null
+        return list.find(item =>
+            item.stem?.endsWith(`/${locale.value}`)
+        ) ?? list[0] ?? null
     })
 
     const limit = computed(() => home.value?.writing?.limit ?? 3)
 
     const latestPosts = computed<PostCardItem[]>(() =>
-        filterDrafts(posts.value ?? []).slice(0, limit.value),
+        filterDrafts((posts.value ?? []) as PostCardItem[])
+            .slice(0, limit.value),
     )
 
     return {home, latestPosts}

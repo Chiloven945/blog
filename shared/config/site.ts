@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
     domain: 'https://www.chiloven.top',
     since: 2024,
     defaultLocale: 'zh-cn',
-    defaultLicense: 'CC BY-NC-SA 4.0',
+    defaultLicense: 'cc-by-nc-sa-4.0',
     social: [
         {
             label: 'GitHub',

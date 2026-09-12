@@ -1,19 +1,37 @@
 import type {ComputedRef} from 'vue'
 
 export const contentCollections = {
-    'zh-cn': {posts: 'postsZhCn', pages: 'pagesZhCn'},
-    'zh-tw': {posts: 'postsZhTw', pages: 'pagesZhTw'},
-    'en': {posts: 'postsEn', pages: 'pagesEn'},
+    'zh-cn': {
+        articles: 'articlesZhCn',
+        novels: 'novelsZhCn',
+        series: 'seriesZhCn',
+        pages: 'pagesZhCn',
+    },
+    'zh-tw': {
+        articles: 'articlesZhTw',
+        novels: 'novelsZhTw',
+        series: 'seriesZhTw',
+        pages: 'pagesZhTw',
+    },
+    en: {
+        articles: 'articlesEn',
+        novels: 'novelsEn',
+        series: 'seriesEn',
+        pages: 'pagesEn'
+    },
 } as const
 
 export type ContentLocale = keyof typeof contentCollections
 
-export type PostCollectionName = (typeof contentCollections)[ContentLocale]['posts']
-
+export type ArticleCollectionName = (typeof contentCollections)[ContentLocale]['articles']
+export type NovelCollectionName = (typeof contentCollections)[ContentLocale]['novels']
+export type SeriesCollectionName = (typeof contentCollections)[ContentLocale]['series']
 export type PageCollectionName = (typeof contentCollections)[ContentLocale]['pages']
 
 export interface ActiveContentCollection {
-    posts: PostCollectionName
+    articles: ArticleCollectionName
+    novels: NovelCollectionName
+    series: SeriesCollectionName
     pages: PageCollectionName
 }
 

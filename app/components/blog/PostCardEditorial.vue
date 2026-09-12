@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type {PostCardItem} from '#shared/types/content'
 import PostMeta from './PostMeta.vue'
-import PostTypeBadge from './PostTypeBadge.vue'
+import PostKindBadge from './PostKindBadge.vue'
 
 const props = defineProps<{
     post: PostCardItem
@@ -33,7 +33,7 @@ const categories = computed(() => props.post.categories ?? [])
 
             <div class="flex flex-1 flex-col p-5">
                 <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-                    <PostTypeBadge :type="post.type"/>
+                    <PostKindBadge :kind="post.kind"/>
                     <PostMeta :date="post.date"/>
                 </div>
 

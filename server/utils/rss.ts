@@ -9,7 +9,9 @@ interface RawPost {
     title?: string
     description?: string
     date?: string
-    draft?: boolean
+    status?: string
+    subtype?: string
+    kind?: 'article' | 'novel'
     body?: unknown
 }
 
@@ -62,7 +64,9 @@ function absoluteUrl(url: string): string {
         return url
     }
 
-    return `${siteUrl()}${url.startsWith('/') ? url : `/${url}`}`
+    return `${siteUrl()}${url.startsWith('/')
+        ? url
+        : `/${url}`}`
 }
 
 function escapeXml(value: string): string {
@@ -78,7 +82,11 @@ function cdata(value: string): string {
     return `<![CDATA[${value.replace(/]]>/g, ']]]]><![CDATA[>')}]]>`
 }
 
-function elementNode(tagName: string, properties: Record<string, unknown>, children: StandardNode[]): StandardElement {
+function elementNode(
+    tagName: string,
+    properties: Record<string, unknown>,
+    children: StandardNode[]
+): StandardElement {
     return {type: 'element', tagName, properties, children}
 }
 
@@ -91,11 +99,16 @@ function readProperties(node: MinimarkElement): Record<string, unknown> {
     const properties: Record<string, unknown> = {}
 
     for (const [key, value] of Object.entries(source)) {
-        if (!KEEP_PROPS.has(key) || value === null || typeof value === 'object') {
+        if (!KEEP_PROPS.has(key)
+            || value === null
+            || typeof value === 'object'
+        ) {
             continue
         }
 
-        if ((key === 'href' || key === 'src') && typeof value === 'string') {
+        if ((key === 'href' || key === 'src')
+            && typeof value === 'string'
+        ) {
             properties[key] = absoluteUrl(value)
             continue
         }
@@ -106,7 +119,9 @@ function readProperties(node: MinimarkElement): Record<string, unknown> {
     return properties
 }
 
-function cleanNode(node: MinimarkNode | undefined | null): StandardNode | StandardNode[] | null {
+function cleanNode(
+    node: MinimarkNode | undefined | null
+): StandardNode | StandardNode[] | null {
     if (!node || typeof node !== 'object') {
         return null
     }
@@ -127,41 +142,61 @@ function cleanNode(node: MinimarkNode | undefined | null): StandardNode | Standa
 
     if (tag === 'spotify-embed') {
         const props = node.props ?? {}
-        const id = typeof props.id === 'string' ? props.id : ''
-        const type = typeof props.type === 'string' ? props.type : 'playlist'
+        const id = typeof props.id === 'string'
+            ? props.id
+            : ''
+        const type = typeof props.type === 'string'
+            ? props.type
+            : 'playlist'
 
         if (!id) {
             return null
         }
 
         return elementNode('p', {}, [
-            elementNode('a', {href: `https://open.spotify.com/${type}/${id}`}, [textNode(`Spotify: ${id}`)]),
+            elementNode(
+                'a',
+                {href: `https://open.spotify.com/${type}/${id}`},
+                [textNode(`Spotify: ${id}`)]
+            ),
         ])
     }
 
     if (tag === 'link-card') {
         const props = node.props ?? {}
-        const href = typeof props.href === 'string' ? props.href : ''
+        const href = typeof props.href === 'string'
+            ? props.href
+            : ''
 
         if (!href) {
             return null
         }
 
-        const label = typeof props.title === 'string' ? props.title : href
+        const label = typeof props.title === 'string'
+            ? props.title
+            : href
 
-        return elementNode('p', {}, [elementNode('a', {href: absoluteUrl(href)}, [textNode(label)])])
+        return elementNode(
+            'p',
+            {},
+            [elementNode('a', {href: absoluteUrl(href)}, [textNode(label)])]
+        )
     }
 
     const children = (node.children ?? [])
         .map(child => cleanNode(child))
-        .filter((child): child is StandardNode | StandardNode[] => child !== null)
+        .filter((child): child is StandardNode | StandardNode[] =>
+            child !== null
+        )
         .flat()
 
     if (HTML_TAGS.has(tag)) {
         return elementNode(tag, readProperties(node), children)
     }
 
-    return children.length ? children : null
+    return children.length
+        ? children
+        : null
 }
 
 function renderBody(body: unknown): string {
@@ -180,16 +215,35 @@ function renderBody(body: unknown): string {
 }
 
 export async function buildRss(event: H3Event): Promise<string> {
-    const posts = (await queryCollection(event, 'postsZhCn')
-        .select('path', 'title', 'description', 'date', 'draft', 'body')
-        .order('date', 'DESC')
-        .all()) as unknown as RawPost[]
+    const [articles, novels] = await Promise.all([
+        queryCollection(event, 'articlesZhCn')
+            .select('path', 'title', 'description', 'date', 'status', 'subtype', 'body')
+            .order('date', 'DESC')
+            .all(),
+        queryCollection(event, 'novelsZhCn')
+            .select('path', 'title', 'description', 'date', 'status', 'subtype', 'body')
+            .order('date', 'DESC')
+            .all(),
+    ])
+
+    const posts = [
+        ...articles.map(post => ({...post, kind: 'article' as const})),
+        ...novels.map(post => ({...post, kind: 'novel' as const})),
+    ].sort((a, b) => {
+        const left = a.date ?? ''
+        const right = b.date ?? ''
+        return left < right
+            ? 1
+            : left > right
+                ? -1
+                : 0
+    }) as unknown as RawPost[]
 
     const feedUrl = `${siteUrl()}/rss.xml`
     const homeUrl = `${siteUrl()}/`
 
     const items = posts
-        .filter(post => !post.draft)
+        .filter(post => post.status !== 'draft')
         .map(post => {
             const url = `${siteUrl()}${post.path}`
             const pubDate = post.date
@@ -202,7 +256,15 @@ export async function buildRss(event: H3Event): Promise<string> {
                 `<link>${escapeXml(url)}</link>`,
                 `<guid isPermaLink="true">${escapeXml(url)}</guid>`,
                 `<pubDate>${pubDate}</pubDate>`,
-                post.description ? `<description>${escapeXml(post.description)}</description>` : '',
+                `<category>${post.kind === 'article'
+                    ? 'Article'
+                    : 'Novel'}</category>`,
+                post.subtype
+                    ? `<category>${escapeXml(post.subtype)}</category>`
+                    : '',
+                post.description
+                    ? `<description>${escapeXml(post.description)}</description>`
+                    : '',
                 `<content:encoded>${cdata(renderBody(post.body))}</content:encoded>`,
                 '</item>',
             ]

@@ -34,6 +34,55 @@
       "novel": "Novel"
     }
   },
+  "article": {
+    "subtype": {
+      "note": "Note",
+      "essay": "Essay",
+      "journal": "Journal",
+      "documentation": "Documentation",
+      "tutorial": "Tutorial",
+      "translation": "Translation",
+      "reference": "Reference",
+      "experiment": "Experiment"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "wip": "In progress",
+      "deprecated": "Deprecated",
+      "archived": "Archived"
+    }
+  },
+  "novel": {
+    "subtype": {
+      "shortStory": "Short story",
+      "vignette": "Vignette",
+      "novella": "Novella",
+      "serial": "Serial",
+      "prose": "Prose",
+      "fragment": "Fragment"
+    },
+    "status": {
+      "draft": "Draft",
+      "wip": "Writing",
+      "complete": "Complete",
+      "paused": "Paused",
+      "abandoned": "Abandoned"
+    }
+  },
+  "series": {
+    "status": {
+      "planned": "Planned",
+      "ongoing": "Ongoing",
+      "complete": "Complete",
+      "paused": "Paused",
+      "abandoned": "Abandoned"
+    }
+  },
+  "license": {
+    "ccByNcSa": "CC BY-NC-SA 4.0",
+    "allRightsReserved": "All Rights Reserved"
+  },
   "search": {
     "label": "SEARCH / 003",
     "title": "Search",

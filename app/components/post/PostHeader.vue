@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const {t, locale} = useI18n()
 
-const typeConfig = computed(() => resolvePostType(props.post.type ?? 'article'))
+const typeConfig = computed(() => resolveKind(props.post.kind ?? 'article'))
 const categories = computed(() => props.post.categories ?? [])
 const tags = computed(() => props.post.tags ?? [])
 const published = computed(() => formatPostDate(props.post.date, locale.value))

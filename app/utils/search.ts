@@ -6,7 +6,8 @@ export interface SearchSection {
     titles: string[]
     level: number
     content: string
-    type?: string
+    kind?: 'article' | 'novel'
+    subtype?: string
     categories?: string[]
     tags?: string[]
     date?: string
@@ -33,7 +34,12 @@ export function tokenizeSearchQuery(query: string): string[] {
 }
 
 function joinMetadata(section: SearchSection): string {
-    return [section.type, ...(section.categories ?? []), ...(section.tags ?? [])]
+    return [
+        section.kind,
+        section.subtype,
+        ...(section.categories ?? []),
+        ...(section.tags ?? [])
+    ]
         .filter(Boolean)
         .join(' ')
         .toLowerCase()
@@ -44,7 +50,10 @@ function joinMetadata(section: SearchSection): string {
  * title exact / prefix > title contains > heading > body > metadata.
  * All terms must appear somewhere in the section.
  */
-export function scoreSearchSection(section: SearchSection, terms: string[]): number {
+export function scoreSearchSection(
+    section: SearchSection,
+    terms: string[]
+): number {
     if (!terms.length) {
         return 0
     }
@@ -90,7 +99,11 @@ export function scoreSearchSection(section: SearchSection, terms: string[]): num
     return score + Math.max(0, 6 - section.level) * 10
 }
 
-export function buildSnippet(content: string, terms: string[], around = 48): string {
+export function buildSnippet(
+    content: string,
+    terms: string[],
+    around = 48
+): string {
     const text = content.replace(/\s+/g, ' ').trim()
 
     if (!text) {
@@ -111,20 +124,29 @@ export function buildSnippet(content: string, terms: string[], around = 48): str
     }
 
     if (index === -1) {
-        return text.length > around * 2 ? `${text.slice(0, around * 2).trim()}…` : text
+        return text.length > around * 2
+            ? `${text.slice(0, around * 2).trim()}…`
+            : text
     }
 
     const start = Math.max(0, index - around)
     const end = Math.min(text.length, index + matched.length + around)
 
-    return `${start > 0 ? '…' : ''}${text.slice(start, end).trim()}${end < text.length ? '…' : ''}`
+    return `${start > 0
+        ? '…'
+        : ''}${text.slice(start, end).trim()}${end < text.length
+        ? '…'
+        : ''}`
 }
 
 function escapeRegExp(value: string): string {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-export function highlightSegments(text: string, terms: string[]): HighlightSegment[] {
+export function highlightSegments(
+    text: string,
+    terms: string[]
+): HighlightSegment[] {
     if (!text) {
         return []
     }
@@ -135,14 +157,19 @@ export function highlightSegments(text: string, terms: string[]): HighlightSegme
         return [{text, match: false}]
     }
 
-    const pattern = new RegExp(`(${normalizedTerms.map(escapeRegExp).join('|')})`, 'gi')
+    const pattern = new RegExp(
+        `(${normalizedTerms.map(escapeRegExp).join('|')})`,
+        'gi'
+    )
 
     return text
         .split(pattern)
         .filter(part => part !== '')
         .map(part => ({
             text: part,
-            match: normalizedTerms.some(term => part.toLowerCase() === term.toLowerCase()),
+            match: normalizedTerms.some(term =>
+                part.toLowerCase() === term.toLowerCase()
+            ),
         }))
 }
 
@@ -171,7 +198,9 @@ export function searchSections(
         }
     }
 
-    scored.sort((a, b) => b.score - a.score || a.level - b.level)
+    scored.sort((a, b) =>
+        b.score - a.score || a.level - b.level
+    )
 
     return scored.slice(0, limit)
 }

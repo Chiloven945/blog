@@ -34,6 +34,55 @@
       "novel": "小說"
     }
   },
+  "article": {
+    "subtype": {
+      "note": "筆記",
+      "essay": "隨筆",
+      "journal": "日誌",
+      "documentation": "文件",
+      "tutorial": "教學",
+      "translation": "翻譯",
+      "reference": "參考",
+      "experiment": "實驗"
+    },
+    "status": {
+      "draft": "草稿",
+      "published": "已發佈",
+      "wip": "撰寫中",
+      "deprecated": "已過時",
+      "archived": "已封存"
+    }
+  },
+  "novel": {
+    "subtype": {
+      "shortStory": "短篇",
+      "vignette": "小品",
+      "novella": "中短篇",
+      "serial": "連載",
+      "prose": "散文",
+      "fragment": "片段"
+    },
+    "status": {
+      "draft": "草稿",
+      "wip": "創作中",
+      "complete": "已完成",
+      "paused": "已暫停",
+      "abandoned": "已棄坑"
+    }
+  },
+  "series": {
+    "status": {
+      "planned": "計畫中",
+      "ongoing": "連載中",
+      "complete": "已完成",
+      "paused": "已暫停",
+      "abandoned": "已停更"
+    }
+  },
+  "license": {
+    "ccByNcSa": "CC BY-NC-SA 4.0",
+    "allRightsReserved": "保留所有權利"
+  },
   "search": {
     "label": "搜尋 / 003",
     "title": "搜尋",

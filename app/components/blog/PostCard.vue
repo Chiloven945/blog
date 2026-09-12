@@ -8,7 +8,7 @@ const props = defineProps<{
     post: PostCardItem
 }>()
 
-const variant = computed(() => resolvePostType(props.post.type ?? 'article').card)
+const variant = computed(() => resolveKind(props.post.kind).card)
 </script>
 
 <template>

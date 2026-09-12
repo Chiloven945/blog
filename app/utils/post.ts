@@ -1,4 +1,4 @@
-import {type PostType, postTypes} from '~~/shared/config/post-types'
+import {type Kind, kinds} from '~~/shared/config/kinds'
 import {parseDate} from './date'
 
 const skipTags = new Set(['pre', 'style', 'script'])
@@ -21,7 +21,9 @@ function collectText(node: unknown): string {
     return children.map(child => collectText(child)).join(' ')
 }
 
-export function extractPostText(body: { value?: unknown } | null | undefined): string {
+export function extractPostText(
+    body: { value?: unknown } | null | undefined
+): string {
     const value = body?.value
 
     if (!Array.isArray(value)) {
@@ -41,12 +43,14 @@ export function estimateReadingTime(text: string): number {
     return Math.max(1, Math.ceil(cjkCount / 300 + wordCount / 200))
 }
 
-export function getReadingTime(body: { value?: unknown } | null | undefined): number {
+export function getReadingTime(
+    body: { value?: unknown } | null | undefined
+): number {
     return estimateReadingTime(extractPostText(body))
 }
 
-export function resolvePostType(type: string) {
-    return postTypes[type as PostType] ?? postTypes.article
+export function resolveKind(kind: string) {
+    return kinds[kind as Kind] ?? kinds.article
 }
 
 export interface PostSurroundItem {
@@ -65,7 +69,9 @@ export function getPostSurround(
 ): PostSurroundResult {
     const ordered = [...posts].sort((a, b) => {
         const diff = parseDate(a.date).getTime() - parseDate(b.date).getTime()
-        return diff !== 0 ? diff : a.path.localeCompare(b.path)
+        return diff !== 0
+            ? diff
+            : a.path.localeCompare(b.path)
     })
 
     const index = ordered.findIndex(post => post.path === currentPath)
@@ -78,7 +84,11 @@ export function getPostSurround(
     const next = ordered[index + 1]
 
     return {
-        prev: prev ? {title: prev.title, path: prev.path} : null,
-        next: next ? {title: next.title, path: next.path} : null,
+        prev: prev
+            ? {title: prev.title, path: prev.path}
+            : null,
+        next: next
+            ? {title: next.title, path: next.path}
+            : null,
     }
 }
