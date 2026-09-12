@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
 import type {FriendItem} from '#shared/types/content'
 import FriendGrid from '~/components/friends/FriendGrid.vue'
 
 const {t} = useI18n()
-const route = useRoute()
 
 const {data} = await useAsyncData('friends-page', () => queryCollection('friends').first())
 
@@ -16,21 +14,10 @@ const friends = computed<FriendItem[]>(() => {
         .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
 })
 
-const canonical = computed(() => `${siteConfig.domain}${route.path}`)
-
-useSeoMeta({
+usePageMeta({
     title: () => t('friends.title'),
     description: () => t('friends.description'),
-    ogTitle: () => t('friends.title'),
-    ogDescription: () => t('friends.description'),
-    ogType: 'website',
-    ogUrl: () => canonical.value,
-    twitterCard: 'summary_large_image',
 })
-
-useHead(() => ({
-    link: [{rel: 'canonical', href: canonical.value}],
-}))
 </script>
 
 <template>

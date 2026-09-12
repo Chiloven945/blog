@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
 import BlogGrid from '~/components/blog/BlogGrid.vue'
 import BlogTabs from '~/components/blog/BlogTabs.vue'
 
@@ -89,21 +88,10 @@ if (import.meta.client) {
     )
 }
 
-const canonical = computed(() => `${siteConfig.domain}${route.path}`)
-
-useSeoMeta({
+usePageMeta({
     title: () => t('blog.title'),
     description: () => t('blog.description'),
-    ogTitle: () => t('blog.title'),
-    ogDescription: () => t('blog.description'),
-    ogType: 'website',
-    ogUrl: () => canonical.value,
-    twitterCard: 'summary_large_image',
 })
-
-useHead(() => ({
-    link: [{rel: 'canonical', href: canonical.value}],
-}))
 </script>
 
 <template>

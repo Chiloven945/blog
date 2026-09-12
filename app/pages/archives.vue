@@ -1,27 +1,14 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
 import ArchiveYear from '~/components/archives/ArchiveYear.vue'
 
 const {t} = useI18n()
-const route = useRoute()
 
 const {years} = await useArchives()
 
-const canonical = computed(() => `${siteConfig.domain}${route.path}`)
-
-useSeoMeta({
+usePageMeta({
     title: () => t('archives.title'),
     description: () => t('archives.description'),
-    ogTitle: () => t('archives.title'),
-    ogDescription: () => t('archives.description'),
-    ogType: 'website',
-    ogUrl: () => canonical.value,
-    twitterCard: 'summary_large_image',
 })
-
-useHead(() => ({
-    link: [{rel: 'canonical', href: canonical.value}],
-}))
 </script>
 
 <template>

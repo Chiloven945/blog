@@ -1,5 +1,12 @@
 <script lang="ts" setup>
 definePageMeta({layout: 'home'})
+
+const {t} = useI18n()
+
+usePageMeta({
+    title: () => t('site.title'),
+    description: () => t('site.description'),
+})
 </script>
 
 <template>

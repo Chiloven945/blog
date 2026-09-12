@@ -49,15 +49,16 @@ const bodyClass = computed(() =>
     variant.value === 'literary' ? 'post-body--literary' : 'post-body--editorial',
 )
 
-useSeoMeta({
+usePageMeta({
     title: () => post.value?.title,
     description: () => post.value?.description,
-    ogTitle: () => post.value?.title,
-    ogDescription: () => post.value?.description,
-    ogType: 'article',
-    articlePublishedTime: () => post.value?.date,
-    articleModifiedTime: () => post.value?.updated,
-    articleTag: () => post.value?.tags,
+    type: 'article',
+    image: () => post.value?.cover,
+    article: {
+        publishedTime: () => post.value?.date,
+        modifiedTime: () => post.value?.updated,
+        tags: () => post.value?.tags,
+    },
 })
 </script>
 
@@ -83,6 +84,17 @@ useSeoMeta({
                 <PostLicense :license="post.license"/>
 
                 <PostSurround :next="surround?.next ?? null" :prev="surround?.prev ?? null"/>
+
+                <section
+                        v-if="post.comments !== false"
+                        class="mt-12 border-t border-default pt-6"
+                >
+                    <h2 class="font-mono text-xs tracking-[0.2em] text-muted uppercase">
+                        {{ t('post.comments') }}
+                    </h2>
+
+                    <PostComments/>
+                </section>
             </div>
 
             <PostToc v-if="showToc" :links="tocLinks" variant="desktop"/>

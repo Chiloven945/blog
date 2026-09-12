@@ -96,6 +96,19 @@ export default defineNuxtConfig({
         domains: [],
     },
 
+    sitemap: {
+        // Search results are query-driven; the /dev/* routes are temporary.
+        exclude: ['/search', '/en/search', '/zh-tw/search', '/dev/**'],
+    },
+
+    nitro: {
+        prerender: {
+            // The feed has no inbound links during the crawl, so list it
+            // explicitly (ROADMAP §34.7). /index.xml is the legacy alias.
+            routes: ['/rss.xml', '/index.xml'],
+        },
+    },
+
     i18n: {
         strategy: 'prefix_except_default',
         defaultLocale: 'zh-cn',

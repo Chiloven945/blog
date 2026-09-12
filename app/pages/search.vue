@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
 import SearchInput from '~/components/search/SearchInput.vue'
 import SearchResult from '~/components/search/SearchResult.vue'
 import {type SearchResultItem, tokenizeSearchQuery} from '~/utils/search'
@@ -49,19 +48,10 @@ watch(query, (value) => {
     router.replace({query: nextQuery})
 })
 
-useSeoMeta({
+usePageMeta({
     title: () => t('search.title'),
     description: () => t('search.description'),
-    ogTitle: () => t('search.title'),
-    ogDescription: () => t('search.description'),
-    ogType: 'website',
-    ogUrl: () => `${siteConfig.domain}${route.path}`,
-    twitterCard: 'summary_large_image',
 })
-
-useHead(() => ({
-    link: [{rel: 'canonical', href: `${siteConfig.domain}${route.path}`}],
-}))
 
 function select(item: SearchResultItem) {
     navigateTo(item.anchor ? `${item.path}#${item.anchor}` : item.path)

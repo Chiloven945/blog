@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import {siteConfig} from '#shared/config/site'
-
 const route = useRoute()
 const {t} = useI18n()
 
@@ -17,21 +15,11 @@ if (!page.value) {
     throw createError({statusCode: 404, statusMessage: t('error.pageNotFound')})
 }
 
-const canonical = computed(() => `${siteConfig.domain}${route.path}`)
-
-useSeoMeta({
+usePageMeta({
     title: () => page.value?.title,
     description: () => page.value?.description,
-    ogTitle: () => page.value?.title,
-    ogDescription: () => page.value?.description,
-    ogType: 'website',
-    ogUrl: () => canonical.value,
-    twitterCard: 'summary_large_image',
+    image: () => page.value?.cover,
 })
-
-useHead(() => ({
-    link: [{rel: 'canonical', href: canonical.value}],
-}))
 </script>
 
 <template>
