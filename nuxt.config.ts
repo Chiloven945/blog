@@ -96,6 +96,29 @@ export default defineNuxtConfig({
         domains: [],
     },
 
+    // /blog is replaced by /articles; keep the old URLs working as
+    // permanent redirects.
+    routeRules: {
+        '/blog': {
+            redirect: {
+                to: '/articles',
+                statusCode: 301
+            }
+        },
+        '/en/blog': {
+            redirect: {
+                to: '/en/articles',
+                statusCode: 301
+            }
+        },
+        '/zh-tw/blog': {
+            redirect: {
+                to: '/zh-tw/articles',
+                statusCode: 301
+            }
+        },
+    },
+
     sitemap: {
         // Search results are query-driven; the /dev/* routes are temporary.
         exclude: ['/search', '/en/search', '/zh-tw/search', '/dev/**'],

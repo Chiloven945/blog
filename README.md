@@ -13,14 +13,15 @@ dependency-light runtime.
   exist yet.
 - **Content-driven** — posts and pages are Markdown/MDC files managed by Nuxt Content; no database,
   CMS, or auth.
-- **Reading experience** — sticky table of contents, reading time, previous / next navigation,
-  license, footnotes, and comments.
+- **Reading experience** — a dedicated article reader with a contents/tools rail (reading progress,
+  copy link, back to top), reading time, source notices for translations, license, footnotes, and
+  comments.
 - **Rich Markdown** — syntax-highlighted code with line numbers and copy, callouts, figures,
   galleries, link cards, Spotify embeds, KaTeX math, and custom anchors.
 - **Search** — a `Ctrl/Cmd + K` command palette and a shareable `/search?q=`
   page, scoped to the active language.
-- **Sections** — a designed homepage, a blog index with article/novel tabs, an archive timeline,
-  friends, and free-form content pages.
+- **Sections** — a designed homepage, a technical article index with a subtype filter and featured
+  entry, an archive timeline, friends, and free-form content pages.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
@@ -128,8 +129,8 @@ Articles default to `license: cc-by-nc-sa-4.0`; novels default to `all-rights-re
 hides `status: draft` (develop with `?drafts=1`).
 
 Custom pages live in `content/pages/<locale>/<slug>.md` and render through the catch-all route.
-Primary navigation is the fixed floating set (Home / Articles / Novels / Tags / Archives /
-Friends); About and Links move to homepage sections in a later milestone.
+Primary navigation is the fixed floating set (Home / Articles / Novels / Tags / Archives / Friends);
+About and Links move to homepage sections in a later milestone.
 
 Homepage copy is stored per locale in `content/data/home/<locale>.yml`, and friend links are
 collected in `content/data/friends.yml`.

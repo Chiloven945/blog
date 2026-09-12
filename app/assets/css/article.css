@@ -1,0 +1,59 @@
+/* ==========================================================================
+   article.css — technical reading layer
+   ==========================================================================
+   The article reader is sans-first, structured, and high-information.
+   Layout comes from the shell classes here; prose tweaks live in the
+   utilities layer so they win over the Nuxt UI prose defaults.
+   ========================================================================== */
+
+@layer components {
+    /* Body column + tools rail (the reader owns its own shell). */
+    .article-shell {
+        max-width: calc(var(--post-width) + var(--toc-width) + 3rem);
+    }
+
+    .article-column {
+        max-width: var(--post-width);
+    }
+}
+
+@layer utilities {
+    .prose-article {
+        font-family: var(--font-reading-sans), sans-serif;
+    }
+
+    /* Headings stay in the UI sans so the page reads as a technical
+       document rather than long-form editorial. */
+    .prose-article :where(h2, h3, h4) {
+        font-family: var(--font-ui-sans), ui-sans-serif;
+        letter-spacing: -0.01em;
+    }
+
+    /* Quieter, structured blockquote: a ruled quote, not a pull quote. */
+    .prose-article :where(blockquote) {
+        border-inline-start: 2px solid var(--ui-primary);
+        background-color: color-mix(in oklab, var(--ui-primary) 4%, transparent);
+        padding-inline: 1rem;
+        font-style: normal;
+        color: var(--ui-text-toned);
+    }
+
+    /* Inline code reads as a token, not prose. */
+    .prose-article :where(code):not(:where(pre code)) {
+        background-color: var(--ui-bg-elevated);
+        border: 1px solid var(--ui-border);
+        border-radius: 2px;
+        padding: 0.1em 0.35em;
+        font-size: 0.9em;
+    }
+
+    /* Tabular numerals keep spec/table columns aligned. */
+    .prose-article :where(table) {
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* Code blocks can break out slightly wider than the text column. */
+    .prose-article :where(pre) {
+        font-variant-ligatures: none;
+    }
+}

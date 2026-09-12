@@ -40,6 +40,24 @@
       "novel": "Novel"
     }
   },
+  "articles": {
+    "kind": "Article",
+    "label": "ARTICLES / 002",
+    "title": "Articles",
+    "description": "Technical notes, docs, tutorials, and translations.",
+    "all": "All",
+    "featured": "Featured",
+    "index": "Index",
+    "empty": "No articles yet.",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "Try another subtype, or check back later.",
+    "tools": "Tools",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "backToTop": "Back to top",
+    "source": "Source",
+    "sourceAuthors": "Authors"
+  },
   "article": {
     "subtype": {
       "note": "Note",

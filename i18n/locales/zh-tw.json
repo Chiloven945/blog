@@ -40,6 +40,24 @@
       "novel": "小說"
     }
   },
+  "articles": {
+    "kind": "文章",
+    "label": "文章 / 002",
+    "title": "文章",
+    "description": "技術筆記、文件、教學與翻譯。",
+    "all": "全部",
+    "featured": "精選",
+    "index": "索引",
+    "empty": "這裡還沒有文章。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "換個類型看看，或稍後再來。",
+    "tools": "工具",
+    "copyLink": "複製連結",
+    "copied": "已複製",
+    "backToTop": "回到頂部",
+    "source": "來源",
+    "sourceAuthors": "作者"
+  },
   "article": {
     "subtype": {
       "note": "筆記",

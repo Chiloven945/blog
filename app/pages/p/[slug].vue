@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type {Kind} from '#shared/config/kinds'
+import type {ArticleDocument} from '#shared/types/article'
 import type {PostDocument} from '#shared/types/content'
+import ArticleReader from '~/components/article/ArticleReader.vue'
 import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
 definePageMeta({layout: 'post'})
@@ -41,10 +43,20 @@ const post = computed<PostDocument | null>(() =>
         : null,
 )
 
+// The article branch delegates to the dedicated reader; the unified Post*
+// markup below remains only for novels until NovelReader lands.
+const articleDoc = computed<ArticleDocument | null>(() =>
+    article.value
+        ? article.value as unknown as ArticleDocument
+        : null,
+)
+
 // Let the floating navigation highlight Articles or Novels on a post.
 const navPostKind = useState<'article' | 'novel' | null>('nav-post-kind', () => null)
 watchEffect(() => {
-    navPostKind.value = post.value ? kind.value : null
+    navPostKind.value = post.value
+        ? kind.value
+        : null
 })
 
 if (!post.value
@@ -117,7 +129,14 @@ usePageMeta({
 </script>
 
 <template>
-    <article v-if="post" :class="shellClass" class="mx-auto">
+    <ArticleReader
+            v-if="post?.kind === 'article' && articleDoc && surround"
+            :article="articleDoc"
+            :reading-time="readingTime"
+            :surround="surround"
+    />
+
+    <article v-else-if="post" :class="shellClass" class="mx-auto">
         <PostHeader :post="post" :reading-time="readingTime"/>
 
         <PostCover

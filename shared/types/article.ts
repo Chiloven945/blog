@@ -18,10 +18,18 @@ export interface ArticleDocument {
     seriesOrder?: number
     cover?: string
     coverAlt?: string
+    source?: ArticleSource
     license?: string
     comments?: boolean
     toc?: boolean
     featured?: boolean
+}
+
+export interface ArticleSource {
+    title?: string
+    url?: string
+    authors?: string[]
+    note?: string
 }
 
 export interface ArticleCardItem {
@@ -29,10 +37,13 @@ export interface ArticleCardItem {
     title: string
     description?: string
     date: string
+    updated?: string
     subtype?: string
     status?: string
     categories?: string[]
     tags?: string[]
+    series?: string
     cover?: string
     coverAlt?: string
+    featured?: boolean
 }

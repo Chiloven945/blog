@@ -59,7 +59,7 @@ const rows = computed(() =>
         <div class="mt-8">
             <UButton
                     :padded="false"
-                    :to="localePath('/blog')"
+                    :to="localePath('/articles')"
                     trailing-icon="i-lucide-arrow-right"
                     variant="link"
             >

@@ -8,7 +8,7 @@ const localePrefixes: Record<ContentLocale, string> = {
     en: '/en',
 }
 
-const systemRoutes = new Set(['/', '/blog', '/search', '/archives', '/friends'])
+const systemRoutes = new Set(['/', '/articles', '/search', '/archives', '/friends'])
 
 type ContentPathIndex = Record<string, string[]>
 
@@ -21,7 +21,10 @@ export interface LocaleOption {
 }
 
 /** Remove the active locale prefix from a route path. */
-export function stripLocalePrefix(path: string, locale: ContentLocale): string {
+export function stripLocalePrefix(
+    path: string,
+    locale: ContentLocale
+): string {
     const prefix = localePrefixes[locale] ?? ''
     let relative = path
 
@@ -31,13 +34,20 @@ export function stripLocalePrefix(path: string, locale: ContentLocale): string {
         relative = relative.slice(prefix.length) || '/'
     }
 
-    return relative.startsWith('/') ? relative : `/${relative}`
+    return relative.startsWith('/')
+        ? relative
+        : `/${relative}`
 }
 
 /** Build the target path for a locale from a locale-less relative path. */
-export function localizedContentPath(relative: string, locale: ContentLocale): string {
+export function localizedContentPath(
+    relative: string,
+    locale: ContentLocale
+): string {
     const targetPrefix = localePrefixes[locale] ?? ''
-    return locale === 'zh-cn' || relative === '/' ? relative : `${targetPrefix}${relative}`
+    return locale === 'zh-cn' || relative === '/'
+        ? relative
+        : `${targetPrefix}${relative}`
 }
 
 export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {

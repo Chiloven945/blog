@@ -40,6 +40,24 @@
       "novel": "小说"
     }
   },
+  "articles": {
+    "kind": "文章",
+    "label": "文章 / 002",
+    "title": "文章",
+    "description": "技术笔记、文档、教程与翻译。",
+    "all": "全部",
+    "featured": "精选",
+    "index": "索引",
+    "empty": "这里还没有文章。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "换个类型看看，或稍后再来。",
+    "tools": "工具",
+    "copyLink": "复制链接",
+    "copied": "已复制",
+    "backToTop": "回到顶部",
+    "source": "来源",
+    "sourceAuthors": "作者"
+  },
   "article": {
     "subtype": {
       "note": "笔记",
