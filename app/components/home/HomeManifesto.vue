@@ -12,7 +12,7 @@ defineProps<{
 
         <figure class="mt-8 border-l-2 border-primary pl-6 lg:pl-10">
             <blockquote class="max-w-4xl">
-                <p class="text-2xl leading-snug font-bold tracking-tight text-highlighted sm:text-3xl lg:text-4xl">
+                <p class="font-display-serif text-2xl leading-snug font-bold tracking-tight text-highlighted sm:text-3xl lg:text-4xl">
                     {{ manifesto.body }}
                 </p>
             </blockquote>

@@ -1,79 +1,154 @@
 /* ==========================================================================
-   typography.css — HarmonyOS Sans + type scale
+   typography.css — v2 self-hosted font stack
+   ==========================================================================
+   All families are SIL OFL 1.1 (licenses in public/fonts/licenses/):
+
+   - Source Han Sans CN/TW  (variable, region subset) → CJK sans
+   - Source Han Serif CN/TW (variable, region subset) → CJK serif
+   - Google Sans Flex       (variable, Latin)          → English sans
+   - Libre Baskerville      (variable, Latin)          → English serif
+   - Cascadia Code          (variable, Latin)          → code
+
+   The @font-face files are never all preloaded. Only the active locale's
+   UI sans (and the reading serif on novel routes) is preloaded; see
+   app/utils/fonts.ts and app/app.vue.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   HarmonyOS Sans (local, self-hosted).
-   v1 loads Regular + Bold only; italics are synthesized by the browser.
-   Files live in public/fonts/harmonyos/ and are never all preloaded.
-   -------------------------------------------------------------------------- */
+/* --- Source Han Sans (CJK, region subsets) --- */
 @font-face {
-    font-family: "HarmonyOS Sans SC";
-    src: url("/fonts/harmonyos/HarmonyOS-Sans-SC-Regular.woff2") format("woff2");
-    font-weight: 400;
+    font-family: "Source Han Sans CN";
+    src: url("/fonts/source-han-sans/SourceHanSansCN-VF.woff2") format("woff2");
+    font-weight: 250 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "HarmonyOS Sans SC";
-    src: url("/fonts/harmonyos/HarmonyOS-Sans-SC-Bold.woff2") format("woff2");
-    font-weight: 700;
+    font-family: "Source Han Sans TW";
+    src: url("/fonts/source-han-sans/SourceHanSansTW-VF.woff2") format("woff2");
+    font-weight: 250 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --- Source Han Serif (CJK, region subsets) --- */
+@font-face {
+    font-family: "Source Han Serif CN";
+    src: url("/fonts/source-han-serif/SourceHanSerifCN-VF.woff2") format("woff2");
+    font-weight: 250 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "HarmonyOS Sans TC";
-    src: url("/fonts/harmonyos/HarmonyOS-Sans-TC-Regular.woff2") format("woff2");
-    font-weight: 400;
+    font-family: "Source Han Serif TW";
+    src: url("/fonts/source-han-serif/SourceHanSerifTW-VF.woff2") format("woff2");
+    font-weight: 250 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --- Latin --- */
+@font-face {
+    font-family: "Google Sans Flex";
+    src: url("/fonts/google-sans-flex/GoogleSansFlex-VF.woff2") format("woff2");
+    font-weight: 1 1000;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "HarmonyOS Sans TC";
-    src: url("/fonts/harmonyos/HarmonyOS-Sans-TC-Bold.woff2") format("woff2");
-    font-weight: 700;
+    font-family: "Libre Baskerville";
+    src: url("/fonts/libre-baskerville/LibreBaskerville-VF.woff2") format("woff2");
+    font-weight: 400 700;
     font-style: normal;
     font-display: swap;
 }
 
-/* --------------------------------------------------------------------------
-   Font tokens — Latin + CJK fall back to the same HarmonyOS glyphs.
-   -------------------------------------------------------------------------- */
-@theme {
-    --font-sans: "HarmonyOS Sans SC", "HarmonyOS Sans TC", ui-sans-serif, system-ui,
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans SC", sans-serif;
-    --font-mono: ui-monospace, SFMono-Regular, "Cascadia Code", "JetBrains Mono", Consolas,
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("/fonts/libre-baskerville/LibreBaskerville-Italic-VF.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* --- Mono --- */
+@font-face {
+    font-family: "Cascadia Code";
+    src: url("/fonts/cascadia-code/CascadiaCode-VF.woff2") format("woff2");
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   Semantic font tokens
+   ==========================================================================
+   Resolved per locale on <html lang="..">:
+     zh-CN → Source Han Sans/Serif CN
+     zh-TW → Source Han Sans/Serif TW
+     en-US → Google Sans Flex / Libre Baskerville
+   ========================================================================== */
+:root {
+    --font-cjk-sans: "Source Han Sans CN";
+    --font-cjk-serif: "Source Han Serif CN";
+    --font-en-sans: "Google Sans Flex";
+    --font-en-serif: "Libre Baskerville";
+
+    --font-fallback-sans: ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-fallback-serif: ui-serif, Georgia, "Times New Roman", serif;
+    --font-fallback-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas,
     "Liberation Mono", Menlo, monospace;
+
+    --font-ui-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
+    --font-display-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
+    --font-display-serif: var(--font-cjk-serif), var(--font-en-serif), var(--font-fallback-serif);
+    --font-reading-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
+    --font-reading-serif: var(--font-cjk-serif), var(--font-en-serif), var(--font-fallback-serif);
 }
 
-/* Traditional Chinese prefers TC glyphs first. */
+/* Traditional Chinese prefers TW glyphs first. */
 :root[lang^="zh-TW"] {
-    --font-sans: "HarmonyOS Sans TC", "HarmonyOS Sans SC", ui-sans-serif, system-ui,
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans TC", sans-serif;
+    --font-cjk-sans: "Source Han Sans TW";
+    --font-cjk-serif: "Source Han Serif TW";
 }
 
-/* --------------------------------------------------------------------------
+/* English drops the CJK families and uses the Latin ones. */
+:root[lang^="en"] {
+    --font-ui-sans: var(--font-en-sans), var(--font-fallback-sans);
+    --font-display-sans: var(--font-en-sans), var(--font-fallback-sans);
+    --font-display-serif: var(--font-en-serif), var(--font-fallback-serif);
+    --font-reading-sans: var(--font-en-sans), var(--font-fallback-sans);
+    --font-reading-serif: var(--font-en-serif), var(--font-fallback-serif);
+}
+
+/* Tailwind utilities follow the locale-aware UI token. `font-mono` is
+   locale-independent, so it is declared literally. */
+@theme {
+    --font-sans: var(--font-ui-sans);
+    --font-mono: "Cascadia Code", ui-monospace, SFMono-Regular, "Cascadia Mono",
+    Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* ==========================================================================
    Base type
-   -------------------------------------------------------------------------- */
+   ========================================================================== */
 @layer base {
     html {
-        font-family: var(--font-sans);
+        font-family: var(--font-ui-sans), ui-sans-serif;
         -webkit-text-size-adjust: 100%;
         text-rendering: optimizeLegibility;
     }
 
     body {
-        font-family: var(--font-sans);
+        font-family: var(--font-ui-sans), ui-sans-serif;
         font-size: 1rem;
         line-height: 1.75;
         color: var(--ui-text);
         background-color: var(--ui-bg);
-        font-synthesis: style; /* allow synthetic italic (no italic file loaded) */
+        font-synthesis: style; /* allow synthetic italic (no italic CJK files) */
     }
 
     h1,
@@ -97,7 +172,7 @@
     pre,
     kbd,
     samp {
-        font-family: var(--font-mono);
+        font-family: var(--font-mono), monospace;
         font-feature-settings: "liga" 0;
     }
 
@@ -111,5 +186,41 @@
 
     a:hover {
         text-decoration: underline;
+    }
+}
+
+/* ==========================================================================
+   Semantic font helpers
+   ========================================================================== */
+@layer components {
+    /* Article body reads in the sans face; novels in the serif face. */
+    .prose-article {
+        font-family: var(--font-reading-sans), sans-serif;
+    }
+
+    .prose-novel {
+        font-family: var(--font-reading-serif), serif;
+    }
+}
+
+@layer utilities {
+    .font-ui-sans {
+        font-family: var(--font-ui-sans), ui-sans-serif;
+    }
+
+    .font-display-sans {
+        font-family: var(--font-display-sans), sans-serif;
+    }
+
+    .font-display-serif {
+        font-family: var(--font-display-serif), serif;
+    }
+
+    .font-reading-sans {
+        font-family: var(--font-reading-sans), ui-sans-serif;
+    }
+
+    .font-reading-serif {
+        font-family: var(--font-reading-serif), ui-serif;
     }
 }

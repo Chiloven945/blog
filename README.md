@@ -29,18 +29,18 @@ dependency-light runtime.
 
 ## Tech stack
 
-| Concern                   | Choice                                                   |
-|---------------------------|----------------------------------------------------------|
-| Runtime / package manager | [Bun](https://bun.sh) 1.4.2                              |
-| Framework                 | [Nuxt 4](https://nuxt.com)                               |
-| UI primitives             | [Nuxt UI 4](https://ui.nuxt.com)                         |
-| Content                   | [Nuxt Content 3](https://content.nuxt.com) + MDC         |
-| Images / Fonts            | `@nuxt/image`, `@nuxt/fonts`, self-hosted HarmonyOS Sans |
-| i18n                      | `@nuxtjs/i18n` (`zh-cn`, `zh-tw`, `en`)                  |
-| SEO                       | `@nuxtjs/sitemap`, `@nuxtjs/robots`                      |
-| Comments                  | Giscus                                                   |
-| Testing                   | Vitest (unit), Playwright (end-to-end)                   |
-| Linting                   | ESLint (`@nuxt/eslint`)                                  |
+| Concern                   | Choice                                                                                                      |
+|---------------------------|-------------------------------------------------------------------------------------------------------------|
+| Runtime / package manager | [Bun](https://bun.sh) 1.4.2                                                                                 |
+| Framework                 | [Nuxt 4](https://nuxt.com)                                                                                  |
+| UI primitives             | [Nuxt UI 4](https://ui.nuxt.com)                                                                            |
+| Content                   | [Nuxt Content 3](https://content.nuxt.com) + MDC                                                            |
+| Images / Fonts            | `@nuxt/image`, `@nuxt/fonts`, self-hosted Source Han / Google Sans Flex / Libre Baskerville / Cascadia Code |
+| i18n                      | `@nuxtjs/i18n` (`zh-cn`, `zh-tw`, `en`)                                                                     |
+| SEO                       | `@nuxtjs/sitemap`, `@nuxtjs/robots`                                                                         |
+| Comments                  | Giscus                                                                                                      |
+| Testing                   | Vitest (unit), Playwright (end-to-end)                                                                      |
+| Linting                   | ESLint (`@nuxt/eslint`)                                                                                     |
 
 ## Requirements
 

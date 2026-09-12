@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {siteConfig} from '#shared/config/site'
+import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
 const {t, locale} = useI18n()
 const head = useLocaleHead({seo: false})
@@ -17,6 +18,9 @@ useHead(() => ({
             title: siteConfig.name,
             href: `${siteConfig.domain}/rss.xml`,
         },
+        // Only the active locale's UI sans is preloaded; the reading serif
+        // is preloaded per route (see pages/p/[slug].vue).
+        fontPreloadLink(resolveFontFiles(locale.value).sans),
     ],
     // Reveal animation is an enhancement: without JS the content must still
     // be visible. The directive reveals it when JS is on.

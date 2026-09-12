@@ -23,7 +23,7 @@ const formatted = computed(() => formatPostDate(props.post.date, locale.value))
                 </span>
 
                 <h3
-                        class="mt-4 text-2xl leading-tight font-bold tracking-tight text-highlighted transition-colors group-hover:text-primary sm:text-3xl"
+                        class="font-display-serif mt-4 text-2xl leading-tight font-bold tracking-tight text-highlighted transition-colors group-hover:text-primary sm:text-3xl"
                 >
                     {{ post.title }}
                 </h3>

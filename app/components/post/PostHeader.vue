@@ -28,7 +28,10 @@ const updated = computed(() =>
                 variant="outline"
         />
 
-        <h1 class="mt-5 text-3xl font-bold tracking-tight text-highlighted sm:text-4xl">
+        <h1
+                :class="post.kind === 'novel' ? 'font-display-serif' : 'font-display-sans'"
+                class="mt-5 text-3xl font-bold tracking-tight text-highlighted sm:text-4xl"
+        >
             {{ post.title }}
         </h1>
 

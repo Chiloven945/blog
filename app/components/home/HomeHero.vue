@@ -23,7 +23,7 @@ const roleLine = computed(() => (props.roles ?? []).join(' / '))
             </div>
 
             <div class="mt-12 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-12 lg:items-end">
-                <h1 class="home-display text-highlighted lg:col-span-9">
+                <h1 class="home-display font-display-sans text-highlighted lg:col-span-9">
                     <span
                             v-for="(line, index) in hero.title"
                             :key="index"

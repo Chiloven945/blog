@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type {Kind} from '#shared/config/kinds'
 import type {PostDocument} from '#shared/types/content'
+import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
 definePageMeta({layout: 'post'})
 
 const route = useRoute()
-const {t} = useI18n()
+const {t, locale} = useI18n()
 
 const active = useActiveContentCollection()
 const path = computed(() => route.path)
@@ -80,9 +81,21 @@ const shellClass = computed(() => {
 
 const bodyClass = computed(() =>
     variant.value === 'literary'
-        ? 'post-body--literary'
-        : 'post-body--editorial',
+        ? 'post-body--literary prose-novel'
+        : 'post-body--editorial prose-article',
 )
+
+// Reading-face preload: novels pull the locale serif, articles the code
+// face (the sans is already preloaded globally).
+useHead(() => {
+    const files = resolveFontFiles(locale.value)
+
+    return {
+        link: variant.value === 'literary'
+            ? [fontPreloadLink(files.serif)]
+            : [fontPreloadLink(files.code)],
+    }
+})
 
 usePageMeta({
     title: () => post.value?.title,
