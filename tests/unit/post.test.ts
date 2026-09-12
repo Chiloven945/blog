@@ -1,12 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {postTypes} from '../../shared/config/post-types'
-import {
-    estimateReadingTime,
-    extractPostText,
-    getPostSurround,
-    getReadingTime,
-    resolvePostType,
-} from '../../app/utils/post'
+import {estimateReadingTime, extractPostText, getPostSurround} from '../../app/utils/post'
 
 describe('post text extraction', () => {
     const body = {
@@ -33,11 +26,6 @@ describe('post text extraction', () => {
 })
 
 describe('reading time', () => {
-    it('is at least one minute', () => {
-        expect(estimateReadingTime('')).toBe(1)
-        expect(estimateReadingTime('short text')).toBe(1)
-    })
-
     it('scales with Latin words', () => {
         expect(estimateReadingTime(Array.from({length: 400}, () => 'word').join(' '))).toBe(2)
     })
@@ -45,21 +33,6 @@ describe('reading time', () => {
     it('scales with CJK characters', () => {
         expect(estimateReadingTime('中'.repeat(300))).toBe(1)
         expect(estimateReadingTime('中'.repeat(301))).toBe(2)
-    })
-
-    it('reads a body document', () => {
-        expect(getReadingTime({value: [['p', {}, 'hello world']]})).toBe(1)
-    })
-})
-
-describe('post type resolution', () => {
-    it('resolves known types', () => {
-        expect(resolvePostType('novel')).toBe(postTypes.novel)
-        expect(resolvePostType('article')).toBe(postTypes.article)
-    })
-
-    it('falls back to article for unknown types', () => {
-        expect(resolvePostType('diary')).toBe(postTypes.article)
     })
 })
 

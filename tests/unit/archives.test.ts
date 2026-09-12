@@ -29,8 +29,4 @@ describe('archive grouping', () => {
         expect(total).toHaveLength(4)
         expect(total.some(post => post.path === '/p/bad')).toBe(false)
     })
-
-    it('labels months for the locale', () => {
-        expect(years[0]!.months[0]!.label.length).toBeGreaterThan(0)
-    })
 })

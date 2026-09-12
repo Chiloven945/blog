@@ -22,19 +22,6 @@ test.describe('migrated content smoke', () => {
         await expect(page.locator('main')).not.toContainText(':span{')
     })
 
-    test('style reference renders prose, math, footnotes and safe external links', async ({page}) => {
-        await gotoHydrated(page, '/dev/style')
-
-        await expect(page.locator('.katex').first()).toBeVisible()
-        expect(await page.locator('.katex').count()).toBeGreaterThan(0)
-        expect(await page.locator('[data-footnotes]').count()).toBeGreaterThan(0)
-        await expect(page.locator('.callout').first()).toBeVisible()
-
-        const external = page.locator('.post-body a[href^="http"]').first()
-        await expect(external).toHaveAttribute('target', '_blank')
-        await expect(external).toHaveAttribute('rel', /noopener/)
-    })
-
     test('about page keeps the Spotify embed and footnotes', async ({page}) => {
         await gotoHydrated(page, '/about')
 

@@ -182,15 +182,15 @@ bun run test
 End-to-end tests build the static site and serve `.output/public` with a clean-URL server, then
 check pages across all three locales, responsive widths from 360px to 1440px, light and dark themes,
 reduced motion, no-JavaScript rendering, keyboard navigation, screen-reader landmarks, internal
-links, RSS, the sitemap, and Core Web Vitals:
+links, RSS, and the sitemap:
 
 ```bash
 bunx playwright install          # Chromium, Firefox, WebKit
 bun run test:e2e
 ```
 
-The suite runs on Chromium, Firefox, and WebKit. Core Web Vitals are measured on Chromium only. On
-systems where Playwright cannot manage its own Chromium, point it at a system build:
+The suite runs on Chromium, Firefox, and WebKit. On systems where Playwright cannot manage its own
+Chromium, point it at a system build:
 
 ```bash
 PLAYWRIGHT_CHROMIUM_EXECUTABLE=/path/to/chromium bun run test:e2e

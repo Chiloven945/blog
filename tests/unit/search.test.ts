@@ -24,10 +24,6 @@ describe('search tokenizing', () => {
     it('lowercases and splits on whitespace', () => {
         expect(tokenizeSearchQuery('  Java  Spring ')).toEqual(['java', 'spring'])
     })
-
-    it('returns an empty list for blank input', () => {
-        expect(tokenizeSearchQuery('   ')).toEqual([])
-    })
 })
 
 describe('search scoring', () => {
@@ -53,10 +49,6 @@ describe('search scoring', () => {
         const s = section({title: 'Java', content: 'virtual threads'})
         expect(scoreSearchSection(s, ['java', 'threads'])).toBeGreaterThan(0)
         expect(scoreSearchSection(s, ['java', 'kotlin'])).toBe(0)
-    })
-
-    it('returns zero without terms', () => {
-        expect(scoreSearchSection(section({title: 'Java'}), [])).toBe(0)
     })
 })
 

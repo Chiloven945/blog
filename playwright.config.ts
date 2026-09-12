@@ -11,8 +11,7 @@ export default defineConfig({
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 1,
-    // Run sequentially: the Core Web Vitals checks would be
-    // skewed by CPU contention from parallel browser instances.
+    // Run sequentially to keep layout and timing checks stable.
     workers: 1,
     reporter: process.env.CI
         ? [['list'], ['html', {open: 'never'}]]
