@@ -15,7 +15,8 @@
     "theme": "Toggle theme",
     "language": "Language",
     "menu": "Menu",
-    "backHome": "Back home"
+    "backHome": "Back home",
+    "unavailable": "Unavailable"
   },
   "footer": {
     "rights": "All rights reserved."

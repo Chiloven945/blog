@@ -15,7 +15,8 @@
     "theme": "切换主题",
     "language": "语言",
     "menu": "菜单",
-    "backHome": "返回首页"
+    "backHome": "返回首页",
+    "unavailable": "暂无此语言"
   },
   "footer": {
     "rights": "保留所有权利。"

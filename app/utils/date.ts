@@ -1,12 +1,4 @@
-const dateLocales: Record<string, string> = {
-    'zh-cn': 'zh-CN',
-    'zh-tw': 'zh-TW',
-    en: 'en-US',
-}
-
-export function resolveDateLocale(locale: string): string {
-    return dateLocales[locale] ?? 'zh-CN'
-}
+import {resolveDateLocale} from './locale'
 
 export function parseDate(value: string): Date {
     const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(value)

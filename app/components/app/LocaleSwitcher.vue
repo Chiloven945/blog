@@ -1,24 +1,22 @@
 <script lang="ts" setup>
-import type {LocaleObject} from '@nuxtjs/i18n'
+const {t} = useI18n()
+const availability = useLocaleAvailability()
 
-const {t, locale, locales} = useI18n()
-const switchLocalePath = useSwitchLocalePath()
-
-const items = computed(() =>
-    (locales.value as LocaleObject[]).map(item => ({
-        label: item.name,
+const items = computed(() => [
+    availability.value.map(item => ({
+        label: item.available ? item.name : `${item.name} · ${t('common.unavailable')}`,
         type: 'checkbox' as const,
-        checked: item.code === locale.value,
+        checked: item.current,
+        disabled: item.current || !item.available,
         onSelect: () => {
-            navigateTo(switchLocalePath(item.code))
+            if (!item.current && item.available) {
+                navigateTo(item.to)
+            }
         },
     })),
-)
+])
 
-const current = computed(() => {
-    const match = (locales.value as LocaleObject[]).find(item => item.code === locale.value)
-    return match?.name ?? locale.value
-})
+const current = computed(() => availability.value.find(item => item.current)?.name ?? '')
 </script>
 
 <template>

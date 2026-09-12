@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-const {t} = useI18n()
+const {t, locale} = useI18n()
 const head = useLocaleHead({seo: false})
 
 useHead(() => ({
     htmlAttrs: head.value.htmlAttrs ?? {},
+    meta: [{property: 'og:locale', content: resolveOgLocale(locale.value)}],
 }))
 </script>
 
