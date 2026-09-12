@@ -61,6 +61,29 @@
     "empty": "还没有友链。",
     "emptyEyebrow": "EMPTY / 000"
   },
+  "home": {
+    "sections": {
+      "identity": "身份 / 002",
+      "manifesto": "宣言 / 003",
+      "interests": "兴趣 / 004",
+      "now": "近况 / 005",
+      "writing": "写作 / 006",
+      "links": "链接 / 007",
+      "art": "旧站 / 008"
+    },
+    "now": {
+      "building": "正在做",
+      "learning": "正在学",
+      "reading": "正在读",
+      "listening": "正在听"
+    },
+    "writing": {
+      "viewAll": "查看全部文章"
+    },
+    "art": {
+      "caption": "旧站背景，留作一段记忆。"
+    }
+  },
   "post": {
     "toc": "目录",
     "readingTime": "{minutes} 分钟阅读",

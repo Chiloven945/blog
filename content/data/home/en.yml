@@ -8,10 +8,30 @@ hero:
   description: >
     Long-form notes on engineering, writing, and everyday life.
 
+identity:
+  roles:
+    - Developer
+    - Writer
+    - Internet resident
+  statement: Code and prose, kept for the long run.
+  bio: >
+    Engineering by day, sentences by night. A believer in restrained
+    design, readable text, and slow accumulation over short bursts.
+  facts:
+    - label: Based in
+      value: Mainland China
+    - label: Focus
+      value: Backend and frontend engineering
+    - label: Stack
+      value: Java / Nuxt / TypeScript
+    - label: Status
+      value: Building
+
 manifesto:
   title: About
   body: >
-    Content first, restrained design.
+    Content first, restrained design. Say it clearly before styling it;
+    keep the reading itself quiet.
 
 interests:
   - Java
@@ -23,7 +43,7 @@ now:
   building: Personal blog v1
   learning: Nuxt 4 and Nuxt Content
   reading: Technical documentation
-  listening: To be added
+  listening: A few albums on repeat
 
 writing:
   limit: 3

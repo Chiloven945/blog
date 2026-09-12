@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+import HomeArtBlock from '~/components/home/HomeArtBlock.vue'
+import HomeHero from '~/components/home/HomeHero.vue'
+import HomeIdentity from '~/components/home/HomeIdentity.vue'
+import HomeInterests from '~/components/home/HomeInterests.vue'
+import HomeLinks from '~/components/home/HomeLinks.vue'
+import HomeManifesto from '~/components/home/HomeManifesto.vue'
+import HomeNow from '~/components/home/HomeNow.vue'
+import HomeWriting from '~/components/home/HomeWriting.vue'
+
 definePageMeta({layout: 'home'})
 
 const {t} = useI18n()
@@ -7,18 +16,19 @@ usePageMeta({
     title: () => t('site.title'),
     description: () => t('site.description'),
 })
+
+const {home, latestPosts} = await useHomeData()
 </script>
 
 <template>
-    <section class="container-page py-16 lg:py-24">
-        <p class="font-mono text-xs uppercase tracking-[0.3em] text-muted">
-            PERSONAL SPACE / 001
-        </p>
-        <h1 class="mt-6 text-5xl font-bold tracking-tight text-highlighted sm:text-7xl">
-            {{ $t('site.title') }}
-        </h1>
-        <p class="mt-4 max-w-xl text-muted">
-            {{ $t('site.description') }}
-        </p>
-    </section>
+    <div v-if="home">
+        <HomeHero :hero="home.hero" :roles="home.identity?.roles ?? []"/>
+        <HomeIdentity v-if="home.identity" :identity="home.identity"/>
+        <HomeManifesto :manifesto="home.manifesto"/>
+        <HomeInterests :interests="home.interests ?? []"/>
+        <HomeNow :now="home.now ?? {}"/>
+        <HomeWriting :posts="latestPosts"/>
+        <HomeLinks/>
+        <HomeArtBlock/>
+    </div>
 </template>

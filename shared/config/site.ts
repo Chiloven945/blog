@@ -8,7 +8,28 @@ export const siteConfig: SiteConfig = {
     since: 2024,
     defaultLocale: 'zh-cn',
     defaultLicense: 'CC BY-NC-SA 4.0',
-    social: [],
+    social: [
+        {
+            label: 'GitHub',
+            icon: 'i-lucide-github',
+            to: 'https://github.com/Chiloven945',
+        },
+        {
+            label: 'Telegram',
+            icon: 'i-lucide-send',
+            to: 'https://t.me/chiloven945',
+        },
+        {
+            label: 'Underground',
+            icon: 'i-lucide-gauge',
+            to: 'https://underground.chiloven.top',
+        },
+        {
+            label: 'RSS',
+            icon: 'i-lucide-rss',
+            to: '/rss.xml',
+        },
+    ],
     comments: {
         provider: 'giscus',
         repo: 'Chiloven945/chiloven945.github.io',

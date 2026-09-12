@@ -61,6 +61,29 @@
     "empty": "No friends listed yet.",
     "emptyEyebrow": "EMPTY / 000"
   },
+  "home": {
+    "sections": {
+      "identity": "IDENTITY / 002",
+      "manifesto": "MANIFESTO / 003",
+      "interests": "INTERESTS / 004",
+      "now": "NOW / 005",
+      "writing": "WRITING / 006",
+      "links": "LINKS / 007",
+      "art": "ARCHIVE / 008"
+    },
+    "now": {
+      "building": "Building",
+      "learning": "Learning",
+      "reading": "Reading",
+      "listening": "Listening"
+    },
+    "writing": {
+      "viewAll": "View all posts"
+    },
+    "art": {
+      "caption": "The old site's backdrop, kept as a memory."
+    }
+  },
   "post": {
     "toc": "Contents",
     "readingTime": "{minutes} min read",

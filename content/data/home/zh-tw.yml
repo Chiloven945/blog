@@ -8,10 +8,30 @@ hero:
   description: >
     記錄工程、寫作與日常的長期筆記。
 
+identity:
+  roles:
+    - 開發者
+    - 寫作者
+    - 網際網路居民
+  statement: 把程式碼與文字寫進長期主義。
+  bio: >
+    白天寫工程，晚上寫句子。相信克制的設計與可讀的文字，
+    也相信慢慢累積比短期爆發更可靠。
+  facts:
+    - label: 座標
+      value: 中國大陸
+    - label: 方向
+      value: 後端與前端工程
+    - label: 工具
+      value: Java / Nuxt / TypeScript
+    - label: 狀態
+      value: 持續建構
+
 manifesto:
   title: About
   body: >
-    內容優先，設計克制。
+    內容優先，設計克制。先把話說清楚，再談形式；
+    讓閱讀本身保持安靜。
 
 interests:
   - Java
@@ -23,7 +43,7 @@ now:
   building: 個人部落格 v1
   learning: Nuxt 4 與 Nuxt Content
   reading: 技術文件
-  listening: 待補充
+  listening: 常聽的幾張專輯
 
 writing:
   limit: 3

@@ -133,6 +133,21 @@
     .skip-link:focus {
         transform: translateY(0);
     }
+
+    /* Homepage art direction (ROADMAP §23). Display type is the hero. */
+    .home-display {
+        font-size: clamp(3.25rem, 13vw, 10rem);
+        line-height: 0.88;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+    }
+
+    .home-number {
+        font-size: clamp(2.25rem, 5vw, 4rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
 }
 
 @layer utilities {

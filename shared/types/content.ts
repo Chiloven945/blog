@@ -106,6 +106,22 @@ export const homeSchema = z.object({
         description: z.string(),
     }),
 
+    identity: z
+        .object({
+            roles: z.array(z.string()).default([]),
+            statement: z.string().default(''),
+            bio: z.string().default(''),
+            facts: z
+                .array(
+                    z.object({
+                        label: z.string(),
+                        value: z.string(),
+                    }),
+                )
+                .default([]),
+        })
+        .default({}),
+
     manifesto: z.object({
         title: z.string(),
         body: z.string(),

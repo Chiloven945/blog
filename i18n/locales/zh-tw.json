@@ -61,6 +61,29 @@
     "empty": "還沒有友鏈。",
     "emptyEyebrow": "EMPTY / 000"
   },
+  "home": {
+    "sections": {
+      "identity": "身分 / 002",
+      "manifesto": "宣言 / 003",
+      "interests": "興趣 / 004",
+      "now": "近況 / 005",
+      "writing": "寫作 / 006",
+      "links": "連結 / 007",
+      "art": "舊站 / 008"
+    },
+    "now": {
+      "building": "正在做",
+      "learning": "正在學",
+      "reading": "正在讀",
+      "listening": "正在聽"
+    },
+    "writing": {
+      "viewAll": "查看全部文章"
+    },
+    "art": {
+      "caption": "舊站背景，留作一段記憶。"
+    }
+  },
   "post": {
     "toc": "目錄",
     "readingTime": "{minutes} 分鐘閱讀",
