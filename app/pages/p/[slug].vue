@@ -41,6 +41,12 @@ const post = computed<PostDocument | null>(() =>
         : null,
 )
 
+// Let the floating navigation highlight Articles or Novels on a post.
+const navPostKind = useState<'article' | 'novel' | null>('nav-post-kind', () => null)
+watchEffect(() => {
+    navPostKind.value = post.value ? kind.value : null
+})
+
 if (!post.value
     || (isDraft(post.value) && !draftsEnabled())
 ) {

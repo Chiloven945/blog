@@ -104,8 +104,20 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             // The feed has no inbound links during the crawl, so list it
-            // explicitly. /index.xml is the legacy alias.
-            routes: ['/rss.xml', '/index.xml'],
+            // explicitly. /index.xml is the legacy alias. The About/Links
+            // pages are no longer navigation targets (they move to the
+            // homepage in a later milestone), but remain reachable until
+            // the compatibility routes land.
+            routes: [
+                '/rss.xml',
+                '/index.xml',
+                '/about',
+                '/en/about',
+                '/zh-tw/about',
+                '/links',
+                '/en/links',
+                '/zh-tw/links',
+            ],
         },
     },
 

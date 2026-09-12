@@ -6,7 +6,7 @@ test.describe('screen reader smoke', () => {
         await gotoHydrated(page, '/')
 
         await expect(page.locator('main#main')).toHaveCount(1)
-        await expect(page.locator('header')).toHaveCount(1)
+        await expect(page.locator('.site-nav:visible')).toHaveCount(1)
         await expect(page.locator('footer')).toHaveCount(1)
         await expect(page.locator('h1')).toHaveCount(1)
 
@@ -78,10 +78,10 @@ test.describe('keyboard', () => {
         await page.setViewportSize({width: 390, height: 844})
         await gotoHydrated(page, '/')
 
-        await page.getByRole('button', {name: /menu/i}).click()
+        await page.locator('.site-nav:visible').getByRole('button', {name: '更多'}).click()
         const dialog = page.getByRole('dialog')
         await expect(dialog).toBeVisible()
-        await expect(dialog.getByRole('link', {name: '博客'})).toBeVisible()
+        await expect(dialog.getByRole('link', {name: '归档'})).toBeVisible()
         await page.keyboard.press('Escape')
         await expect(dialog).toBeHidden()
         await expectNoHorizontalOverflow(page, 'mobile menu')

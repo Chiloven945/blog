@@ -56,9 +56,10 @@ test.describe('locales', () => {
         await expect(page.locator('main h1').first()).toContainText('關於')
     })
 
-    test('switches locale from the header', async ({page}) => {
+    test('switches locale from the navigation', async ({page}) => {
         await gotoHydrated(page, '/blog')
-        await page.getByRole('button', {name: '语言'}).click()
+        const nav = page.locator('.site-nav:visible')
+        await nav.getByRole('button', {name: '语言'}).click()
         await page.getByRole('menuitemcheckbox', {name: 'English'}).click()
         await expect(page).toHaveURL(/\/en\/blog$/)
         await expect(page.locator('main h1').first()).toContainText('Writing')
@@ -66,11 +67,11 @@ test.describe('locales', () => {
 })
 
 test.describe('color mode', () => {
-    test('toggles dark mode from the header', async ({page}) => {
+    test('toggles dark mode from the navigation', async ({page}) => {
         await gotoHydrated(page, '/')
         const html = page.locator('html')
         await expect(html).not.toHaveClass(/\bdark\b/)
-        await page.getByRole('button', {name: '切换主题'}).click()
+        await page.locator('.site-nav:visible').getByRole('button', {name: '切换主题'}).click()
         await expect(html).toHaveClass(/\bdark\b/)
         await expectNoHorizontalOverflow(page, '/ dark')
     })

@@ -3,6 +3,33 @@
    ========================================================================== */
 
 @layer components {
+    /* App shell: fixed floating navigation lives outside the flow, so the
+       content column reserves space for the active nav layout. */
+    .app-shell {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        /* Mobile: floating brand + bottom dock. */
+        padding-top: 4.5rem;
+        padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+    }
+
+    @media (min-width: 768px) {
+        .app-shell {
+            /* Tablet: floating top dock. */
+            padding-top: 5.5rem;
+            padding-bottom: 0;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .app-shell {
+            /* Desktop: left rail (width + gap ≈ 96px). */
+            padding-top: 0;
+            padding-inline-start: 6rem;
+        }
+    }
+
     /* Centered page container: 1280px max, responsive gutters. */
     .container-page {
         width: 100%;
@@ -131,6 +158,13 @@
 
     .skip-link:focus {
         transform: translateY(0);
+    }
+
+    /* Clear the floating left rail on desktop. */
+    @media (min-width: 1280px) {
+        .skip-link {
+            left: 6.5rem;
+        }
     }
 
     /* Homepage art direction. Display type is the hero. */

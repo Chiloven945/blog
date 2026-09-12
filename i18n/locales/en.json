@@ -4,8 +4,11 @@
     "description": "Personal homepage and technical writing archive"
   },
   "nav": {
+    "primary": "Primary",
     "home": "Home",
-    "blog": "Blog",
+    "articles": "Articles",
+    "novels": "Novels",
+    "tags": "Tags",
     "archives": "Archives",
     "friends": "Friends",
     "search": "Search"
@@ -14,6 +17,9 @@
     "skipToContent": "Skip to content",
     "theme": "Toggle theme",
     "language": "Language",
+    "more": "More",
+    "settings": "Settings",
+    "comingSoon": "Coming soon",
     "menu": "Menu",
     "backHome": "Back home",
     "unavailable": "Unavailable"

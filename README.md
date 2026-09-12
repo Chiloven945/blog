@@ -21,6 +21,8 @@ dependency-light runtime.
   page, scoped to the active language.
 - **Sections** — a designed homepage, a blog index with article/novel tabs, an archive timeline,
   friends, and free-form content pages.
+- **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
+  dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
 - **Comments & feed** — lazy, color-mode/locale-aware Giscus comments and an RSS feed at `/rss.xml`
   (legacy alias `/index.xml`).
@@ -125,18 +127,9 @@ featured: false
 Articles default to `license: cc-by-nc-sa-4.0`; novels default to `all-rights-reserved`. Production
 hides `status: draft` (develop with `?drafts=1`).
 
-Custom pages live in `content/pages/<locale>/<slug>.md` and can join the navigation through
-frontmatter:
-
-```yaml
----
-title: Links
-navigation:
-  title: Links
-  icon: i-lucide-link
-  order: 60
----
-```
+Custom pages live in `content/pages/<locale>/<slug>.md` and render through the catch-all route.
+Primary navigation is the fixed floating set (Home / Articles / Novels / Tags / Archives /
+Friends); About and Links move to homepage sections in a later milestone.
 
 Homepage copy is stored per locale in `content/data/home/<locale>.yml`, and friend links are
 collected in `content/data/friends.yml`.

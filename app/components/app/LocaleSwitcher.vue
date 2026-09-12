@@ -1,4 +1,12 @@
 <script lang="ts" setup>
+withDefaults(defineProps<{
+    square?: boolean
+    size?: 'sm' | 'md' | 'lg'
+}>(), {
+    square: false,
+    size: 'md',
+})
+
 const {t} = useI18n()
 const availability = useLocaleAvailability()
 
@@ -23,12 +31,14 @@ const current = computed(() => availability.value.find(item => item.current)?.na
     <UDropdownMenu :items="items">
         <UButton
                 :aria-label="t('common.language')"
+                :size="size"
+                :square="square"
+                :trailing-icon="square ? undefined : 'i-lucide-chevron-down'"
                 color="neutral"
                 icon="i-lucide-languages"
-                trailing-icon="i-lucide-chevron-down"
                 variant="ghost"
         >
-            <span class="hidden xl:inline">{{ current }}</span>
+            <span v-if="!square" class="hidden xl:inline">{{ current }}</span>
         </UButton>
     </UDropdownMenu>
 </template>

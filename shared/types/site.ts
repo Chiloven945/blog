@@ -21,6 +21,8 @@ export interface CommentsConfig {
 export interface SiteConfig {
     name: string
     shortName: string
+    /** Compact mark for the floating navigation brand tile. */
+    mark: string
     author: string
     domain: string
     since: number
