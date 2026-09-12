@@ -1,6 +1,10 @@
 <script lang="ts" setup>
-// M1 verification page. Temporary dev route — delete before release.
-useSeoMeta({title: 'Design Tokens / Theme', robots: 'noindex'})
+// Unlisted, noindex reference for design tokens, components, prose, math,
+// and footnotes. Keep it around for debugging the theme or MDC rendering.
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
+
+useSeoMeta({title: 'Style & Content Reference', robots: 'noindex'})
 
 const modalOpen = ref(false)
 const inputValue = ref('')
@@ -16,18 +20,46 @@ const semanticColors = [
 ]
 
 const brandScale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+
+const inlineMathEl = ref<HTMLElement | null>(null)
+const displayMathEl = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (inlineMathEl.value) {
+    katex.render('a^2 + b^2 = c^2', inlineMathEl.value, {throwOnError: false})
+  }
+
+  if (displayMathEl.value) {
+    katex.render(
+        '\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}',
+        displayMathEl.value,
+        {throwOnError: false, displayMode: true},
+    )
+  }
+})
+
+const galleryImages = [
+  {src: '/images/home/art-01.webp', alt: 'Art 01', caption: 'First'},
+  {src: '/images/home/art-02.webp', alt: 'Art 02', caption: 'Second'},
+  {src: '/images/social/og-default.png', alt: 'Social card', caption: 'Third'},
+]
+
+const sampleCode = 'export function greet(name: string) {\n  return `Hello, ${name}!`\n}'
 </script>
 
 <template>
   <div class="container-page space-y-12 py-12">
     <header class="space-y-3 border-b border-default pb-6">
-      <p class="text-xs uppercase tracking-[0.2em] text-muted">Dev only</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-muted">
+        Dev reference
+      </p>
       <h1 class="text-3xl font-bold text-highlighted">
-        Design Tokens / Theme
+        Style &amp; Content Reference
       </h1>
       <p class="text-muted">
-        M1 verification page — Button, Input, Modal, Typography, border, colors,
-        code, Card. Delete before release.
+        Unlisted, noindex reference for design tokens, components, prose, math,
+        and footnotes. Not linked from the site — reach it directly at
+        <code>/dev/style</code> when debugging the theme or MDC rendering.
       </p>
     </header>
 
@@ -200,11 +232,73 @@ const brandScale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
         Inline <code class="rounded-xs bg-elevated px-1.5 py-0.5 text-sm">const answer = 42</code>
         code.
       </p>
-      <pre
-          class="overflow-x-auto rounded-sm border border-default bg-elevated p-4 text-sm"
-      ><code>export function greet(name: string) {
-  return `Hello, ${name}!`
-}</code></pre>
+      <ProsePre
+          :code="sampleCode"
+          filename="greet.ts"
+          language="ts"
+      >
+        <span class="line">export function greet(name: string) {</span>
+        <span class="line">  return `Hello, ${name}!`</span>
+        <span class="line">}</span>
+      </ProsePre>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-bold text-highlighted">
+        Content / Prose
+      </h2>
+      <div class="post-body space-y-6">
+        <Callout
+            title="Note"
+            type="info"
+        >
+          Callouts, figures, galleries, link cards, math, and footnotes all
+          render through the same components posts use.
+        </Callout>
+
+        <p class="text-sm">
+          Inline math renders as <span ref="inlineMathEl" />, display math
+          below, and an
+          <ProseA href="https://nuxt.com">external link</ProseA>.
+        </p>
+
+        <div ref="displayMathEl" />
+
+        <Figure
+            alt="Homepage art"
+            caption="Figure with caption"
+            src="/images/home/art-01.webp"
+        />
+
+        <Gallery :images="galleryImages" />
+
+        <LinkCard
+            description="The framework this site is built with."
+            href="https://nuxt.com"
+            title="Nuxt"
+        />
+
+        <p class="text-sm">
+          A statement that needs a source<sup id="fnref-1"><a
+              class="text-primary"
+              href="#fn-1"
+          >[1]</a></sup>.
+        </p>
+
+        <section data-footnotes>
+          <h2 class="sr-only">
+            Footnotes
+          </h2>
+          <ol>
+            <li id="fn-1">
+              Sample footnote text. <a
+                  href="#fnref-1"
+                  data-footnote-backref
+              >↩</a>
+            </li>
+          </ol>
+        </section>
+      </div>
     </section>
 
     <section class="space-y-4">

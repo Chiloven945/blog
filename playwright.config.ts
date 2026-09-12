@@ -1,6 +1,6 @@
 import {defineConfig, devices} from '@playwright/test'
 
-// Static regression suite for the generated site (ROADMAP §42).
+// Static regression suite for the generated site.
 // `bun test:e2e` builds `.output/public` and serves it with a clean-URL
 // static server so production behaviour (no dev HMR, real payloads) is what
 // gets tested.
@@ -11,7 +11,7 @@ export default defineConfig({
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 1,
-    // Run sequentially: the Core Web Vitals checks (ROADMAP §36.7) would be
+    // Run sequentially: the Core Web Vitals checks would be
     // skewed by CPU contention from parallel browser instances.
     workers: 1,
     reporter: process.env.CI
@@ -22,7 +22,7 @@ export default defineConfig({
     use: {
         baseURL: 'http://localhost:4173',
         // Keep browser-language detection on the default locale so the root
-        // URL does not redirect away from zh-cn (ROADMAP §16).
+        // URL does not redirect away from the default locale.
         locale: 'zh-CN',
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',

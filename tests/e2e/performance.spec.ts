@@ -3,8 +3,8 @@ import {collectWebVitals, gotoHydrated} from './helpers'
 
 const pages = ['/', '/blog', '/p/jep-401'] as const
 
-// Core Web Vitals are measured on Chromium, the reference engine
-// (ROADMAP §36.7). Budgets are sanity bounds, not hard targets.
+// Core Web Vitals are measured on Chromium, the reference engine.
+// Budgets are sanity bounds, not hard targets.
 test.describe('core web vitals', () => {
     test.skip(({browserName}) => browserName !== 'chromium', 'measured on Chromium')
 

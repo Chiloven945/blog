@@ -1,5 +1,5 @@
 /**
- * Wrap `prefers-reduced-motion` (ROADMAP §38).
+ * Wrap `prefers-reduced-motion`.
  *
  * `prefersReducedMotion()` is the non-reactive helper used outside of a
  * component instance (for example the reveal directive), while

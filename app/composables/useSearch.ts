@@ -41,9 +41,9 @@ function toSearchSection(raw: RawSearchSection): SearchSection {
 }
 
 /**
- * Search sections for the active locale (ROADMAP §29).
+ * Search sections for the active locale.
  * The index is built lazily in the browser from the posts + pages collections
- * and scored locally with the simple ranking from §29.5.
+ * and scored locally with a simple first-version ranking.
  */
 export function useSearch() {
     const {locale} = useI18n()

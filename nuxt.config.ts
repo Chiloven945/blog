@@ -21,13 +21,13 @@ export default defineNuxtConfig({
         renderer: {
             alias: {
                 // Nuxt UI maps `::callout` to ProseCallout; use our own
-                // component so `type`/`title` match ROADMAP §26.3.
+                // component so `type`/`title` match the callout API.
                 callout: 'Callout',
             },
         },
         build: {
             markdown: {
-                // Light + dark Shiki themes (ROADMAP §28.1). The `dark` key
+                // Light + dark Shiki themes. The `dark` key
                 // matches Nuxt UI's `.dark` class on <html>.
                 highlight: {
                     theme: {
@@ -53,7 +53,7 @@ export default defineNuxtConfig({
                         'toml',
                     ],
                 },
-                // Math (ROADMAP §28.4): $inline$ / $$block$$ → KaTeX.
+                // Math: $inline$ / $$block$$ → KaTeX.
                 remarkPlugins: {
                     'remark-math': {},
                 },
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
     },
 
     image: {
-        // Third-party friend avatars stay remote (ROADMAP §31.4). Add their
+        // Third-party friend avatars stay remote. Add their
         // hosts here to route them through Nuxt Image; other remote avatars
         // are rendered with <img> so nothing is mirrored without permission.
         domains: [],
@@ -104,7 +104,7 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             // The feed has no inbound links during the crawl, so list it
-            // explicitly (ROADMAP §34.7). /index.xml is the legacy alias.
+            // explicitly. /index.xml is the legacy alias.
             routes: ['/rss.xml', '/index.xml'],
         },
     },

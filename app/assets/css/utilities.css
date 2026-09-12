@@ -1,6 +1,5 @@
 /* ==========================================================================
    utilities.css — layout containers + shared helpers
-   ROADMAP §19 · §21 响应式设计
    ========================================================================== */
 
 @layer components {
@@ -24,7 +23,7 @@
         }
     }
 
-    /* Reading column and TOC widths (ROADMAP §25.3–§25.4). */
+    /* Reading column and TOC widths. */
     .post-column {
         max-width: var(--post-width);
     }
@@ -53,7 +52,7 @@
         width: var(--toc-width);
     }
 
-    /* Rendered Markdown wrapper (ROADMAP §27). Typography comes from the
+    /* Rendered Markdown wrapper. Typography comes from the
        Prose components; this only guards against long-word overflow. */
     .post-body {
         overflow-wrap: break-word;
@@ -64,7 +63,7 @@
         scroll-margin-top: calc(var(--ui-header-height) + 1.5rem);
     }
 
-    /* Code blocks: line numbers via the Shiki `.line` spans (ROADMAP §28.2). */
+    /* Code blocks: line numbers via the Shiki `.line` spans. */
     .prose-pre__pre code {
         counter-reset: line;
     }
@@ -94,7 +93,7 @@
         background-color: transparent;
     }
 
-    /* Footnotes (ROADMAP §26.1, §42.6). */
+    /* Footnotes. */
     .post-body [data-footnotes] {
         margin-block: 2.5rem 0;
         border-top: 1px solid var(--ui-border);
@@ -114,7 +113,7 @@
         padding-block: 0.5rem;
     }
 
-    /* Skip-to-content link: off-screen until focused (ROADMAP §37.1). */
+    /* Skip-to-content link: off-screen until focused. */
     .skip-link {
         position: fixed;
         top: 0.5rem;
@@ -134,7 +133,7 @@
         transform: translateY(0);
     }
 
-    /* Homepage art direction (ROADMAP §23). Display type is the hero. */
+    /* Homepage art direction. Display type is the hero. */
     .home-display {
         font-size: clamp(3.25rem, 13vw, 10rem);
         line-height: 0.88;

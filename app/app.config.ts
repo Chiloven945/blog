@@ -1,6 +1,6 @@
 export default defineAppConfig({
     ui: {
-        // Semantic colors (ROADMAP §19.5). Only one brand color: `brand` → primary.
+        // Semantic colors. Only one brand color: `brand` → primary.
         colors: {
             primary: 'brand',
             secondary: 'blue',
@@ -11,7 +11,7 @@ export default defineAppConfig({
             neutral: 'zinc',
         },
 
-        // Sharper radii than Nuxt UI defaults (ROADMAP §19.2).
+        // Sharper radii than Nuxt UI defaults.
         button: {
             slots: {
                 base: (base: string) => base.replace('rounded-md', 'rounded-sm'),
@@ -33,7 +33,7 @@ export default defineAppConfig({
             },
         },
 
-        // Prose (ROADMAP §27): quiet editorial defaults, sharper radii.
+        // Prose: quiet editorial defaults, sharper radii.
         prose: {
             blockquote: {
                 base: (base: string) => base.replace('border-s-4', 'border-s-2').replace('italic', 'not-italic'),

@@ -40,7 +40,7 @@ function joinMetadata(section: SearchSection): string {
 }
 
 /**
- * Simple first-version score following ROADMAP §29.5:
+ * Simple first-version score:
  * title exact / prefix > title contains > heading > body > metadata.
  * All terms must appear somewhere in the section.
  */

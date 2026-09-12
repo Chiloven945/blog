@@ -30,7 +30,7 @@ describe('search tokenizing', () => {
     })
 })
 
-describe('search scoring (ROADMAP §29.5)', () => {
+describe('search scoring', () => {
     it('scores an exact title highest', () => {
         const exact = scoreSearchSection(section({title: 'Java'}), ['java'])
         const prefix = scoreSearchSection(section({title: 'Java basics'}), ['java'])

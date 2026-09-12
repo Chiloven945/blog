@@ -16,8 +16,8 @@ function resolveOptions(value: RevealValue | undefined) {
 }
 
 /**
- * `v-reveal` — adds `is-revealed` when the element scrolls into view
- * (ROADMAP §22). Pair it with a `.reveal*` class; the styles live in
+ * `v-reveal` — adds `is-revealed` when the element scrolls into view.
+ * Pair it with a `.reveal*` class; the styles live in
  * motion.css. Reduced motion and missing IntersectionObserver reveal
  * immediately, so the animation is never required for content.
  */

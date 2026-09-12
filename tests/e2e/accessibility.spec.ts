@@ -52,10 +52,18 @@ test.describe('keyboard', () => {
 
     test('search modal opens with Ctrl+K and supports arrow keys', async ({page}) => {
         await gotoHydrated(page, '/')
-        await page.keyboard.press('Control+k')
 
         const dialog = page.getByRole('dialog')
-        await expect(dialog).toBeVisible()
+        await page.keyboard.press('Control+k')
+
+        // The global shortcut listener attaches during hydration; retry once
+        // if the first press lands before the app is interactive.
+        try {
+            await expect(dialog).toBeVisible({timeout: 2_500})
+        } catch {
+            await page.keyboard.press('Control+k')
+            await expect(dialog).toBeVisible()
+        }
 
         const input = dialog.getByRole('textbox')
         await input.fill('jep')

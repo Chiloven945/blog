@@ -1,13 +1,11 @@
 /* ==========================================================================
    typography.css — HarmonyOS Sans + type scale
-   ROADMAP §6.3 Typography before decoration · §20 字体与 Typography
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    HarmonyOS Sans (local, self-hosted).
    v1 loads Regular + Bold only; italics are synthesized by the browser.
    Files live in public/fonts/harmonyos/ and are never all preloaded.
-   ROADMAP §20.2 · §20.3
    -------------------------------------------------------------------------- */
 @font-face {
     font-family: "HarmonyOS Sans SC";
@@ -43,7 +41,6 @@
 
 /* --------------------------------------------------------------------------
    Font tokens — Latin + CJK fall back to the same HarmonyOS glyphs.
-   ROADMAP §20.1 · §20.6
    -------------------------------------------------------------------------- */
 @theme {
     --font-sans: "HarmonyOS Sans SC", "HarmonyOS Sans TC", ui-sans-serif, system-ui,
@@ -104,7 +101,7 @@
         font-feature-settings: "liga" 0;
     }
 
-    /* Links — brand colored, underline on hover. ROADMAP §19.5 */
+    /* Links — brand colored, underline on hover. */
     a {
         color: var(--ui-primary);
         text-decoration: none;

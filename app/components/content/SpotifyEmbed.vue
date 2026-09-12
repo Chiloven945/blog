@@ -13,7 +13,7 @@ const props = withDefaults(
     },
 )
 
-// Fixed embed parameters (ROADMAP §26.7): authors only provide type + id.
+// Fixed embed parameters: authors only provide type + id.
 const src = computed(
     () => `https://open.spotify.com/embed/${props.type}/${props.id}?utm_source=generator&theme=0`,
 )

@@ -48,8 +48,8 @@ const isRemote = computed(() => /^https?:\/\//i.test(props.friend.avatar ?? ''))
                         width="96"
                 />
 
-                <!-- Remote avatars stay remote (ROADMAP §31.4); add their host
-                     to `image.domains` in nuxt.config to optimize them. -->
+                <!-- Remote avatars stay remote; add their host to
+                     `image.domains` in nuxt.config to optimize them. -->
                 <img
                         v-else-if="isRemote"
                         :alt="friend.name"

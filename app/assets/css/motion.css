@@ -1,6 +1,5 @@
 /* ==========================================================================
    motion.css — durations, easings, reduced motion
-   ROADMAP §22 Motion / 动画规范
    ========================================================================== */
 
 :root {
@@ -19,7 +18,7 @@
     --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Normal UI stays within the allowed properties. ROADMAP §22.2 */
+/* Normal UI stays within the allowed properties. */
 @layer utilities {
     .transition-ui {
         transition-property: opacity, transform, border-color, background-color;
@@ -29,7 +28,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Reveal primitives. ROADMAP §22.1
+   Reveal primitives.
    The `<noscript>` rule in app.vue keeps content visible without JS, and the
    reduced-motion query below reveals everything immediately.
    -------------------------------------------------------------------------- */
@@ -70,7 +69,7 @@
     transition-duration: var(--duration-slow);
 }
 
-/* Mobile reduces motion: drop transforms and the mask, keep a short fade. ROADMAP §21.1 */
+/* Mobile reduces motion: drop transforms and the mask, keep a short fade. */
 @media (max-width: 639px) {
     .reveal {
         transform: none;
@@ -90,7 +89,7 @@
     }
 }
 
-/* ROADMAP §22.5 — reduced motion is mandatory. */
+/* Reduced motion is mandatory. */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

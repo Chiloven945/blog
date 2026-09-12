@@ -20,7 +20,7 @@ export interface LocaleOption {
     to: string
 }
 
-/** Remove the active locale prefix from a route path (ROADMAP §16). */
+/** Remove the active locale prefix from a route path. */
 export function stripLocalePrefix(path: string, locale: ContentLocale): string {
     const prefix = localePrefixes[locale] ?? ''
     let relative = path
