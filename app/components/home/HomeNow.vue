@@ -17,7 +17,7 @@ const rows = computed(() =>
 </script>
 
 <template>
-    <section class="container-page py-14 lg:py-20">
+    <section v-reveal class="reveal container-page py-14 lg:py-20">
         <HomeSectionLabel :label="$t('home.sections.now')"/>
 
         <dl class="mt-8 grid grid-cols-1 gap-x-12 sm:grid-cols-2">

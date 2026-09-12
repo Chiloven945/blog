@@ -23,9 +23,10 @@ const rows = computed(() =>
 
         <ol v-if="rows.length" class="mt-8">
             <li
-                    v-for="post in rows"
+                    v-for="(post, index) in rows"
                     :key="post.path"
-                    class="border-t border-default last:border-b"
+                    v-reveal="index * 70"
+                    class="reveal border-t border-default last:border-b"
             >
                 <NuxtLink
                         :to="post.path"

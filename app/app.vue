@@ -18,6 +18,13 @@ useHead(() => ({
             href: `${siteConfig.domain}/rss.xml`,
         },
     ],
+    // Reveal animation is an enhancement: without JS the content must still
+    // be visible (ROADMAP §22). The directive reveals it when JS is on.
+    noscript: [
+        {
+            innerHTML: '<style>.reveal,.reveal-text,.reveal-mask{opacity:1!important;transform:none!important;clip-path:none!important}</style>',
+        },
+    ],
 }))
 </script>
 

@@ -13,7 +13,7 @@ const roleLine = computed(() => (props.roles ?? []).join(' / '))
 <template>
     <section class="border-b border-default">
         <div class="container-page pt-10 pb-14 lg:pt-16 lg:pb-20">
-            <div class="flex items-baseline justify-between gap-6">
+            <div v-reveal class="reveal flex items-baseline justify-between gap-6">
                 <span class="font-mono text-xs tracking-[0.3em] text-highlighted uppercase">
                     {{ siteConfig.shortName }}
                 </span>
@@ -27,11 +27,15 @@ const roleLine = computed(() => (props.roles ?? []).join(' / '))
                     <span
                             v-for="(line, index) in hero.title"
                             :key="index"
-                            class="block"
+                            v-reveal="index * 90"
+                            class="reveal-text block"
                     >{{ line }}</span>
                 </h1>
 
-                <div class="flex flex-col items-start gap-2 lg:col-span-3 lg:items-end lg:gap-3">
+                <div
+                        v-reveal="180"
+                        class="reveal flex flex-col items-start gap-2 lg:col-span-3 lg:items-end lg:gap-3"
+                >
                     <span class="home-number text-primary tabular-nums">{{ hero.number }}</span>
                     <span class="font-mono text-xs tracking-[0.3em] text-muted uppercase">
                         PERSONAL SPACE
@@ -39,7 +43,7 @@ const roleLine = computed(() => (props.roles ?? []).join(' / '))
                 </div>
             </div>
 
-            <div class="mt-12 border-t border-default pt-6 lg:mt-20">
+            <div v-reveal="260" class="reveal mt-12 border-t border-default pt-6 lg:mt-20">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <p
                             v-if="roleLine"

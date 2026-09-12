@@ -15,7 +15,7 @@ const formatted = computed(() => formatPostDate(props.post.date, locale.value))
     <article class="col-span-full border-t border-default">
         <NuxtLink
                 :to="post.path"
-                class="group grid gap-6 py-8 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-10 lg:py-10"
+                class="group transition-ui grid gap-6 py-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-10 lg:py-10"
         >
             <div class="min-w-0">
                 <span class="font-mono text-xs tracking-[0.3em] text-muted uppercase">

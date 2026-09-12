@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-    <section class="container-page py-14 lg:py-20">
+    <section v-reveal class="reveal container-page py-14 lg:py-20">
         <HomeSectionLabel :label="$t('home.sections.identity')"/>
 
         <div class="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">

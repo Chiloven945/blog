@@ -6,10 +6,10 @@ defineProps<{
 </script>
 
 <template>
-    <figure class="mt-8">
+    <figure v-reveal class="reveal reveal--fast mt-8">
         <NuxtImg
-                :src="src"
                 :alt="alt"
+                :src="src"
                 class="w-full rounded-sm border border-default"
                 format="webp"
                 loading="lazy"

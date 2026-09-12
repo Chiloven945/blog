@@ -12,7 +12,8 @@ defineProps<{
             <li
                     v-for="(interest, index) in interests"
                     :key="interest"
-                    class="flex items-baseline gap-3 border-t border-default pt-4"
+                    v-reveal="index * 60"
+                    class="reveal flex items-baseline gap-3 border-t border-default pt-4"
             >
                 <span class="font-mono text-[0.7rem] text-dimmed tabular-nums">
                     {{ String(index + 1).padStart(2, '0') }}

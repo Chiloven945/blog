@@ -14,7 +14,7 @@ const categories = computed(() => props.post.categories ?? [])
     <article class="h-full">
         <NuxtLink
                 :to="post.path"
-                class="group flex h-full flex-col overflow-hidden rounded-sm border border-default bg-default transition duration-150 hover:-translate-y-0.5 hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                class="group transition-ui flex h-full flex-col overflow-hidden rounded-sm border border-default bg-default hover:-translate-y-0.5 hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
             <div
                     v-if="post.cover"

@@ -9,7 +9,8 @@ defineProps<{
 
 <template>
     <section
-            class="border-t border-default py-10 lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
+            v-reveal
+            class="reveal reveal--fast border-t border-default py-10 lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
         <h2 class="text-3xl font-bold tracking-tight text-highlighted tabular-nums sm:text-4xl">
             {{ group.year }}
         </h2>

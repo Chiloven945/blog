@@ -7,6 +7,9 @@ const items = useMainNavigation()
             :items="items"
             :ui="{ link: 'text-sm' }"
             color="neutral"
+            highlight
+            highlight-color="primary"
             orientation="horizontal"
+            variant="link"
     />
 </template>

@@ -14,8 +14,9 @@ function isExternal(to: string) {
     <section class="container-page py-14 lg:py-20">
         <HomeSectionLabel :label="t('home.sections.links')"/>
 
-        <ul class="mt-8 divide-y divide-default border-y border-default">
-            <li v-for="link in links" :key="link.label">
+        <ul class="mt-8 divide-y divide-default border-y">
+            <li v-for="(link, index) in links" :key="link.label" v-reveal="index * 60"
+                class="reveal">
                 <a
                         :href="link.to"
                         :rel="isExternal(link.to) ? 'noopener noreferrer' : undefined"
@@ -29,12 +30,11 @@ function isExternal(to: string) {
                         </span>
                     </span>
                     <UIcon
-                            name="i-lucide-arrow-up-right"
                             class="size-4 text-dimmed transition-transform group-hover:-translate-y-0.5"
+                            name="i-lucide-arrow-up-right"
                     />
                 </a>
             </li>
         </ul>
     </section>
 </template>
-

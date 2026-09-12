@@ -19,12 +19,74 @@
     --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Only opacity / transform / border-color / background-color. ROADMAP §22.2 */
+/* Normal UI stays within the allowed properties. ROADMAP §22.2 */
 @layer utilities {
     .transition-ui {
-        transition-property: opacity, transform, border-color, background-color, color;
+        transition-property: opacity, transform, border-color, background-color;
         transition-duration: var(--duration-base);
         transition-timing-function: var(--ease-out);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Reveal primitives. ROADMAP §22.1
+   The `<noscript>` rule in app.vue keeps content visible without JS, and the
+   reduced-motion query below reveals everything immediately.
+   -------------------------------------------------------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition: opacity var(--duration-art) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--duration-art) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+}
+
+/* Text clip reveal — hero display lines. */
+.reveal-text {
+    clip-path: inset(0 0 110% 0);
+    transition: clip-path var(--duration-art) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal-text.is-revealed {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Image mask reveal — home art block. */
+.reveal-mask {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path var(--duration-art-slow) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal-mask.is-revealed {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Normal-UI reveal (120–220ms) for reading pages and lists. */
+.reveal--fast {
+    transition-duration: var(--duration-slow);
+}
+
+/* Mobile reduces motion: drop transforms and the mask, keep a short fade. ROADMAP §21.1 */
+@media (max-width: 639px) {
+    .reveal {
+        transform: none;
+        transition-duration: var(--duration-base);
+    }
+
+    .reveal-text,
+    .reveal-mask {
+        clip-path: none;
+        opacity: 0;
+        transition: opacity var(--duration-base) var(--ease-out) var(--reveal-delay, 0ms);
+    }
+
+    .reveal-text.is-revealed,
+    .reveal-mask.is-revealed {
+        opacity: 1;
     }
 }
 
@@ -37,5 +99,14 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    .reveal,
+    .reveal-text,
+    .reveal-mask {
+        opacity: 1;
+        transform: none;
+        clip-path: none;
+        transition: none;
     }
 }

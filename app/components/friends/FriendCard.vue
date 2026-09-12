@@ -29,7 +29,7 @@ const isRemote = computed(() => /^https?:\/\//i.test(props.friend.avatar ?? ''))
 <template>
     <a
             :href="friend.url"
-            class="group flex h-full flex-col rounded-sm border border-default bg-default p-5 transition duration-150 hover:-translate-y-0.5 hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            class="group transition-ui flex h-full flex-col rounded-sm border border-default bg-default p-5 hover:-translate-y-0.5 hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             rel="noopener noreferrer"
             target="_blank"
     >

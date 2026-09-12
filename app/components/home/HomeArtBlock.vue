@@ -8,7 +8,7 @@ const {t} = useI18n()
             <HomeSectionLabel :label="t('home.sections.art')"/>
 
             <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <figure class="overflow-hidden">
+                <figure v-reveal class="reveal-mask overflow-hidden">
                     <NuxtImg
                             alt=""
                             class="aspect-16/10 w-full object-cover"
@@ -17,7 +17,7 @@ const {t} = useI18n()
                             src="/images/home/art-01.webp"
                     />
                 </figure>
-                <figure class="overflow-hidden">
+                <figure v-reveal="150" class="reveal-mask overflow-hidden">
                     <NuxtImg
                             alt=""
                             class="aspect-16/10 w-full object-cover"
