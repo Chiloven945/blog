@@ -7,7 +7,7 @@ test.describe(
         test(
             'home exposes landmarks, a single h1 and named controls',
             async ({page}) => {
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
 
                 await expect(page.locator('main#main')).toHaveCount(1)
                 await expect(page.locator('.site-nav:visible')).toHaveCount(1)
@@ -42,7 +42,7 @@ test.describe(
         test(
             'post has a labelled table-of-contents landmark',
             async ({page}) => {
-                await gotoHydrated(page, '/p/jep-512')
+                await gotoHydrated(page, '/zh-cn/articles/jep-512')
                 await expect(page.getByRole('navigation', {name: 'Table of contents'}))
                     .toBeVisible()
                 await expect(page.locator('h1')).toHaveCount(1)
@@ -57,7 +57,7 @@ test.describe(
         test(
             'skip link is the first stop and focuses main',
             async ({page}) => {
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
                 await page.keyboard.press('Tab')
                 await expect(page.locator('a.skip-link')).toBeFocused()
                 await page.keyboard.press('Enter')
@@ -68,7 +68,7 @@ test.describe(
         test(
             'search modal opens with Ctrl+K and supports arrow keys',
             async ({page}) => {
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
 
                 const dialog = page.getByRole('dialog')
                 await page.keyboard.press('Control+k')
@@ -96,7 +96,7 @@ test.describe(
             'mobile navigation is reachable and operable',
             async ({page}) => {
                 await page.setViewportSize({width: 390, height: 844})
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
 
                 await page.locator('.site-nav:visible').getByRole('button', {name: '更多'}).click()
                 const dialog = page.getByRole('dialog')
@@ -112,7 +112,7 @@ test.describe(
             'novel reading mode toggles and exits with Escape',
             async ({page}) => {
                 await page.setViewportSize({width: 1280, height: 900})
-                await gotoHydrated(page, '/p/wip-a')
+                await gotoHydrated(page, '/zh-cn/novels/wip-a')
 
                 const html = page.locator('html')
                 const toolbar = page.locator('[role="group"][aria-label="阅读设置"]')
@@ -134,7 +134,7 @@ test.describe(
         test(
             'all revealed content is immediately visible',
             async ({page}) => {
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
 
                 const result = await page.evaluate(() => {
                     const targets = [
@@ -161,7 +161,7 @@ test.describe(
         test(
             'home still renders its core content',
             async ({page}) => {
-                await page.goto('/', {waitUntil: 'domcontentloaded'})
+                await page.goto('/zh-cn', {waitUntil: 'domcontentloaded'})
                 await expect(page.locator('main h1')).toContainText('CHILOVEN')
                 await expect(page.locator('main')).toContainText('PERSONAL SPACE')
                 await expect(page.locator('.reveal-text').first()).toHaveText(/.+/)
@@ -171,7 +171,7 @@ test.describe(
         test(
             'post still renders its body',
             async ({page}) => {
-                await page.goto('/p/jep-512', {waitUntil: 'domcontentloaded'})
+                await page.goto('/zh-cn/articles/jep-512', {waitUntil: 'domcontentloaded'})
                 await expect(page.locator('main h1')).toContainText('JEP 512')
                 await expect(page.locator('main pre').first()).toBeVisible()
             }

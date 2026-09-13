@@ -100,12 +100,12 @@ export default defineNuxtConfig({
         domains: [],
     },
 
-    // /blog is replaced by /articles; keep the old URLs working as
-    // permanent redirects.
+    // Legacy entry URLs. Canonical pages always carry a locale prefix; the
+    // old /blog, /about and /links paths remain as redirectors.
     routeRules: {
         '/blog': {
             redirect: {
-                to: '/articles',
+                to: '/zh-cn/articles',
                 statusCode: 301
             }
         },
@@ -123,29 +123,40 @@ export default defineNuxtConfig({
         },
 
         // About and Links are homepage sections in v2; keep the old URLs.
-        '/about': {redirect: {to: '/#about', statusCode: 301}},
+        '/about': {redirect: {to: '/zh-cn#about', statusCode: 301}},
         '/en/about': {redirect: {to: '/en#about', statusCode: 301}},
         '/zh-tw/about': {redirect: {to: '/zh-tw#about', statusCode: 301}},
-        '/links': {redirect: {to: '/#links', statusCode: 301}},
+        '/links': {redirect: {to: '/zh-cn#links', statusCode: 301}},
         '/en/links': {redirect: {to: '/en#links', statusCode: 301}},
         '/zh-tw/links': {redirect: {to: '/zh-tw#links', statusCode: 301}},
     },
 
     sitemap: {
         // Search results are query-driven; the /dev/* routes are temporary.
-        exclude: ['/search', '/en/search', '/zh-tw/search', '/dev/**'],
+        exclude: [
+            '/search',
+            '/en/search',
+            '/zh-tw/search',
+            '/zh-cn/search',
+            '/dev/**',
+            '/en/dev/**',
+            '/zh-tw/dev/**',
+            '/zh-cn/dev/**',
+        ],
     },
 
     nitro: {
         prerender: {
-            // The feed has no inbound links during the crawl, so list it
-            // explicitly. /index.xml is the legacy alias.
+            // The feeds have no inbound links during the crawl, so list them
+            // explicitly. /index.xml is the legacy feed alias.
             routes: ['/rss.xml', '/index.xml'],
         },
     },
 
     i18n: {
-        strategy: 'prefix_except_default',
+        // Every locale carries an explicit URL prefix; unprefixed paths are
+        // language-entry redirectors only.
+        strategy: 'prefix',
         defaultLocale: 'zh-cn',
         baseUrl: siteConfig.domain,
         locales: [

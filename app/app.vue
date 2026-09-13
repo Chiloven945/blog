@@ -19,7 +19,8 @@ useHead(() => ({
             href: `${siteConfig.domain}/rss.xml`,
         },
         // Only the active locale's UI sans is preloaded; the reading serif
-        // is preloaded per route (see pages/p/[slug].vue).
+        // is preloaded per route (see pages/articles/[slug].vue and
+        // pages/novels/[slug].vue).
         fontPreloadLink(resolveFontFiles(locale.value).sans),
     ],
     // Reveal animation is an enhancement: without JS the content must still

@@ -30,8 +30,7 @@ playwright/.cache
 tmp-screenshots/
 
 # Development-only planning
-ROADMAP.md
-blog-ROADMAP-v2.md
+blog-FINAL-AUDIT-CLEANUP-v2.md
 
 # IDE / OS
 .DS_Store

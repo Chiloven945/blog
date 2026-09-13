@@ -12,13 +12,13 @@ test.describe(
                 test.slow()
 
                 const entries = [
-                    '/',
-                    '/articles',
-                    '/tags',
-                    '/archives',
-                    '/friends',
-                    '/p/jep-401',
-                    '/p/causerie-1',
+                    '/zh-cn',
+                    '/zh-cn/articles',
+                    '/zh-cn/tags',
+                    '/zh-cn/archives',
+                    '/zh-cn/friends',
+                    '/zh-cn/articles/jep-401',
+                    '/zh-cn/novels/causerie-1',
                     '/en',
                     '/zh-tw',
                 ]
@@ -102,7 +102,7 @@ test.describe(
 
                     const xml = await response.text()
                     expect(xml, path).not.toContain('/search')
-                    expect(xml, path).toContain('/p/')
+                    expect(xml, path).toContain('/articles/')
                 }
             }
         )
@@ -110,10 +110,10 @@ test.describe(
         test(
             'emits canonical and hreflang links on posts',
             async ({page}) => {
-                await gotoHydrated(page, '/p/jep-512')
+                await gotoHydrated(page, '/zh-cn/articles/jep-512')
                 await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
                     'href',
-                    `${siteUrl}/p/jep-512`,
+                    `${siteUrl}/zh-cn/articles/jep-512`,
                 )
 
                 const hreflang = await page.$$eval(
@@ -123,9 +123,9 @@ test.describe(
                             `${link.getAttribute('hreflang')}=${link.getAttribute('href')}`
                         ),
                 )
-                expect(hreflang).toContain(`zh-CN=${siteUrl}/p/jep-512`)
-                expect(hreflang).toContain(`en=${siteUrl}/en/p/jep-512`)
-                expect(hreflang).toContain(`zh-TW=${siteUrl}/zh-tw/p/jep-512`)
+                expect(hreflang).toContain(`zh-CN=${siteUrl}/zh-cn/articles/jep-512`)
+                expect(hreflang).toContain(`en=${siteUrl}/en/articles/jep-512`)
+                expect(hreflang).toContain(`zh-TW=${siteUrl}/zh-tw/articles/jep-512`)
             }
         )
 

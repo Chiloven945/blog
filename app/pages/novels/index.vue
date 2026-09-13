@@ -111,26 +111,30 @@ function setFilter(key: 'type' | 'status', value: string) {
 }
 
 if (import.meta.client) {
-    watch([activeType, activeStatus], ([type, status]) => {
-        const query = {...route.query}
-        let changed = false
+    watch(
+        [activeType, activeStatus],
+        ([type, status]) => {
+            const query = {...route.query}
+            let changed = false
 
-        if ((query.type ?? 'all') !== type) {
-            if (type === 'all') delete query.type
-            else query.type = type
-            changed = true
-        }
+            if ((query.type ?? 'all') !== type) {
+                if (type === 'all') delete query.type
+                else query.type = type
+                changed = true
+            }
 
-        if ((query.status ?? 'all') !== status) {
-            if (status === 'all') delete query.status
-            else query.status = status
-            changed = true
-        }
+            if ((query.status ?? 'all') !== status) {
+                if (status === 'all') delete query.status
+                else query.status = status
+                changed = true
+            }
 
-        if (changed) {
-            router.replace({query})
-        }
-    }, {immediate: true})
+            if (changed) {
+                router.replace({query})
+            }
+        },
+        {immediate: true}
+    )
 }
 
 usePageMeta({

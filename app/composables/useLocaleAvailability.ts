@@ -4,7 +4,7 @@ import {tagPath} from '#shared/utils/taxonomy'
 import {contentCollections, type ContentLocale} from './useActiveContentCollection'
 
 const localePrefixes: Record<ContentLocale, string> = {
-    'zh-cn': '',
+    'zh-cn': '/zh-cn',
     'zh-tw': '/zh-tw',
     en: '/en',
 }
@@ -54,8 +54,8 @@ export function localizedContentPath(
     locale: ContentLocale
 ): string {
     const targetPrefix = localePrefixes[locale] ?? ''
-    return locale === 'zh-cn' || relative === '/'
-        ? relative
+    return relative === '/'
+        ? targetPrefix || '/'
         : `${targetPrefix}${relative}`
 }
 

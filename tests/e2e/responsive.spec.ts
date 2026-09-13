@@ -10,7 +10,13 @@ const viewports = [
     {name: '1440', width: 1440, height: 900},
 ] as const
 
-const pages = ['/', '/articles', '/novels', '/tags', '/p/wip-a'] as const
+const pages = [
+    '/zh-cn',
+    '/zh-cn/articles',
+    '/zh-cn/novels',
+    '/zh-cn/tags',
+    '/zh-cn/novels/wip-a',
+] as const
 
 for (const viewport of viewports) {
     test.describe(
@@ -39,7 +45,7 @@ test.describe(
             'home sections stay readable on mobile',
             async ({page}) => {
                 await page.setViewportSize({width: 390, height: 844})
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
                 await expect(page.locator('.home-display')).toBeVisible()
                 await expect(page.locator('main section').first()).toBeVisible()
                 await expectNoHorizontalOverflow(page, 'home mobile')
@@ -50,7 +56,7 @@ test.describe(
             'post code blocks scroll inside their own container',
             async ({page}) => {
                 await page.setViewportSize({width: 390, height: 844})
-                await gotoHydrated(page, '/p/jep-401')
+                await gotoHydrated(page, '/zh-cn/articles/jep-401')
                 const pre = page.locator('main pre').first()
                 await pre.scrollIntoViewIfNeeded()
                 const overflow = await pre.evaluate((el) => el.scrollWidth > el.clientWidth)

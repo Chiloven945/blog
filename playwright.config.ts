@@ -10,7 +10,9 @@ export default defineConfig({
     testDir: './tests/e2e',
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
-    retries: process.env.CI ? 2 : 1,
+    retries: process.env.CI
+        ? 2
+        : 1,
     // Run sequentially to keep layout and timing checks stable.
     workers: 1,
     reporter: process.env.CI
@@ -43,8 +45,8 @@ export default defineConfig({
     ],
     webServer: {
         command: 'bun run generate && bun tests/e2e/static-server.ts',
-        url: 'http://localhost:4173',
+        url: 'http://localhost:4173/zh-cn',
         reuseExistingServer: !process.env.CI,
-        timeout: 300_000,
+        timeout: 600_000,
     },
 })

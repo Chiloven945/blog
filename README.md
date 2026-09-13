@@ -105,8 +105,9 @@ rendering.
 
 Articles live in `content/articles/<locale>/<slug>.md` and novels in
 `content/novels/<locale>/<slug>.md`, where `<slug>` is both the filename and the URL segment
-(`/p/<slug>`). The same slug is used across locales, and a slug must be unique across articles and
-novels within a locale. Series descriptions live in `content/series/<locale>/<slug>.md`.
+(`/<locale>/articles/<slug>` or `/<locale>/novels/<slug>`). The same slug is used across locales,
+and a slug must be unique across articles and novels within a locale. Series descriptions live in
+`content/series/<locale>/<slug>.md`.
 
 ```yaml
 ---
@@ -161,13 +162,14 @@ images, and missing translations.
 ## Internationalization
 
 The site ships **Simplified Chinese** (`zh-cn`, default), **Traditional Chinese** (`zh-tw`), and
-**English** (`en`) using the `prefix_except_default`
-strategy:
+**English** (`en`). Every locale carries an explicit URL prefix (`prefix` strategy), so unprefixed
+paths are language-entry redirectors only:
 
-| Content     | zh-cn       | zh-tw             | en             |
-|-------------|-------------|-------------------|----------------|
-| Post        | `/p/<slug>` | `/zh-tw/p/<slug>` | `/en/p/<slug>` |
-| Custom page | `/<slug>`   | `/zh-tw/<slug>`   | `/en/<slug>`   |
+| Content     | en                    | zh-cn                    | zh-tw                    |
+|-------------|-----------------------|--------------------------|--------------------------|
+| Article     | `/en/articles/<slug>` | `/zh-cn/articles/<slug>` | `/zh-tw/articles/<slug>` |
+| Novel       | `/en/novels/<slug>`   | `/zh-cn/novels/<slug>`   | `/zh-tw/novels/<slug>`   |
+| Custom page | `/en/<slug>`          | `/zh-cn/<slug>`          | `/zh-tw/<slug>`          |
 
 UI copy lives in `i18n/locales/`; long-form content lives under `content/`.
 

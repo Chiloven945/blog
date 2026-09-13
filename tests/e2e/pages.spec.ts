@@ -2,13 +2,13 @@ import {expect, test} from '@playwright/test'
 import {expectNoHorizontalOverflow, gotoHydrated} from './helpers'
 
 const keyPages = [
-    {path: '/', heading: 'CHILOVEN'},
-    {path: '/articles', heading: '文章'},
-    {path: '/novels', heading: '小说'},
-    {path: '/tags', heading: '标签'},
-    {path: '/archives', heading: '归档'},
-    {path: '/friends', heading: '友链'},
-    {path: '/search', heading: '搜索'},
+    {path: '/zh-cn', heading: 'CHILOVEN'},
+    {path: '/zh-cn/articles', heading: '文章'},
+    {path: '/zh-cn/novels', heading: '小说'},
+    {path: '/zh-cn/tags', heading: '标签'},
+    {path: '/zh-cn/archives', heading: '归档'},
+    {path: '/zh-cn/friends', heading: '友链'},
+    {path: '/zh-cn/search', heading: '搜索'},
 ] as const
 
 test.describe(
@@ -28,21 +28,21 @@ test.describe(
         test(
             'renders a post with header, TOC and comments',
             async ({page}) => {
-                await gotoHydrated(page, '/p/jep-512')
+                await gotoHydrated(page, '/zh-cn/articles/jep-512')
                 await expect(page.locator('main h1')).toContainText('JEP 512')
                 await expect(page.getByRole(
                     'navigation',
                     {name: 'Table of contents'}
                 )).toBeVisible()
                 await expect(page.locator('main')).toContainText('评论')
-                await expectNoHorizontalOverflow(page, '/p/jep-512')
+                await expectNoHorizontalOverflow(page, '/zh-cn/articles/jep-512')
             }
         )
 
         test(
             'article index features articles and filters by subtype',
             async ({page}) => {
-                await gotoHydrated(page, '/articles')
+                await gotoHydrated(page, '/zh-cn/articles')
 
                 await expect(page.locator('main')).toContainText('精选')
                 const rows = page.locator('main ol li')
@@ -61,7 +61,7 @@ test.describe(
         test(
             'novel library lists works and filters by status',
             async ({page}) => {
-                await gotoHydrated(page, '/novels')
+                await gotoHydrated(page, '/zh-cn/novels')
 
                 await expect(page.locator('main')).toContainText('连载中')
                 const works = page.locator('main article')
@@ -76,9 +76,9 @@ test.describe(
         test(
             'tags index links to split tag results',
             async ({page}) => {
-                await gotoHydrated(page, '/tags')
+                await gotoHydrated(page, '/zh-cn/tags')
 
-                const tiles = page.locator('main a[href^="/tags/"]')
+                const tiles = page.locator('main a[href*="/tags/"]')
                 expect(await tiles.count()).toBeGreaterThan(0)
 
                 await tiles.first().click()
@@ -91,7 +91,7 @@ test.describe(
         test(
             'shows the 404 page for unknown routes',
             async ({page}) => {
-                const response = await page.goto('/does-not-exist')
+                const response = await page.goto('/zh-cn/does-not-exist')
                 expect(response?.status()).toBe(404)
                 await page.waitForFunction(
                     () =>
@@ -129,7 +129,7 @@ test.describe('locales', () => {
     test(
         'switches locale from the navigation',
         async ({page}) => {
-            await gotoHydrated(page, '/articles')
+            await gotoHydrated(page, '/zh-cn/articles')
             const nav = page.locator('.site-nav:visible')
             await nav.getByRole('button', {name: '语言'}).click()
             await page.getByRole('menuitemcheckbox', {name: 'English'}).click()
@@ -145,14 +145,14 @@ test.describe(
         test(
             'toggles dark mode from the navigation',
             async ({page}) => {
-                await gotoHydrated(page, '/')
+                await gotoHydrated(page, '/zh-cn')
                 const html = page.locator('html')
                 await expect(html).not.toHaveClass(/\bdark\b/)
                 await page.locator('.site-nav:visible')
                     .getByRole('button', {name: '切换主题'})
                     .click()
                 await expect(html).toHaveClass(/\bdark\b/)
-                await expectNoHorizontalOverflow(page, '/ dark')
+                await expectNoHorizontalOverflow(page, '/zh-cn dark')
             }
         )
     }

@@ -23,14 +23,12 @@ export function useSiteNavigation(): ComputedRef<NavigationItem[]> {
 }
 
 /**
- * The navigation key for the current route. Posts report their reader kind
- * through the `nav-post-kind` state so the rail/dock highlights Articles or
- * Novels accordingly (set by pages/p/[slug].vue).
+ * The navigation key for the current route. Articles and novels have
+ * separate URL trees, so the active item is derived from the path itself.
  */
 export function useActiveNavKey(): ComputedRef<SystemNavKey | null> {
     const {locale} = useI18n()
     const route = useRoute()
-    const postKind = useState<'article' | 'novel' | null>('nav-post-kind', () => null)
 
     const segments: Record<string, SystemNavKey> = {
         articles: 'articles',
@@ -47,13 +45,9 @@ export function useActiveNavKey(): ComputedRef<SystemNavKey | null> {
             return 'home'
         }
 
-        if (relative.startsWith('/p/')) {
-            if (postKind.value === 'novel') return 'novels'
-            if (postKind.value === 'article') return 'articles'
-            return null
-        }
-
         const segment = relative.split('/').filter(Boolean)[0]
-        return segment ? segments[segment] ?? null : null
+        return segment
+            ? segments[segment] ?? null
+            : null
     })
 }
