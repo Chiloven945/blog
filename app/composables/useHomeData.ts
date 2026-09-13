@@ -1,72 +1,59 @@
-import type {HomeData, PostCardItem} from '#shared/types/content'
+import type {ArticleCardItem} from '#shared/types/article'
+import type {NovelCardItem} from '#shared/types/novel'
 
-interface HomeDocument extends HomeData {
-    stem?: string
-}
+const LIMIT = 3
 
+/**
+ * Homepage latest writing. Registers both async sources before the first
+ * `await` so the Nuxt instance is still available (setup-context safety).
+ */
 export async function useHomeData() {
-    const {locale} = useI18n()
     const active = useActiveContentCollection()
 
-    const homeAsync = useAsyncData(
-        () => `home-data-${locale.value}`,
-        () => queryCollection('home').all() as unknown as Promise<HomeDocument[]>,
+    const fields = [
+        'path',
+        'title',
+        'description',
+        'date',
+        'updated',
+        'subtype',
+        'status',
+        'tags',
+        'series',
+        'seriesOrder',
+        'cover',
+        'coverAlt',
+        'featured',
+    ] as const
+
+    const articlesAsync = useAsyncData(
+        () => `home-articles-${active.value.articles}`,
+        () =>
+            queryCollection(active.value.articles)
+                .select(...fields)
+                .order('date', 'DESC')
+                .all(),
     )
 
-    const postsAsync = useAsyncData(
-        () => `home-writing-${active.value.articles}-${active.value.novels}`,
-        async () => {
-            const fields = [
-                'path',
-                'title',
-                'description',
-                'date',
-                'subtype',
-                'status',
-                'tags',
-                'cover',
-                'coverAlt',
-            ] as const
-
-            const [articles, novels] = await Promise.all([
-                queryCollection(active.value.articles)
-                    .select(...fields)
-                    .order('date', 'DESC')
-                    .all(),
-                queryCollection(active.value.novels)
-                    .select(...fields)
-                    .order('date', 'DESC')
-                    .all(),
-            ])
-
-            return [
-                ...articles.map(item => (
-                    {...item, kind: 'article' as const}
-                )),
-                ...novels.map(item => (
-                    {...item, kind: 'novel' as const}
-                )),
-            ]
-        },
+    const novelsAsync = useAsyncData(
+        () => `home-novels-${active.value.novels}`,
+        () =>
+            queryCollection(active.value.novels)
+                .select(...fields)
+                .order('date', 'DESC')
+                .all(),
     )
 
-    const {data: homeList} = await homeAsync
-    const {data: posts} = await postsAsync
+    const {data: articlesData} = await articlesAsync
+    const {data: novelsData} = await novelsAsync
 
-    const home = computed<HomeData | null>(() => {
-        const list = homeList.value ?? []
-
-        return list.find(item =>
-            item.stem?.endsWith(`/${locale.value}`)
-        ) ?? list[0] ?? null
-    })
-
-    const limit = computed(() => home.value?.writing?.limit ?? 3)
-
-    const latestPosts = computed<PostCardItem[]>(() =>
-        filterDrafts((posts.value ?? []) as PostCardItem[])
-            .slice(0, limit.value),
+    const latestArticles = computed(() =>
+        filterDrafts((articlesData.value ?? []) as unknown as ArticleCardItem[]).slice(0, LIMIT),
     )
 
-    return {home, latestPosts}
+    const latestNovels = computed(() =>
+        filterDrafts((novelsData.value ?? []) as unknown as NovelCardItem[]).slice(0, LIMIT),
+    )
+
+    return {latestArticles, latestNovels}
 }

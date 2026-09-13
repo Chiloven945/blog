@@ -1,8 +1,10 @@
 import {defineCollection, defineContentConfig} from '@nuxt/content'
 import {articleSchema} from './shared/schemas/article'
+import {linksSchema} from './shared/schemas/links'
 import {novelSchema} from './shared/schemas/novel'
+import {profileSchema} from './shared/schemas/profile'
 import {seriesSchema} from './shared/schemas/series'
-import {friendsSchema, homeSchema, pageSchema} from './shared/types/content'
+import {friendsSchema, pageSchema} from './shared/types/content'
 
 const locales = {
     zhCn: {dir: 'zh-cn', prefix: '/p'},
@@ -120,10 +122,16 @@ export default defineContentConfig({
             schema: pageSchema,
         }),
 
-        home: defineCollection({
+        profile: defineCollection({
             type: 'data',
-            source: 'data/home/*.yml',
-            schema: homeSchema,
+            source: 'data/profile/*.yml',
+            schema: profileSchema,
+        }),
+
+        links: defineCollection({
+            type: 'data',
+            source: 'data/links.yml',
+            schema: linksSchema,
         }),
 
         friends: defineCollection({

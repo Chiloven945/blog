@@ -3,22 +3,27 @@ import {licenses} from '#shared/config/licenses'
 import {siteConfig} from '#shared/config/site'
 
 const {t} = useI18n()
-const items = useSiteNavigation()
-const year = new Date().getFullYear()
+const {featured} = useLinks()
 
-const footerItems = computed(() => items.value.filter(item => item.available))
+const year = new Date().getFullYear()
 const cc = licenses['cc-by-nc-sa-4.0']
+
+function isExternal(url: string): boolean {
+    return /^https?:\/\//i.test(url)
+}
 </script>
 
 <template>
-    <UFooter :ui="{ root: 'app-footer border-t border-default' }">
-        <template #left>
-            <div class="flex flex-col gap-3">
-                <p class="text-sm text-muted">
+    <footer class="app-footer">
+        <div class="container-page grid gap-10 py-12 lg:grid-cols-12 lg:py-16">
+            <div class="lg:col-span-7">
+                <p class="font-mono text-sm tracking-[0.3em]">{{ siteConfig.mark }}</p>
+                <p class="mt-3 text-2xl font-bold">{{ siteConfig.shortName }}</p>
+                <p class="mt-2 text-sm opacity-75">
                     © {{ siteConfig.since }}–{{ year }} {{ siteConfig.author }}
                 </p>
 
-                <div class="flex items-center gap-3">
+                <div class="mt-6 flex items-start gap-3">
                     <a
                             :aria-label="t('license.badgeAlt')"
                             :href="cc.url"
@@ -35,25 +40,32 @@ const cc = licenses['cc-by-nc-sa-4.0']
                         >
                     </a>
 
-                    <div class="flex max-w-md flex-col text-xs text-muted">
-                        <span>{{ t('license.siteLabel') }}</span>
-                        <span class="text-dimmed">{{ t('license.siteNote') }}</span>
+                    <div class="max-w-md text-xs leading-relaxed opacity-70">
+                        <p>{{ t('license.siteLabel') }}</p>
+                        <p class="mt-1">{{ t('license.siteNote') }}</p>
                     </div>
                 </div>
             </div>
-        </template>
 
-        <template #right>
-            <UButton
-                    v-for="item in footerItems"
-                    :key="item.key"
-                    :to="item.to"
-                    color="neutral"
-                    size="sm"
-                    variant="link"
-            >
-                {{ item.label }}
-            </UButton>
-        </template>
-    </UFooter>
+            <div class="lg:col-span-5">
+                <p class="home-kicker opacity-60">{{ t('common.links') }}</p>
+
+                <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+                    <li
+                            v-for="link in featured"
+                            :key="link.id"
+                    >
+                        <a
+                                :href="link.url"
+                                :rel="isExternal(link.url) ? 'noopener noreferrer' : undefined"
+                                :target="isExternal(link.url) ? '_blank' : undefined"
+                                class="text-sm opacity-85 transition-opacity hover:opacity-100 hover:underline"
+                        >
+                            {{ link.label }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </template>

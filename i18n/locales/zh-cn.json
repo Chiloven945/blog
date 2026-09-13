@@ -22,7 +22,8 @@
     "comingSoon": "即将上线",
     "menu": "菜单",
     "backHome": "返回首页",
-    "unavailable": "暂无此语言"
+    "unavailable": "暂无此语言",
+    "links": "链接"
   },
   "footer": {
     "rights": "保留所有权利。"
@@ -194,27 +195,7 @@
     "emptyEyebrow": "EMPTY / 000"
   },
   "home": {
-    "sections": {
-      "identity": "身份 / 002",
-      "manifesto": "宣言 / 003",
-      "interests": "兴趣 / 004",
-      "now": "近况 / 005",
-      "writing": "写作 / 006",
-      "links": "链接 / 007",
-      "art": "旧站 / 008"
-    },
-    "now": {
-      "building": "正在做",
-      "learning": "正在学",
-      "reading": "正在读",
-      "listening": "正在听"
-    },
-    "writing": {
-      "viewAll": "查看全部文章"
-    },
-    "art": {
-      "caption": "旧站背景，留作一段记忆。"
-    }
+    "noArticles": "还没有文章。"
   },
   "post": {
     "toc": "目录",

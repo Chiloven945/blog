@@ -2,14 +2,17 @@
 import NavigationItem from './NavigationItem.vue'
 import LocaleSwitcher from './LocaleSwitcher.vue'
 import ThemeButton from './ThemeButton.vue'
-import {siteConfig} from '#shared/config/site'
 
-const emit = defineEmits<{navigate: []}>()
+const emit = defineEmits<{ navigate: [] }>()
 const {t} = useI18n()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
 
-const moreItems = computed(() => items.value.filter(item => ['tags', 'archives', 'friends'].includes(item.key)))
+const moreItems = computed(() => items.value.filter(item => [
+    'tags',
+    'archives',
+    'friends'
+].includes(item.key)))
 </script>
 
 <template>
@@ -41,7 +44,7 @@ const moreItems = computed(() => items.value.filter(item => ['tags', 'archives',
             </div>
 
             <a
-                    :aria-label="siteConfig.social.find(link => link.label === 'RSS')?.label ?? 'RSS'"
+                    aria-label="RSS"
                     class="flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm text-muted transition-ui hover:bg-elevated hover:text-highlighted focus-ring"
                     href="/rss.xml"
             >

@@ -13,11 +13,7 @@
     "typecheck": "nuxt typecheck",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:e2e": "playwright test",
-    "content:check": "bun tools/validate-content.ts",
-    "new:post": "bun tools/new-post.ts",
-    "new:page": "bun tools/new-page.ts",
-    "migrate:hugo": "bun tools/migrate-hugo.ts"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",

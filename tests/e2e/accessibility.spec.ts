@@ -161,7 +161,7 @@ test.describe(
         test(
             'home still renders its core content',
             async ({page}) => {
-                await page.goto('/')
+                await page.goto('/', {waitUntil: 'domcontentloaded'})
                 await expect(page.locator('main h1')).toContainText('CHILOVEN')
                 await expect(page.locator('main')).toContainText('PERSONAL SPACE')
                 await expect(page.locator('.reveal-text').first()).toHaveText(/.+/)
@@ -171,7 +171,7 @@ test.describe(
         test(
             'post still renders its body',
             async ({page}) => {
-                await page.goto('/p/jep-512')
+                await page.goto('/p/jep-512', {waitUntil: 'domcontentloaded'})
                 await expect(page.locator('main h1')).toContainText('JEP 512')
                 await expect(page.locator('main pre').first()).toBeVisible()
             }

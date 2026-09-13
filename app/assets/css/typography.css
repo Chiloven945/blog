@@ -2,12 +2,13 @@
    typography.css — self-hosted font stack
    ==========================================================================
    One unified Latin-first stack for every locale (no per-language
-   switching): the Latin face renders Latin/digits/punctuation and the CJK
+   switching): the Latin face renders Latin/digits/punctuation, Google Sans
+   covers the scripts Google Sans Flex lacks (Greek/Cyrillic), and the CJK
    face is the fallback for CJK glyphs.
 
-     sans  → Google Sans Flex   → Source Han Sans
-     serif → Libre Baskerville  → Source Han Serif
-     mono  → Cascadia Code      → Sarasa Mono CL
+      sans  → Google Sans Flex   → Google Sans → Source Han Sans
+      serif → Libre Baskerville  → system serif → Source Han Serif
+      mono  → Cascadia Code      → system mono  → Sarasa Mono CL
 
    All bundled families are SIL OFL 1.1 (licenses in public/fonts/). Sarasa
    Mono CL is a subsetted Sarasa Gothic web font, so CJK glyphs in code
@@ -41,6 +42,23 @@
     src: url("/fonts/google-sans-flex/GoogleSansFlex-VF.woff2") format("woff2");
     font-weight: 1 1000;
     font-style: normal;
+    font-display: swap;
+}
+
+/* --- Google Sans (Greek/Cyrillic fallback; Google Sans Flex has neither) --- */
+@font-face {
+    font-family: "Google Sans";
+    src: url("/fonts/google-sans/GoogleSans-VF.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Google Sans";
+    src: url("/fonts/google-sans/GoogleSans-Italic-VF.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: italic;
     font-display: swap;
 }
 
@@ -81,7 +99,7 @@
    Semantic font tokens (locale-independent)
    ========================================================================== */
 :root {
-    --font-latin-sans: "Google Sans Flex";
+    --font-latin-sans: "Google Sans Flex", "Google Sans";
     --font-latin-serif: "Libre Baskerville";
     --font-latin-mono: "Cascadia Code";
     --font-cjk-sans: "Source Han Sans CN";
@@ -89,7 +107,7 @@
     --font-cjk-mono: "Sarasa Mono CL";
 
     --font-fallback-sans: ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-fallback-serif: ui-serif, Georgia, "Times New Roman", serif;
     --font-fallback-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas,
     "Liberation Mono", Menlo, monospace;

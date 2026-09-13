@@ -29,7 +29,7 @@ usePageMeta({
 </script>
 
 <template>
-    <div v-if="tag" class="container-page py-10 lg:py-14">
+    <div v-if="tag">
         <header class="border-b border-default pb-8">
             <NuxtLink
                     :to="localePath('/tags')"

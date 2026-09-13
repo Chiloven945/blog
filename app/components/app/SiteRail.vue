@@ -19,9 +19,17 @@ const {t} = useI18n()
         <NuxtLink
                 :aria-label="siteConfig.name"
                 :to="localePath('/')"
-                class="flex size-10 items-center justify-center rounded-sm bg-primary font-mono text-xs font-bold text-inverted"
+                class="flex size-10 items-center justify-center overflow-hidden rounded-sm"
         >
-            {{ siteConfig.mark }}
+            <NuxtImg
+                    :alt="siteConfig.name"
+                    class="size-full object-cover"
+                    format="webp"
+                    height="80"
+                    loading="eager"
+                    src="/images/avatar/avatar.png"
+                    width="80"
+            />
         </NuxtLink>
 
         <span aria-hidden="true" class="my-0.5 h-px w-6 bg-accented"/>

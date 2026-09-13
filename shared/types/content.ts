@@ -79,63 +79,6 @@ export interface CustomPageDocument {
     coverAlt?: string
 }
 
-export const homeSchema = z.object({
-    hero: z.object({
-        eyebrow: z.string(),
-        title: z.array(z.string()).min(1),
-        number: z.string(),
-        description: z.string(),
-    }),
-
-    identity: z
-        .object({
-            roles: z.array(z.string()).default([]),
-            statement: z.string().default(''),
-            bio: z.string().default(''),
-            facts: z
-                .array(
-                    z.object({
-                        label: z.string(),
-                        value: z.string(),
-                    }),
-                )
-                .default([]),
-            notes: z
-                .array(
-                    z.object({
-                        id: z.string(),
-                        text: z.string(),
-                    }),
-                )
-                .default([]),
-        })
-        .default({}),
-
-    manifesto: z.object({
-        title: z.string(),
-        body: z.string(),
-    }),
-
-    interests: z.array(z.string()).default([]),
-
-    now: z
-        .object({
-            building: z.string().optional(),
-            learning: z.string().optional(),
-            reading: z.string().optional(),
-            listening: z.string().optional(),
-        })
-        .default({}),
-
-    writing: z
-        .object({
-            limit: z.number().int().positive().default(3),
-        })
-        .default({}),
-})
-
-export type HomeData = z.infer<typeof homeSchema>
-
 export const friendItemSchema = z.object({
     id: z.string(),
     name: z.string(),

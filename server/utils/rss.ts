@@ -140,28 +140,6 @@ function cleanNode(
         return null
     }
 
-    if (tag === 'spotify-embed') {
-        const props = node.props ?? {}
-        const id = typeof props.id === 'string'
-            ? props.id
-            : ''
-        const type = typeof props.type === 'string'
-            ? props.type
-            : 'playlist'
-
-        if (!id) {
-            return null
-        }
-
-        return elementNode('p', {}, [
-            elementNode(
-                'a',
-                {href: `https://open.spotify.com/${type}/${id}`},
-                [textNode(`Spotify: ${id}`)]
-            ),
-        ])
-    }
-
     if (tag === 'link-card') {
         const props = node.props ?? {}
         const href = typeof props.href === 'string'

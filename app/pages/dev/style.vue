@@ -75,7 +75,7 @@ const licenseList = licenseKeys.map((key) => {
 </script>
 
 <template>
-    <div class="container-page space-y-12 py-12">
+    <div class="space-y-12">
         <header class="space-y-3 border-b border-default pb-6">
             <p class="text-xs uppercase tracking-[0.2em] text-muted">
                 Dev reference
@@ -417,8 +417,12 @@ const licenseList = licenseKeys.map((key) => {
                         >
                             {{ license.label }}
                         </a>
-                        <span v-else class="block text-sm text-highlighted">{{ license.label }}</span>
-                        <code class="mt-0.5 block font-mono text-xs text-dimmed">{{ license.key }}</code>
+                        <span v-else class="block text-sm text-highlighted">{{
+                                license.label
+                            }}</span>
+                        <code class="mt-0.5 block font-mono text-xs text-dimmed">{{
+                                license.key
+                            }}</code>
                     </div>
                 </div>
             </div>

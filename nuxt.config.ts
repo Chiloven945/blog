@@ -121,6 +121,14 @@ export default defineNuxtConfig({
                 statusCode: 301
             }
         },
+
+        // About and Links are homepage sections in v2; keep the old URLs.
+        '/about': {redirect: {to: '/#about', statusCode: 301}},
+        '/en/about': {redirect: {to: '/en#about', statusCode: 301}},
+        '/zh-tw/about': {redirect: {to: '/zh-tw#about', statusCode: 301}},
+        '/links': {redirect: {to: '/#links', statusCode: 301}},
+        '/en/links': {redirect: {to: '/en#links', statusCode: 301}},
+        '/zh-tw/links': {redirect: {to: '/zh-tw#links', statusCode: 301}},
     },
 
     sitemap: {
@@ -131,20 +139,8 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             // The feed has no inbound links during the crawl, so list it
-            // explicitly. /index.xml is the legacy alias. The About/Links
-            // pages are no longer navigation targets (they move to the
-            // homepage in a later milestone), but remain reachable until
-            // the compatibility routes land.
-            routes: [
-                '/rss.xml',
-                '/index.xml',
-                '/about',
-                '/en/about',
-                '/zh-tw/about',
-                '/links',
-                '/en/links',
-                '/zh-tw/links',
-            ],
+            // explicitly. /index.xml is the legacy alias.
+            routes: ['/rss.xml', '/index.xml'],
         },
     },
 

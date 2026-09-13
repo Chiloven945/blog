@@ -1,0 +1,95 @@
+/* ==========================================================================
+   home.css — homepage v2 (solid tone mosaic)
+   Tone blocks carry the brand color so the page is not a white section stack.
+   ========================================================================== */
+
+@layer components {
+    .home-tone-deep {
+        background-color: var(--color-brand-700);
+        color: #ffffff;
+    }
+
+    .home-tone-strong {
+        background-color: var(--color-brand-500);
+        color: #ffffff;
+    }
+
+    .home-tone-soft {
+        background-color: var(--color-brand-100);
+        color: var(--ui-text-highlighted);
+    }
+
+    .home-tone-faint {
+        background-color: var(--color-brand-50);
+        color: var(--ui-text);
+    }
+
+    /* Dark mode: each tone is one step lighter than before, keeping the
+       hero stack's distinct banding (deep 900 / soft 800 / faint mix). */
+    .dark .home-tone-deep {
+        background-color: var(--color-brand-900);
+    }
+
+    .dark .home-tone-strong {
+        background-color: var(--color-brand-700);
+    }
+
+    .dark .home-tone-soft {
+        background-color: var(--color-brand-800);
+    }
+
+    .dark .home-tone-faint {
+        background-color: color-mix(in oklab, var(--color-brand-900) 55%, var(--ui-bg));
+    }
+
+    /* Footer: near-black in dark, a corresponding light surface in light. */
+    .app-footer {
+        background-color: var(--color-brand-50);
+        color: var(--ui-text);
+    }
+
+    .dark .app-footer {
+        background-color: #181a1f;
+        color: #ffffff;
+    }
+
+    .home-tone-deep a:hover,
+    .home-tone-strong a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+
+    /* Hairline mosaic: the 1px gap shows the page border between blocks. */
+    .home-mosaic {
+        display: grid;
+        gap: 1px;
+        background-color: var(--ui-border);
+    }
+
+    .home-mosaic > * {
+        min-width: 0;
+    }
+
+    .home-kicker {
+        font-family: var(--font-mono), ui-monospace;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+    }
+
+    .home-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+    }
+
+    /* Fiction "paper" surface — neutral, not beige. */
+    .home-paper {
+        background-color: var(--ui-bg-muted);
+    }
+
+    .dark .home-paper {
+        background-color: color-mix(in oklab, var(--color-brand-950) 35%, var(--ui-bg));
+    }
+}

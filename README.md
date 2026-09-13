@@ -18,10 +18,12 @@ dependency-light runtime.
   comments; and a separate serif novel reader with a title page, scene breaks, a reading toolbar
   (text size, line spacing, column width, indent), a chrome-free reading mode, and a progress line.
 - **Rich Markdown** — syntax-highlighted code with line numbers and copy, callouts, figures,
-  galleries, link cards, Spotify embeds, KaTeX math, and custom anchors.
+  galleries, link cards, KaTeX math, and custom anchors.
 - **Search** — a `Ctrl/Cmd + K` command palette and a shareable `/search?q=`
   page, scoped to the active language.
-- **Sections** — a designed homepage, a technical article index with a subtype filter and featured
+- **Sections** — a solid-tone mosaic homepage built from the authored profile (names, facts,
+  interests, trying list, stats, tools) with distinct blocks for latest articles and latest fiction,
+  plus the full contact/link mosaic; a technical article index with a subtype filter and featured
   entry, a novel library with subtype and status filters and a currently-writing feature, an archive
   timeline, friends, and free-form content pages.
 - **Tags** — a `/tags` index with count-tiered blocks and `/tags/:tag` pages that keep article and
@@ -74,17 +76,18 @@ The dev server runs at <http://localhost:3000>.
 ```text
 app/
   assets/css/     theme, typography, motion, and utility layers
-  components/     app shell, home, blog, post, search, archives, friends, content
+  components/     app shell, home mosaic, article, novel, taxonomy, search, archives, friends
   composables/    content selection, search, archives, navigation, motion, SEO
   layouts/        default, home, post
-  pages/          home, blog, search, archives, friends, custom pages, posts
+  pages/          home, articles, novels, tags, archives, friends, search, custom pages, posts
   utils/          date, post, search, locale, and content helpers
 content/
   articles/<locale>/  article Markdown
   novels/<locale>/    novel Markdown
   series/<locale>/    series Markdown
   pages/<locale>/     custom pages
-  data/home/          homepage copy per locale
+  data/profile/<locale>.yml  homepage profile copy per locale
+  data/links.yml      personal links (single source)
   data/friends.yml    friend links
 i18n/locales/     UI strings per locale
 public/           fonts, images, and other static assets
@@ -138,10 +141,12 @@ hides `status: draft` (develop with `?drafts=1`).
 
 Custom pages live in `content/pages/<locale>/<slug>.md` and render through the catch-all route.
 Primary navigation is the fixed floating set (Home / Articles / Novels / Tags / Archives / Friends);
-About and Links move to homepage sections in a later milestone.
+About and Links are homepage sections (`/#about`, `/#links`), and the old `/about` and `/links` URLs
+redirect there.
 
-Homepage copy is stored per locale in `content/data/home/<locale>.yml`, and friend links are
-collected in `content/data/friends.yml`.
+The homepage profile is authored per locale in `content/data/profile/<locale>.yml`, personal links
+come from the single `content/data/links.yml` source, and friend links are collected in
+`content/data/friends.yml`.
 
 Before publishing, validate everything:
 

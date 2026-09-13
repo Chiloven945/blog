@@ -1,0 +1,114 @@
+items:
+  - id: github
+    label: "GitHub"
+    url: "https://github.com/Chiloven945"
+    icon: "i-simple-icons-github"
+    featured: true
+    order: 10
+    description:
+      zh-cn: "我的 GitHub 主页。"
+      zh-tw: "我的 GitHub 首頁。"
+      en: "My GitHub profile."
+
+  - id: bluesky
+    label: "Bluesky"
+    url: "https://chiloven.bsky.social"
+    image: "/images/links/bluesky.png"
+    order: 20
+    description:
+      zh-cn: "我的 Bluesky 主页。"
+      zh-tw: "我的 Bluesky 首頁。"
+      en: "My Bluesky profile."
+
+  - id: bilibili
+    label: "Bilibili"
+    url: "https://space.bilibili.com/630677026"
+    image: "/images/links/bilibili.png"
+    order: 30
+    description:
+      zh-cn: "我的 Bilibili 账号，偶尔发视频。"
+      zh-tw: "我的 Bilibili 帳戶，偶爾發影片。"
+      en: "My Bilibili account, post videos sometimes."
+
+  - id: weibo
+    label: "Sina Weibo"
+    url: "https://weibo.com/u/7497491648"
+    image: "/images/links/weibo.png"
+    order: 40
+    description:
+      zh-cn: "我的新浪微博账号。"
+      zh-tw: "我的新浪微博帳戶。"
+      en: "My Sina Weibo account."
+
+  - id: spotify
+    label: "Spotify"
+    url: "https://open.spotify.com/user/31aagy6vodynowvbf5uzlpopjvwq"
+    image: "/images/links/spotify.png"
+    order: 50
+    description:
+      zh-cn: "我的 Spotify 账号。"
+      zh-tw: "我的 Spotify 帳戶。"
+      en: "My Spotify account."
+
+  - id: instagram
+    label: "Instagram"
+    url: "https://www.instagram.com/clovenbugle/"
+    image: "/images/links/instagram.png"
+    order: 60
+    description:
+      zh-cn: "基本上啥也没有。"
+      zh-tw: "基本上什麼也沒有。"
+      en: "Nothing much here."
+
+  - id: facebook
+    label: "Facebook"
+    url: "https://www.facebook.com/100093362991435"
+    image: "/images/links/facebook.png"
+    order: 70
+    description:
+      zh-cn: "你可以在这里加我好友。"
+      zh-tw: "你可以在這裡加我好友。"
+      en: "You can friend me here."
+
+  - id: telegram
+    label: "Telegram"
+    url: "https://t.me/chiloven945"
+    image: "/images/links/telegram.png"
+    featured: true
+    order: 80
+    description:
+      zh-cn: "我的 Telegram 账号，欢迎联系我！"
+      zh-tw: "我的 Telegram 帳戶，歡迎聯絡我！"
+      en: "My Telegram account, feel free to contact me."
+
+  - id: qq
+    label: "QQ"
+    url: "https://qm.qq.com/q/aivFy2XQcw"
+    image: "/images/links/qq.png"
+    order: 90
+    description:
+      zh-cn: "我的 QQ，欢迎扩列！"
+      zh-tw: "我的 QQ，歡迎擴列！"
+      en: "My QQ account, feel free to friend me."
+
+  - id: underground
+    label: "Underground"
+    url: "https://underground.chiloven.top"
+    icon: "i-lucide-gauge"
+    featured: true
+    order: 100
+    description:
+      zh-cn: "Secret basement."
+      zh-tw: "Secret basement."
+      en: "Secret basement."
+
+  - id: rss
+    label: "RSS"
+    url: "/rss.xml"
+    icon: "i-lucide-rss"
+    featured: true
+    order: 110
+    description:
+      zh-cn: "订阅本站更新。"
+      zh-tw: "訂閱本站更新。"
+      en: "Subscribe to site updates."

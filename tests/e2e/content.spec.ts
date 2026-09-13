@@ -65,12 +65,12 @@ test.describe(
         )
 
         test(
-            'about page keeps the Spotify embed and footnotes',
+            'home keeps the structured profile notes',
             async ({page}) => {
-                await gotoHydrated(page, '/about')
+                await gotoHydrated(page, '/')
 
-                await expect(page.locator('iframe[src*="open.spotify.com"]')).toHaveCount(1)
-                expect(await page.locator('[data-footnotes]').count()).toBeGreaterThan(0)
+                await expect(page.locator('main')).toContainText('ClovenBugle')
+                await expect(page.locator('main')).toContainText('Xbox')
             }
         )
 
@@ -91,19 +91,6 @@ test.describe(
                     el => getComputedStyle(el).fontFamily,
                 )
                 expect(family).toContain('Source Han Serif')
-            }
-        )
-
-        test(
-            'footnote references jump to notes and backlinks return',
-            async ({page}) => {
-                await gotoHydrated(page, '/about')
-
-                await page.locator('a[data-footnote-ref]').first().click()
-                await expect(page).toHaveURL(/#user-content-fn-1$/)
-
-                await page.locator('a[data-footnote-backref]').first().click()
-                await expect(page).toHaveURL(/#user-content-fnref-1$/)
             }
         )
 

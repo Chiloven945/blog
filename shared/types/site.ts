@@ -1,9 +1,3 @@
-export interface SocialLink {
-    label: string
-    icon: string
-    to: string
-}
-
 export interface CommentsConfig {
     provider: 'giscus'
     repo: `${string}/${string}`
@@ -28,6 +22,5 @@ export interface SiteConfig {
     since: number
     defaultLocale: string
     defaultLicense: string
-    social: SocialLink[]
     comments: CommentsConfig
 }

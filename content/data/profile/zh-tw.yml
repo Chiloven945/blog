@@ -1,0 +1,108 @@
+meta:
+  description: "記錄工程、寫作與日常的個人站；技術文章、隨筆與小說的長期筆記。"
+
+motto: "幻想慘死於現實麾下，愛昰墓誌銘。"
+
+names:
+  - primary: ClovenBugle
+    suffix: "9455"
+    pronunciation: "[ˈkʰl̥əʊ.və̆n ˌbjuː.ɡɫ̩]"
+    note: name-origin-1
+  - primary: Chiloven
+    middle: Bustiangle
+    suffix: "945"
+    pronunciation: "[ˈ(tʃʰ|kʰ|h|ç|x)ɪɫ.əʊ.və̆n ˌbʌs.tĭ.ˈæŋ.ɡɫ̩]"
+    note: name-origin-2
+  - primary: Mackenzie
+    pronunciation: "[mə̥ˈkʰɛ̃n.si]"
+  - primary: chi
+    pronunciation: "[ˈ(tʃʰ|kʰ|h|ç|x)ɪ]"
+  - primary: 阿奇
+    pronunciation: "[ʔa⁵⁵ tɕʰi³⁵]"
+
+facts:
+  - icon: "🐾"
+    text: "Furry"
+  - icon: "🏳️‍🌈"
+    text: "性取向為同性戀"
+  - icon: "👤"
+    text: "MBTI 為 infp-t"
+  - icon: "🗺️"
+    text: "居住於中華人民共和國，重慶"
+
+languages:
+  - name: "简体中文"
+    level: "母語"
+  - name: "繁體中文"
+    level: "可理解"
+  - name: "English"
+    level: "熟練"
+  - name: "Ελληνικά"
+    level: "學習中"
+  - name: "日本語"
+    level: "學習中"
+
+interests:
+  - icon: "📓"
+    text: "寫一些我喜歡題材的小說（可以看看我的部落格文章或者 Pixiv！）"
+  - icon: "📖"
+    text: "也喜歡看一堆小說（"
+  - icon: "🎮"
+    text: "喜歡玩 Minecraft 和 Cities Skylines（沒錯就這點……）"
+  - icon: "🖥️"
+    text: "喜歡弄一些電腦相關的東西"
+  - icon: "🅰️"
+    text: "詞源學，記點詞根什麼的"
+  - icon: "🏞️"
+    text: "研究漢字字形構成"
+  - icon: "🎼"
+    text: "會做一些 MIDI，會扒一些譜"
+  - icon: "🎵"
+    text: "聽點自己喜歡的音樂"
+  - icon: "📃"
+    text: "做點翻譯工作，還能學習英語何樂而不為（"
+  - icon: "📺"
+    text: "看點知識性的影片"
+  - icon: "🐶"
+    text: "邊牧是世界上最可愛的小狗"
+  - icon: "🐺"
+    text: "狼狼！狼狼好，狼狼可愛！！！"
+
+trying:
+  - icon: "🧭"
+    text: "為一些 Java 版的模組製作翻譯文件"
+  - icon: "💻"
+    text: "嘗試學習 Java、Kotlin 與 C#，還有 Rust!"
+  - icon: "👥"
+    text: "交到更多朋友（快來和我擴列！）"
+  - icon: "🏛️"
+    text: "學習希臘語"
+    note: greek
+  - icon: "📚"
+    text: "完成 AP CSA 與 AP Calculus BC 的學習"
+  - icon: "😭"
+    text: "考雅思"
+  - icon: "❔"
+    text: "擴充自己知識面的廣度"
+  - icon: "😶‍🌫️"
+    text: "與痛苦苟活於人類文明。"
+    struck: true
+
+stats:
+  - id: github
+    label: "GitHub Metrics"
+    image: "https://raw.githubusercontent.com/Chiloven945/Chiloven945/refs/heads/main/github.svg"
+    url: "https://github.com/Chiloven945"
+  - id: social
+    label: "Social"
+    image: "https://raw.githubusercontent.com/Chiloven945/Chiloven945/refs/heads/main/social.svg"
+    url: "https://github.com/Chiloven945"
+
+skills:
+  description: "雖說的確有技能相關的東西，但是更多的是一個列舉了自己使用過的東西的列表……"
+  image: "https://skills.syvixor.com/api/icons?perline=12&i=java,kotlin,rust,vuejs,nuxtjs,javascript,typescript,html,css,csharp,python,fabricmc,forgemc,neoforge,papermc,velocity,markdown,sql,toml,yaml,xaml,powershell,bash,spring,springboot,jakartaee,nodejs,tauri,pinia,tailwindcss,chromium,mysql,sqlite,mermaid,gradle,apachemaven,npm,chocolatey,docker,adobeillustrator,adobephotoshop,adobepremierepro,intellijidea,webstorm,datagrip,rider,pycharm,fleet,visualstudio,visualstudiocode,eclipseide,git,gitbash,github,githubpages,githubactions,postman,prettier,cloudflare,figma,firefox,microsoftoffice,microsoftword,microsoftpowerpoint,microsoftexcel,blender,gimp,obs,vmix,vmware,canva,telegram,discord,windows"
+
+notes:
+  name-origin-1: "「ClovenBugle」實際上是一個 Xbox 自己生成的名字，「ChilovenBustiangle」則是其在字母上的變形；"
+  name-origin-2: "後綴「945」最初並不存在，但因為名字的長度限制「9455」被強制縮短至「945」，並保留在了今天；"
+  greek: "也許吧……可能吧……大概吧……"

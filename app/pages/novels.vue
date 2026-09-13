@@ -140,7 +140,7 @@ usePageMeta({
 </script>
 
 <template>
-    <div class="container-page py-10 lg:py-14">
+    <div>
         <header class="border-b border-default pb-8">
             <p class="font-mono text-xs tracking-[0.3em] text-muted uppercase">
                 {{ t('novels.label') }}

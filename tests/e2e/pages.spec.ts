@@ -8,8 +8,6 @@ const keyPages = [
     {path: '/tags', heading: '标签'},
     {path: '/archives', heading: '归档'},
     {path: '/friends', heading: '友链'},
-    {path: '/links', heading: '链接'},
-    {path: '/about', heading: '关于'},
     {path: '/search', heading: '搜索'},
 ] as const
 
@@ -122,9 +120,9 @@ test.describe('locales', () => {
     test(
         'serves Traditional Chinese under /zh-tw',
         async ({page}) => {
-            await gotoHydrated(page, '/zh-tw/about')
+            await gotoHydrated(page, '/zh-tw/novels')
             await expect(page.locator('html')).toHaveAttribute('lang', 'zh-TW')
-            await expect(page.locator('main h1').first()).toContainText('關於')
+            await expect(page.locator('main h1').first()).toContainText('小說')
         }
     )
 
