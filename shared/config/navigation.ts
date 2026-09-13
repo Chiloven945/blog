@@ -1,10 +1,10 @@
 import type {SystemNavItem} from '../types/navigation'
 
 // Fixed v2 primary navigation (`Home / Articles / Novels / Tags /
-// Archives / Friends`). The novel and tag indexes ship in later
-// milestones, so they are flagged unavailable: the floating nav renders
-// them as disabled rather than linking to a route that does not exist
-// yet. Flip `available` to true as each page lands.
+// Archives / Friends`). Tags ship in a later milestone, so it stays
+// flagged unavailable: the floating nav renders it as disabled rather
+// than linking to a route that does not exist yet. Flip `available` to
+// true as each page lands.
 export const siteNavigation: SystemNavItem[] = [
     {
         key: 'home',
@@ -25,7 +25,7 @@ export const siteNavigation: SystemNavItem[] = [
         to: '/novels',
         icon: 'i-lucide-book-open',
         order: 30,
-        available: false
+        available: true
     },
     {
         key: 'tags',

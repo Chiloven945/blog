@@ -58,6 +58,21 @@
     "source": "Source",
     "sourceAuthors": "Authors"
   },
+  "novels": {
+    "kind": "Novel",
+    "label": "NOVELS / 003",
+    "title": "Novels",
+    "description": "Stories, vignettes, and serials.",
+    "all": "All",
+    "subtypeLabel": "Type",
+    "statusLabel": "Status",
+    "currentlyWriting": "Currently writing",
+    "recent": "Recent works",
+    "series": "Series",
+    "empty": "The shelf is still empty.",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "New writing will appear here."
+  },
   "article": {
     "subtype": {
       "note": "Note",
@@ -78,6 +93,7 @@
     }
   },
   "novel": {
+    "sceneBreak": "Scene break",
     "subtype": {
       "shortStory": "Short story",
       "vignette": "Vignette",
@@ -92,6 +108,26 @@
       "complete": "Complete",
       "paused": "Paused",
       "abandoned": "Abandoned"
+    },
+    "reading": {
+      "settings": "Reading settings",
+      "settingsHint": "Adjust the reading style of the text.",
+      "size": "Text size",
+      "small": "S",
+      "medium": "M",
+      "large": "L",
+      "leading": "Line spacing",
+      "compact": "Compact",
+      "normal": "Normal",
+      "airy": "Airy",
+      "width": "Column width",
+      "narrow": "Narrow",
+      "wide": "Wide",
+      "indent": "Paragraph indent",
+      "on": "On",
+      "off": "Off",
+      "readingMode": "Reading mode",
+      "exit": "Exit reading mode"
     }
   },
   "series": {
@@ -101,7 +137,8 @@
       "complete": "Complete",
       "paused": "Paused",
       "abandoned": "Abandoned"
-    }
+    },
+    "part": "Part {n}"
   },
   "license": {
     "ccByNcSa": "CC BY-NC-SA 4.0",

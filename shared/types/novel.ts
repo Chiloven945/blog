@@ -29,10 +29,14 @@ export interface NovelCardItem {
     title: string
     description?: string
     date: string
+    updated?: string
     subtype?: string
     status?: string
     categories?: string[]
     tags?: string[]
+    series?: string
+    seriesOrder?: number
     cover?: string
     coverAlt?: string
+    featured?: boolean
 }

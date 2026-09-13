@@ -58,6 +58,21 @@
     "source": "来源",
     "sourceAuthors": "作者"
   },
+  "novels": {
+    "kind": "小说",
+    "label": "小说 / 003",
+    "title": "小说",
+    "description": "故事、小品与连载。",
+    "all": "全部",
+    "subtypeLabel": "类型",
+    "statusLabel": "状态",
+    "currentlyWriting": "连载中",
+    "recent": "近期作品",
+    "series": "系列",
+    "empty": "书架还是空的。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "新的作品会出现在这里。"
+  },
   "article": {
     "subtype": {
       "note": "笔记",
@@ -78,6 +93,7 @@
     }
   },
   "novel": {
+    "sceneBreak": "场景分隔",
     "subtype": {
       "shortStory": "短篇",
       "vignette": "小品",
@@ -92,6 +108,26 @@
       "complete": "已完成",
       "paused": "已暂停",
       "abandoned": "已弃坑"
+    },
+    "reading": {
+      "settings": "阅读设置",
+      "settingsHint": "调整正文的阅读样式。",
+      "size": "字号",
+      "small": "小",
+      "medium": "中",
+      "large": "大",
+      "leading": "行距",
+      "compact": "紧凑",
+      "normal": "标准",
+      "airy": "宽松",
+      "width": "版心",
+      "narrow": "窄",
+      "wide": "宽",
+      "indent": "段落缩进",
+      "on": "开",
+      "off": "关",
+      "readingMode": "阅读模式",
+      "exit": "退出阅读模式"
     }
   },
   "series": {
@@ -101,7 +137,8 @@
       "complete": "已完成",
       "paused": "已暂停",
       "abandoned": "已停更"
-    }
+    },
+    "part": "第 {n} 篇"
   },
   "license": {
     "ccByNcSa": "CC BY-NC-SA 4.0",

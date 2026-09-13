@@ -15,13 +15,15 @@ dependency-light runtime.
   CMS, or auth.
 - **Reading experience** — a dedicated article reader with a contents/tools rail (reading progress,
   copy link, back to top), reading time, source notices for translations, license, footnotes, and
-  comments.
+  comments; and a separate serif novel reader with a title page, scene breaks, a reading toolbar
+  (text size, line spacing, column width, indent), a chrome-free reading mode, and a progress line.
 - **Rich Markdown** — syntax-highlighted code with line numbers and copy, callouts, figures,
   galleries, link cards, Spotify embeds, KaTeX math, and custom anchors.
 - **Search** — a `Ctrl/Cmd + K` command palette and a shareable `/search?q=`
   page, scoped to the active language.
 - **Sections** — a designed homepage, a technical article index with a subtype filter and featured
-  entry, an archive timeline, friends, and free-form content pages.
+  entry, a novel library with subtype and status filters and a currently-writing feature, an archive
+  timeline, friends, and free-form content pages.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.

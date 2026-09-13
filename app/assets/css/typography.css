@@ -1,20 +1,23 @@
 /* ==========================================================================
-   typography.css — v2 self-hosted font stack
+   typography.css — self-hosted font stack
    ==========================================================================
-   All families are SIL OFL 1.1 (licenses in public/fonts/licenses/):
+   One unified Latin-first stack for every locale (no per-language
+   switching): the Latin face renders Latin/digits/punctuation and the CJK
+   face is the fallback for CJK glyphs.
 
-   - Source Han Sans CN/TW  (variable, region subset) → CJK sans
-   - Source Han Serif CN/TW (variable, region subset) → CJK serif
-   - Google Sans Flex       (variable, Latin)          → English sans
-   - Libre Baskerville      (variable, Latin)          → English serif
-   - Cascadia Code          (variable, Latin)          → code
+     sans  → Google Sans Flex   → Source Han Sans
+     serif → Libre Baskerville  → Source Han Serif
+     mono  → Cascadia Code      → Sarasa Mono CL
 
-   The @font-face files are never all preloaded. Only the active locale's
-   UI sans (and the reading serif on novel routes) is preloaded; see
-   app/utils/fonts.ts and app/app.vue.
+   All bundled families are SIL OFL 1.1 (licenses in public/fonts/). Sarasa
+   Mono CL is a subsetted Sarasa Gothic web font, so CJK glyphs in code
+   always resolve to it.
+
+   @font-face files are never all preloaded. Only one small Latin face per
+   route is preloaded (see app/utils/fonts.ts and app/app.vue).
    ========================================================================== */
 
-/* --- Source Han Sans (CJK, region subsets) --- */
+/* --- Source Han Sans (CJK) --- */
 @font-face {
     font-family: "Source Han Sans CN";
     src: url("/fonts/source-han-sans/SourceHanSansCN-VF.woff2") format("woff2");
@@ -23,15 +26,7 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: "Source Han Sans TW";
-    src: url("/fonts/source-han-sans/SourceHanSansTW-VF.woff2") format("woff2");
-    font-weight: 250 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* --- Source Han Serif (CJK, region subsets) --- */
+/* --- Source Han Serif (CJK) --- */
 @font-face {
     font-family: "Source Han Serif CN";
     src: url("/fonts/source-han-serif/SourceHanSerifCN-VF.woff2") format("woff2");
@@ -40,15 +35,7 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: "Source Han Serif TW";
-    src: url("/fonts/source-han-serif/SourceHanSerifTW-VF.woff2") format("woff2");
-    font-weight: 250 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* --- Latin --- */
+/* --- Latin / mono --- */
 @font-face {
     font-family: "Google Sans Flex";
     src: url("/fonts/google-sans-flex/GoogleSansFlex-VF.woff2") format("woff2");
@@ -73,7 +60,6 @@
     font-display: swap;
 }
 
-/* --- Mono --- */
 @font-face {
     font-family: "Cascadia Code";
     src: url("/fonts/cascadia-code/CascadiaCode-VF.woff2") format("woff2");
@@ -82,19 +68,25 @@
     font-display: swap;
 }
 
+/* --- Sarasa Mono CL (CJK mono fallback) --- */
+@font-face {
+    font-family: "Sarasa Mono CL";
+    src: url("/fonts/sarasa-mono-cl/SarasaMonoCL-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* ==========================================================================
-   Semantic font tokens
-   ==========================================================================
-   Resolved per locale on <html lang="..">:
-     zh-CN → Source Han Sans/Serif CN
-     zh-TW → Source Han Sans/Serif TW
-     en-US → Google Sans Flex / Libre Baskerville
+   Semantic font tokens (locale-independent)
    ========================================================================== */
 :root {
+    --font-latin-sans: "Google Sans Flex";
+    --font-latin-serif: "Libre Baskerville";
+    --font-latin-mono: "Cascadia Code";
     --font-cjk-sans: "Source Han Sans CN";
     --font-cjk-serif: "Source Han Serif CN";
-    --font-en-sans: "Google Sans Flex";
-    --font-en-serif: "Libre Baskerville";
+    --font-cjk-mono: "Sarasa Mono CL";
 
     --font-fallback-sans: ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -102,34 +94,18 @@
     --font-fallback-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas,
     "Liberation Mono", Menlo, monospace;
 
-    --font-ui-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
-    --font-display-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
-    --font-display-serif: var(--font-cjk-serif), var(--font-en-serif), var(--font-fallback-serif);
-    --font-reading-sans: var(--font-cjk-sans), var(--font-en-sans), var(--font-fallback-sans);
-    --font-reading-serif: var(--font-cjk-serif), var(--font-en-serif), var(--font-fallback-serif);
+    --font-ui-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
+    --font-display-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
+    --font-display-serif: var(--font-latin-serif), var(--font-cjk-serif), var(--font-fallback-serif);
+    --font-reading-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
+    --font-reading-serif: var(--font-latin-serif), var(--font-cjk-serif), var(--font-fallback-serif);
+    --font-code: var(--font-latin-mono), var(--font-cjk-mono), var(--font-fallback-mono);
 }
 
-/* Traditional Chinese prefers TW glyphs first. */
-:root[lang^="zh-TW"] {
-    --font-cjk-sans: "Source Han Sans TW";
-    --font-cjk-serif: "Source Han Serif TW";
-}
-
-/* English drops the CJK families and uses the Latin ones. */
-:root[lang^="en"] {
-    --font-ui-sans: var(--font-en-sans), var(--font-fallback-sans);
-    --font-display-sans: var(--font-en-sans), var(--font-fallback-sans);
-    --font-display-serif: var(--font-en-serif), var(--font-fallback-serif);
-    --font-reading-sans: var(--font-en-sans), var(--font-fallback-sans);
-    --font-reading-serif: var(--font-en-serif), var(--font-fallback-serif);
-}
-
-/* Tailwind utilities follow the locale-aware UI token. `font-mono` is
-   locale-independent, so it is declared literally. */
+/* Tailwind utilities follow the same unified tokens. */
 @theme {
     --font-sans: var(--font-ui-sans);
-    --font-mono: "Cascadia Code", ui-monospace, SFMono-Regular, "Cascadia Mono",
-    Consolas, "Liberation Mono", Menlo, monospace;
+    --font-mono: var(--font-code);
 }
 
 /* ==========================================================================
@@ -172,7 +148,7 @@
     pre,
     kbd,
     samp {
-        font-family: var(--font-mono), monospace;
+        font-family: var(--font-code), monospace;
         font-feature-settings: "liga" 0;
     }
 

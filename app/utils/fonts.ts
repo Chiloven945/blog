@@ -1,43 +1,29 @@
 /**
- * Per-locale self-hosted font files.
+ * Self-hosted font files that are candidates for <link rel="preload">.
  *
- * Only the files listed here are candidates for <link rel="preload">; the
- * full set of @font-face declarations lives in app/assets/css/typography.css.
- * The active locale's sans is preloaded globally, and the reading face is
- * preloaded per route so the first paint never fetches every CJK font.
+ * The stack is unified and locale-independent (see typography.css):
+ * Latin faces are small and safe to preload, while the large CJK fallbacks
+ * load on demand via `font-display: swap`. Only one face is preloaded per
+ * route: the UI sans globally, plus the reading/code face on post pages.
  */
-export interface LocaleFontFiles {
-    /** UI + article reading sans for the locale. */
+export interface FontAssets {
+    /** UI + article reading Latin sans. */
     sans: string
-    /** Novel reading serif for the locale. */
+    /** Novel reading Latin serif. */
     serif: string
-    /** Code face (Cascadia Code, shared by all locales). */
+    /** Code face. */
     code: string
 }
 
-const codeFile = '/fonts/cascadia-code/CascadiaCode-VF.woff2'
-
-const fontFiles: Record<string, LocaleFontFiles> = {
-    'zh-cn': {
-        sans: '/fonts/source-han-sans/SourceHanSansCN-VF.woff2',
-        serif: '/fonts/source-han-serif/SourceHanSerifCN-VF.woff2',
-        code: codeFile,
-    },
-    'zh-tw': {
-        sans: '/fonts/source-han-sans/SourceHanSansTW-VF.woff2',
-        serif: '/fonts/source-han-serif/SourceHanSerifTW-VF.woff2',
-        code: codeFile,
-    },
-    en: {
-        sans: '/fonts/google-sans-flex/GoogleSansFlex-VF.woff2',
-        serif: '/fonts/libre-baskerville/LibreBaskerville-VF.woff2',
-        code: codeFile,
-    },
+const fontAssets: FontAssets = {
+    sans: '/fonts/google-sans-flex/GoogleSansFlex-VF.woff2',
+    serif: '/fonts/libre-baskerville/LibreBaskerville-VF.woff2',
+    code: '/fonts/cascadia-code/CascadiaCode-VF.woff2',
 }
 
-/** Resolve a locale's font files, falling back to the default locale. */
-export function resolveFontFiles(locale?: string): LocaleFontFiles {
-    return fontFiles[locale ?? ''] ?? fontFiles['zh-cn']!
+/** The fixed font asset set (kept locale-independent by design). */
+export function resolveFontFiles(_locale?: string): FontAssets {
+    return fontAssets
 }
 
 /** Build a `<link rel="preload">` descriptor for a self-hosted font file. */

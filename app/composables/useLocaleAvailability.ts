@@ -8,7 +8,7 @@ const localePrefixes: Record<ContentLocale, string> = {
     en: '/en',
 }
 
-const systemRoutes = new Set(['/', '/articles', '/search', '/archives', '/friends'])
+const systemRoutes = new Set(['/', '/articles', '/novels', '/search', '/archives', '/friends'])
 
 type ContentPathIndex = Record<string, string[]>
 

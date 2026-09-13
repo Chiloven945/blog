@@ -1,17 +1,23 @@
 # Font licenses
 
-License files for the v2 font stack. Each family is distributed under the SIL Open Font License 1.1
-(OFL). The binaries live alongside these files under ``.
+License files for the font stack. Each bundled family is distributed under the SIL Open Font License
+1.1 (OFL). The binaries live alongside these files under ``.
 
-| Font              | Role                  | Files                             | License file                | Source                                          |
-|-------------------|-----------------------|-----------------------------------|-----------------------------|-------------------------------------------------|
-| Source Han Sans   | CJK sans (UI/article) | `source-han-sans`   | `source-han-sans/source-han-sans-OFL.txt`   | https://github.com/adobe-fonts/source-han-sans  |
-| Source Han Serif  | CJK serif (novel)     | `source-han-serif`  | `source-han-serif/source-han-serif-OFL.txt`  | https://github.com/adobe-fonts/source-han-serif |
-| Google Sans Flex  | English sans (UI)     | `google-sans-flex`  | `google-sans-flex/google-sans-flex-OFL.txt`  | https://github.com/googlefonts/googlesans-flex  |
-| Libre Baskerville | English serif (novel) | `libre-baskerville` | `libre-baskerville/libre-baskerville-OFL.txt` | https://github.com/impallari/Libre-Baskerville  |
-| Cascadia Code     | code                  | `cascadia-code`     | `cascadia-code/cascadia-code-OFL.txt`     | https://github.com/microsoft/cascadia-code      |
+| Font              | Role                    | Files               | License file                                  | Source                                          |
+|-------------------|-------------------------|---------------------|-----------------------------------------------|-------------------------------------------------|
+| Google Sans Flex  | Latin sans (UI/article) | `google-sans-flex`  | `google-sans-flex/google-sans-flex-OFL.txt`   | https://github.com/googlefonts/googlesans-flex  |
+| Source Han Sans   | CJK sans fallback       | `source-han-sans`   | `source-han-sans/source-han-sans-OFL.txt`     | https://github.com/adobe-fonts/source-han-sans  |
+| Libre Baskerville | Latin serif (novel)     | `libre-baskerville` | `libre-baskerville/libre-baskerville-OFL.txt` | https://github.com/impallari/Libre-Baskerville  |
+| Source Han Serif  | CJK serif fallback      | `source-han-serif`  | `source-han-serif/source-han-serif-OFL.txt`   | https://github.com/adobe-fonts/source-han-serif |
+| Cascadia Code     | Latin mono (code)       | `cascadia-code`     | `cascadia-code/cascadia-code-OFL.txt`         | https://github.com/microsoft/cascadia-code      |
+| Sarasa Mono CL    | CJK mono fallback       | `sarasa-mono-cl`    | `sarasa-mono-cl/sarasa-gothic-OFL.txt`        | https://github.com/be5invis/Sarasa-Gothic       |
 
-Source Han Sans/Serif are the official Adobe region subsets (CN / TW) in variable WOFF2. The Latin
-and mono files are the Fontsource variable Latin subsets of the respective upstream projects. Fonts
-are self-hosted; retain these license files alongside the binaries and keep the copyright notices
-intact.
+The stack is unified and locale-independent: the Latin face renders Latin, and the CJK face is the
+fallback for CJK glyphs (Google Sans Flex → Source Han Sans, Libre Baskerville → Source Han Serif,
+Cascadia Code → Sarasa Mono CL). Source Han Sans/Serif are the official Adobe CN region subsets in
+variable WOFF2; the Latin and mono files are the Fontsource variable Latin subsets. Sarasa Mono CL
+is a subsetted Sarasa Gothic web font (Regular, one file, loaded on demand when CJK mono glyphs
+appear).
+
+Fonts are self-hosted; retain these license files alongside the binaries and keep the copyright
+notices intact.

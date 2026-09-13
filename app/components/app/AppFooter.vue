@@ -8,7 +8,7 @@ const footerItems = computed(() => items.value.filter(item => item.available))
 </script>
 
 <template>
-    <UFooter :ui="{ root: 'border-t border-default' }">
+    <UFooter :ui="{ root: 'app-footer border-t border-default' }">
         <template #left>
             <p class="text-sm text-muted">
                 © {{ siteConfig.since }}–{{ year }} {{ siteConfig.author }}

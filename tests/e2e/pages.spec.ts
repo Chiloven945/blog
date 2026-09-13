@@ -4,6 +4,7 @@ import {expectNoHorizontalOverflow, gotoHydrated} from './helpers'
 const keyPages = [
     {path: '/', heading: 'CHILOVEN'},
     {path: '/articles', heading: '文章'},
+    {path: '/novels', heading: '小说'},
     {path: '/archives', heading: '归档'},
     {path: '/friends', heading: '友链'},
     {path: '/links', heading: '链接'},
@@ -59,6 +60,21 @@ test.describe(
         )
 
         test(
+            'novel library lists works and filters by status',
+            async ({page}) => {
+                await gotoHydrated(page, '/novels')
+
+                await expect(page.locator('main')).toContainText('连载中')
+                const works = page.locator('main article')
+                expect(await works.count()).toBeGreaterThan(1)
+
+                await page.getByRole('button', {name: '已完成'}).click()
+                await expect(page).toHaveURL(/\?status=complete/)
+                await expect(works).toHaveCount(3)
+            }
+        )
+
+        test(
             'shows the 404 page for unknown routes',
             async ({page}) => {
                 const response = await page.goto('/does-not-exist')
@@ -109,18 +125,21 @@ test.describe('locales', () => {
     )
 })
 
-test.describe('color mode', () => {
-    test(
-        'toggles dark mode from the navigation',
-        async ({page}) => {
-            await gotoHydrated(page, '/')
-            const html = page.locator('html')
-            await expect(html).not.toHaveClass(/\bdark\b/)
-            await page.locator('.site-nav:visible')
-                .getByRole('button', {name: '切换主题'})
-                .click()
-            await expect(html).toHaveClass(/\bdark\b/)
-            await expectNoHorizontalOverflow(page, '/ dark')
-        }
-    )
-})
+test.describe(
+    'color mode',
+    () => {
+        test(
+            'toggles dark mode from the navigation',
+            async ({page}) => {
+                await gotoHydrated(page, '/')
+                const html = page.locator('html')
+                await expect(html).not.toHaveClass(/\bdark\b/)
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: '切换主题'})
+                    .click()
+                await expect(html).toHaveClass(/\bdark\b/)
+                await expectNoHorizontalOverflow(page, '/ dark')
+            }
+        )
+    }
+)

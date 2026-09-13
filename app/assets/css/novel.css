@@ -1,0 +1,100 @@
+/* ==========================================================================
+   novel.css — literary reading layer
+   ==========================================================================
+   The novel reader is serif-first, quiet, and roomy: one measured column,
+   generous vertical rhythm, and few interface elements. Reading preferences
+   from useNovelReadingPreferences() drive the CSS custom properties below.
+   ========================================================================== */
+
+@layer components {
+    /* Reader shell (title page) and the measured body column. */
+    .novel-shell {
+        max-width: 52rem;
+    }
+
+    .novel-column {
+        max-width: var(--novel-measure, 36rem);
+    }
+
+    .novel-title-page {
+        text-wrap: balance;
+    }
+
+    .novel-colophon {
+        font-family: var(--font-reading-serif), serif;
+    }
+
+    .novel-epigraph blockquote {
+        border: 0;
+        padding: 0;
+    }
+
+    .novel-scene-break {
+        letter-spacing: 0.6em;
+        font-family: var(--font-display-serif), serif;
+    }
+}
+
+@layer utilities {
+    .prose-novel {
+        font-family: var(--font-reading-serif), serif;
+        font-size: var(--novel-font-size, 1.125rem);
+        line-height: var(--novel-leading, 1.95);
+    }
+
+    /* Chinese prose indents every paragraph; blockquotes, lists, captions and
+       the scene break stay flush. Nuxt UI's prose paragraphs carry an
+       absolute `leading-7` utility, so the reading line-height must be set
+       directly on the text elements rather than inherited. */
+    .prose-novel :where(p) {
+        text-indent: var(--novel-indent, 2em);
+        line-height: var(--novel-leading, 1.95);
+    }
+
+    .prose-novel :where(li, blockquote, figcaption, dd) {
+        line-height: var(--novel-leading, 1.95);
+    }
+
+    .prose-novel :where(blockquote p, li p, figcaption, .novel-epigraph p, .novel-scene-break) {
+        text-indent: 0;
+    }
+
+    /* Chapter-style headings: centered, spaced, no technical anchor wall. */
+    .prose-novel :where(h2, h3, h4) {
+        font-family: var(--font-display-serif), serif;
+        text-align: center;
+        text-indent: 0;
+        letter-spacing: 0.02em;
+        margin-block: 3rem 1.5rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Reader chrome (§37, §69)
+   On novel routes the floating navigation is quiet; reading mode removes it
+   and the footer entirely. Keyboard focus always restores full contrast.
+   -------------------------------------------------------------------------- */
+.site-nav {
+    transition: opacity var(--duration-base) var(--ease-out);
+}
+
+html.novel-reading:not(.reading-mode) .site-nav {
+    opacity: 0.5;
+}
+
+html.novel-reading:not(.reading-mode) .site-nav:hover,
+html.novel-reading:not(.reading-mode) .site-nav:focus-within {
+    opacity: 1;
+}
+
+html.reading-mode .site-nav,
+html.reading-mode .app-footer {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-nav {
+        transition: none;
+    }
+}
