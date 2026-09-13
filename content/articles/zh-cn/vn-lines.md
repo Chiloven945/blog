@@ -4,9 +4,8 @@ description: 闲着没事搞的东西，存这了（ 算是某种可以给 vn �
 date: 2025-11-18T01:54:47+08:00
 subtype: experiment
 status: published
-categories:
+tags:
   - 杂物
-tags: []
 ---
 
 闲着没事搞的东西，存这了（  

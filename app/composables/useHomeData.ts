@@ -23,7 +23,6 @@ export async function useHomeData() {
                 'date',
                 'subtype',
                 'status',
-                'categories',
                 'tags',
                 'cover',
                 'coverAlt',

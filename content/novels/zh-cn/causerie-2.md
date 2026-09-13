@@ -4,8 +4,6 @@ description: 一九二一年深秋，十七岁的伊万收到一封迟来的信�
 date: 2026-04-19
 subtype: short-story
 status: complete
-categories:
-  - 随笔
 tags:
   - 清水
   - 随笔

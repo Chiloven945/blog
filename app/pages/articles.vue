@@ -20,7 +20,6 @@ const {data} = await useAsyncData<ArticleCardItem[]>(
             'updated',
             'subtype',
             'status',
-            'categories',
             'tags',
             'series',
             'cover',
@@ -43,6 +42,15 @@ const subtypeOptions = useArticleSubtypes()
 const availableSubtypes = computed(() => {
     const present = new Set(articles.value.map(article => article.subtype))
     return subtypeOptions.value.filter(option => present.has(option.value))
+})
+
+const subtypeCounts = computed(() => {
+    const counts = new Map<string, number>()
+    for (const article of articles.value) {
+        const key = article.subtype ?? ''
+        counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+    return counts
 })
 
 const activeType = computed(() => {
@@ -139,6 +147,7 @@ usePageMeta({
                     @click="setType('all')"
             >
                 {{ t('articles.all') }}
+                <span class="ms-1.5 tabular-nums opacity-60">{{ articles.length }}</span>
             </UButton>
 
             <UButton
@@ -150,6 +159,9 @@ usePageMeta({
                     @click="setType(option.value)"
             >
                 {{ option.label }}
+                <span class="ms-1.5 tabular-nums opacity-60">{{
+                        subtypeCounts.get(option.value) ?? 0
+                    }}</span>
             </UButton>
         </div>
 

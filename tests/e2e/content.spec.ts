@@ -22,6 +22,36 @@ test.describe(
         )
 
         test(
+            'article TOC rail stays sticky and tracks the active section',
+            async ({page}) => {
+                await gotoHydrated(page, '/p/jep-512')
+
+                const tools = page.locator('.article-tools')
+                await expect(tools).toBeVisible()
+
+                await page.evaluate(() => window.scrollTo(0, 2000))
+                await page.waitForTimeout(250)
+                const firstTop = await tools.evaluate(el =>
+                    Math.round(el.getBoundingClientRect().top),
+                )
+
+                await page.evaluate(() => window.scrollTo(0, 9000))
+                await page.waitForTimeout(300)
+                const secondTop = await tools.evaluate(el =>
+                    Math.round(el.getBoundingClientRect().top),
+                )
+
+                // The rail must not scroll away with the article.
+                expect(Math.abs(firstTop - secondTop)).toBeLessThanOrEqual(2)
+                expect(secondTop).toBeLessThan(150)
+
+                await expect(
+                    page.locator('nav[aria-label="Table of contents"] a[data-active="true"]'),
+                ).toHaveCount(1)
+            }
+        )
+
+        test(
             'jep-401 keeps hand-written anchors and tables',
             async ({page}) => {
                 await gotoHydrated(page, '/p/jep-401')

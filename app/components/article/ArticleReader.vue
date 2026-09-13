@@ -53,10 +53,12 @@ const showToc = computed(() =>
                 class="mt-8"
         />
 
-        <ArticleToc v-if="showToc" :links="tocLinks" class="mt-8" variant="mobile"/>
+        <div v-if="showToc" class="mt-8">
+            <ArticleToc :links="tocLinks" variant="mobile"/>
+        </div>
 
         <div
-                :class="showToc ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_var(--toc-width)] lg:gap-12' : ''"
+                :class="showToc ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_var(--toc-width)] lg:items-start lg:gap-12' : ''"
                 class="mt-10"
         >
             <div :class="showToc ? '' : 'mx-auto'" class="article-column min-w-0">

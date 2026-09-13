@@ -54,22 +54,38 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <aside class="article-tools sticky top-24 hidden lg:block">
-        <div class="flex items-center justify-between font-mono text-xs tracking-[0.2em] text-muted uppercase">
-            <span>{{ t('articles.tools') }}</span>
-            <span class="tabular-nums">{{ Math.round(progress) }}%</span>
-        </div>
-
-        <div class="mt-2 h-0.5 w-full bg-elevated">
+    <aside
+            class="article-tools sticky top-24 hidden max-h-[calc(100vh-7.5rem)] flex-col lg:flex"
+    >
+        <!-- Pinned top: tools, progress and the contents label. -->
+        <div class="shrink-0">
             <div
-                    :style="{width: `${progress}%`}"
-                    class="h-full bg-primary transition-[width] duration-150"
-            />
+                    class="flex items-center justify-between font-mono text-xs tracking-[0.2em] text-muted uppercase"
+            >
+                <span>{{ t('articles.tools') }}</span>
+                <span class="tabular-nums">{{ Math.round(progress) }}%</span>
+            </div>
+
+            <div class="mt-2 h-0.5 w-full bg-elevated">
+                <div
+                        :style="{width: `${progress}%`}"
+                        class="h-full bg-primary transition-[width] duration-150"
+                />
+            </div>
+
+            <p class="mt-6 font-mono text-xs tracking-[0.2em] text-muted uppercase">
+                {{ t('post.toc') }}
+            </p>
         </div>
 
-        <ArticleToc :links="links" class="mt-6"/>
+        <!-- Only the table of contents scrolls; it also auto-follows the
+             active section. When it is short it keeps its natural height. -->
+        <div class="mt-3 flex min-h-0 flex-1 flex-col">
+            <ArticleToc :links="links"/>
+        </div>
 
-        <div class="mt-6 flex flex-col items-start gap-1 text-sm">
+        <!-- Pinned bottom: quick actions. -->
+        <div class="mt-6 flex shrink-0 flex-col items-start gap-1 text-sm">
             <button
                     class="focus-ring inline-flex items-center gap-2 text-muted transition-colors hover:text-highlighted"
                     type="button"

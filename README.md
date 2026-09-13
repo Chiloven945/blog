@@ -24,6 +24,8 @@ dependency-light runtime.
 - **Sections** — a designed homepage, a technical article index with a subtype filter and featured
   entry, a novel library with subtype and status filters and a currently-writing feature, an archive
   timeline, friends, and free-form content pages.
+- **Tags** — a `/tags` index with count-tiered blocks and `/tags/:tag` pages that keep article and
+  novel results in separate lists; tags are normalized per locale and clickable from the readers.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
@@ -104,8 +106,7 @@ description: A short summary.
 date: "2026-09-11"
 subtype: tutorial        # article subtype (shared/config/article-subtypes.ts)
 status: published        # article status (shared/config/statuses.ts)
-categories: [ Java ]
-tags: [ JEP ]
+tags: [ Java, JEP ]
 cover: /images/posts/my-post/cover.png
 comments: true
 toc: true
@@ -118,8 +119,7 @@ featured: false
 | `date`       | required       | `YYYY-MM-DD` or an ISO timestamp                    |
 | `subtype`    | required       | Article or novel subtype (per collection)           |
 | `status`     | `published`    | Articles: `published`; novels default to `complete` |
-| `categories` | `[]`           | Topics shown in the UI                              |
-| `tags`       | `[]`           | Free-form tags                                      |
+| `tags`       | `[]`           | Free-form tags, normalized per locale               |
 | `cover`      | –              | Path under `public/`                                |
 | `license`    | per kind       | Key from `shared/config/licenses.ts`                |
 | `comments`   | `true`         | Set to `false` to hide Giscus                       |

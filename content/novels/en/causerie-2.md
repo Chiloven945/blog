@@ -4,12 +4,11 @@ description: 一九二一年深秋，十七岁的伊万收到一封迟来的信�
 date: 2026-04-19
 subtype: short-story
 status: complete
-categories:
-  - Causerie
 tags:
   - 清水
   - 随笔
   - 文学
+  - Causerie
 license: all-rights-reserved
 toc: false
 ---

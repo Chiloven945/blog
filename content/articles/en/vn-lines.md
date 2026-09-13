@@ -4,9 +4,8 @@ description: Something I tinkered with when I was bored, storing it here It’s 
 date: 2025-11-18T01:54:47+08:00
 subtype: experiment
 status: published
-categories:
+tags:
   - Misc
-tags: []
 ---
 
 Something I tinkered with when I was bored, storing it here It’s basically some kind of

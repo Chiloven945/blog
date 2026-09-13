@@ -20,7 +20,6 @@ const {data} = await useAsyncData<NovelCardItem[]>(
             'updated',
             'subtype',
             'status',
-            'categories',
             'tags',
             'series',
             'seriesOrder',
@@ -50,6 +49,24 @@ const availableSubtypes = computed(() => {
 const availableStatuses = computed(() => {
     const present = new Set(novels.value.map(novel => novel.status))
     return statusOptions.value.filter(option => present.has(option.value))
+})
+
+const subtypeCounts = computed(() => {
+    const counts = new Map<string, number>()
+    for (const novel of novels.value) {
+        const key = novel.subtype ?? ''
+        counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+    return counts
+})
+
+const statusCounts = computed(() => {
+    const counts = new Map<string, number>()
+    for (const novel of novels.value) {
+        const key = novel.status ?? ''
+        counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+    return counts
 })
 
 function validQuery(key: 'type' | 'status', options: Array<{ value: string }>) {
@@ -148,6 +165,7 @@ usePageMeta({
                         @click="setFilter('type', 'all')"
                 >
                     {{ t('novels.all') }}
+                    <span class="ms-1.5 tabular-nums opacity-60">{{ novels.length }}</span>
                 </UButton>
                 <UButton
                         v-for="option in availableSubtypes"
@@ -158,6 +176,9 @@ usePageMeta({
                         @click="setFilter('type', option.value)"
                 >
                     {{ option.label }}
+                    <span class="ms-1.5 tabular-nums opacity-60">{{
+                            subtypeCounts.get(option.value) ?? 0
+                        }}</span>
                 </UButton>
             </div>
 
@@ -172,6 +193,7 @@ usePageMeta({
                         @click="setFilter('status', 'all')"
                 >
                     {{ t('novels.all') }}
+                    <span class="ms-1.5 tabular-nums opacity-60">{{ novels.length }}</span>
                 </UButton>
                 <UButton
                         v-for="option in availableStatuses"
@@ -182,6 +204,9 @@ usePageMeta({
                         @click="setFilter('status', option.value)"
                 >
                     {{ option.label }}
+                    <span class="ms-1.5 tabular-nums opacity-60">{{
+                            statusCounts.get(option.value) ?? 0
+                        }}</span>
                 </UButton>
             </div>
         </div>

@@ -10,7 +10,7 @@ const viewports = [
     {name: '1440', width: 1440, height: 900},
 ] as const
 
-const pages = ['/', '/articles', '/novels', '/p/wip-a'] as const
+const pages = ['/', '/articles', '/novels', '/tags', '/p/wip-a'] as const
 
 for (const viewport of viewports) {
     test.describe(

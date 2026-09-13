@@ -8,7 +8,6 @@ export interface SearchSection {
     content: string
     kind?: 'article' | 'novel'
     subtype?: string
-    categories?: string[]
     tags?: string[]
     date?: string
 }
@@ -37,7 +36,6 @@ function joinMetadata(section: SearchSection): string {
     return [
         section.kind,
         section.subtype,
-        ...(section.categories ?? []),
         ...(section.tags ?? [])
     ]
         .filter(Boolean)

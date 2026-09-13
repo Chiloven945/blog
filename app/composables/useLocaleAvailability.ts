@@ -1,5 +1,6 @@
 import type {ComputedRef} from 'vue'
 import type {LocaleObject} from '@nuxtjs/i18n'
+import {tagPath} from '#shared/utils/taxonomy'
 import {contentCollections, type ContentLocale} from './useActiveContentCollection'
 
 const localePrefixes: Record<ContentLocale, string> = {
@@ -8,7 +9,15 @@ const localePrefixes: Record<ContentLocale, string> = {
     en: '/en',
 }
 
-const systemRoutes = new Set(['/', '/articles', '/novels', '/search', '/archives', '/friends'])
+const systemRoutes = new Set([
+    '/',
+    '/articles',
+    '/novels',
+    '/tags',
+    '/search',
+    '/archives',
+    '/friends'
+])
 
 type ContentPathIndex = Record<string, string[]>
 
@@ -63,8 +72,8 @@ export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
                 codes.map(async (code) => {
                     const collections = contentCollections[code]
                     const [articles, novels, series, pages] = await Promise.all([
-                        queryCollection(collections.articles).select('path').all(),
-                        queryCollection(collections.novels).select('path').all(),
+                        queryCollection(collections.articles).select('path', 'tags').all(),
+                        queryCollection(collections.novels).select('path', 'tags').all(),
                         queryCollection(collections.series).select('path').all(),
                         queryCollection(collections.pages).select('path').all(),
                     ])
@@ -74,7 +83,14 @@ export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
                         ...series,
                         ...pages
                     ].map(item => (item as { path: string }).path,)
-                    return [code, paths] as const
+
+                    // Tag pages are locale-local: only mark a tag reachable
+                    // when the target locale actually carries it.
+                    const tags = [...articles, ...novels]
+                        .flatMap(item => (item as { tags?: string[] }).tags ?? [])
+                        .map(tag => localizedContentPath(tagPath(tag), code))
+
+                    return [code, [...paths, ...new Set(tags)]] as const
                 }),
             )
 

@@ -5,6 +5,7 @@ import {parse as parseYaml} from 'yaml'
 import {articleSchema} from '../shared/schemas/article'
 import {novelSchema} from '../shared/schemas/novel'
 import {seriesSchema} from '../shared/schemas/series'
+import {normalizeTagKey} from '../shared/utils/taxonomy'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const contentDir = join(root, 'content')
@@ -92,10 +93,6 @@ function parseFrontmatter(raw: string): Record<string, unknown> | null {
         : {}
 }
 
-function normalizeTag(tag: string): string {
-    return tag.trim().toLowerCase().replace(/\s+/g, ' ')
-}
-
 async function validateEntry(entry: ContentEntry): Promise<void> {
     const {data, label} = entry
     const schema = entry.kind === 'article'
@@ -170,7 +167,7 @@ async function validateEntry(entry: ContentEntry): Promise<void> {
     const seenTags = new Map<string, string>()
 
     for (const tag of tags) {
-        const normalized = normalizeTag(tag)
+        const normalized = normalizeTagKey(tag)
         const previous = seenTags.get(normalized)
 
         if (previous !== undefined) {

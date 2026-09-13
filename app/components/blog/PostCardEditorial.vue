@@ -3,11 +3,9 @@ import type {PostCardItem} from '#shared/types/content'
 import PostMeta from './PostMeta.vue'
 import PostKindBadge from './PostKindBadge.vue'
 
-const props = defineProps<{
+defineProps<{
     post: PostCardItem
 }>()
-
-const categories = computed(() => props.post.categories ?? [])
 </script>
 
 <template>
@@ -46,13 +44,6 @@ const categories = computed(() => props.post.categories ?? [])
                 <p v-if="post.description" class="mt-3 line-clamp-3 text-sm/6 text-muted">
                     {{ post.description }}
                 </p>
-
-                <div
-                        v-if="categories.length"
-                        class="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-5 font-mono text-xs tracking-[0.15em] text-muted uppercase"
-                >
-                    <span v-for="category in categories" :key="category">{{ category }}</span>
-                </div>
             </div>
         </NuxtLink>
     </article>

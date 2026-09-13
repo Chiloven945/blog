@@ -4,7 +4,6 @@ description: 正在奮筆疾書……
 date: 2025-12-20
 subtype: serial
 status: wip
-categories: []
 tags:
   - 戀愛
   - furry

@@ -39,7 +39,7 @@ describe('search scoring', () => {
         const title = scoreSearchSection(section({title: 'Java'}), ['java'])
         const heading = scoreSearchSection(section({titles: ['Java']}), ['java'])
         const body = scoreSearchSection(section({content: 'java'}), ['java'])
-        const metadata = scoreSearchSection(section({categories: ['java']}), ['java'])
+        const metadata = scoreSearchSection(section({tags: ['java']}), ['java'])
         expect(title).toBeGreaterThan(heading)
         expect(heading).toBeGreaterThan(body)
         expect(body).toBeGreaterThan(metadata)

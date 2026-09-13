@@ -5,6 +5,7 @@ const keyPages = [
     {path: '/', heading: 'CHILOVEN'},
     {path: '/articles', heading: '文章'},
     {path: '/novels', heading: '小说'},
+    {path: '/tags', heading: '标签'},
     {path: '/archives', heading: '归档'},
     {path: '/friends', heading: '友链'},
     {path: '/links', heading: '链接'},
@@ -71,6 +72,21 @@ test.describe(
                 await page.getByRole('button', {name: '已完成'}).click()
                 await expect(page).toHaveURL(/\?status=complete/)
                 await expect(works).toHaveCount(3)
+            }
+        )
+
+        test(
+            'tags index links to split tag results',
+            async ({page}) => {
+                await gotoHydrated(page, '/tags')
+
+                const tiles = page.locator('main a[href^="/tags/"]')
+                expect(await tiles.count()).toBeGreaterThan(0)
+
+                await tiles.first().click()
+                await expect(page).toHaveURL(/\/tags\/.+/)
+                await expect(page.locator('main h1')).toContainText('#')
+                await expect(page.locator('main')).toContainText('小说 / 3')
             }
         )
 

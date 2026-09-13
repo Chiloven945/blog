@@ -4,8 +4,6 @@ description: 實際上是作業的摸摸魚~ 並沒有對角色進行刻畫
 date: 2024-10-23
 subtype: short-story
 status: complete
-categories:
-  - 隨筆
 tags:
   - 戀愛
   - 純愛

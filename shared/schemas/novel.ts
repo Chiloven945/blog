@@ -10,7 +10,6 @@ export const novelSchema = z.object({
     subtype: z.enum(novelSubtypeKeys),
     status: z.enum(novelStatusKeys).default('complete'),
 
-    categories: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
 
     series: z.string().optional(),

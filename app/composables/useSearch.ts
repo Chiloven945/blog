@@ -13,7 +13,6 @@ type RawSearchSection = {
     content?: unknown
     subtype?: unknown
     status?: unknown
-    categories?: unknown
     tags?: unknown
     date?: unknown
 }
@@ -39,13 +38,12 @@ function toSearchSection(
         content: typeof raw.content === 'string' ? raw.content : '',
         kind,
         subtype: typeof raw.subtype === 'string' ? raw.subtype : undefined,
-        categories: toStringArray(raw.categories),
         tags: toStringArray(raw.tags),
         date: typeof raw.date === 'string' ? raw.date : undefined,
     }
 }
 
-const extraFields = ['subtype', 'categories', 'tags', 'date'] as const
+const extraFields = ['subtype', 'tags', 'date'] as const
 
 /**
  * Search sections for the active locale.

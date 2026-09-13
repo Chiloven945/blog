@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type {ArticleDocument} from '#shared/types/article'
+import TaxonomyLink from '~/components/taxonomy/TaxonomyLink.vue'
 
 const props = defineProps<{
     article: ArticleDocument
@@ -14,7 +15,6 @@ const subtypeLabel = computed(() =>
         ? t(subtype.value.labelKey)
         : null
 )
-const categories = computed(() => props.article.categories ?? [])
 const tags = computed(() => props.article.tags ?? [])
 const published = computed(() => formatPostDate(props.article.date, locale.value))
 const updated = computed(() =>
@@ -34,11 +34,6 @@ const updated = computed(() =>
             <template v-if="subtypeLabel">
                 <span aria-hidden="true" class="text-dimmed">/</span>
                 <span class="text-muted">{{ subtypeLabel }}</span>
-            </template>
-
-            <template v-for="category in categories" :key="category">
-                <span aria-hidden="true" class="text-dimmed">/</span>
-                <span class="text-muted">{{ category }}</span>
             </template>
 
             <template v-if="article.series">
@@ -69,8 +64,8 @@ const updated = computed(() =>
             <span>{{ t('post.readingTime', {minutes: readingTime}) }}</span>
         </div>
 
-        <div v-if="tags.length" class="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
-            <span v-for="tag in tags" :key="tag">#{{ tag }}</span>
+        <div v-if="tags.length" class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+            <TaxonomyLink v-for="tag in tags" :key="tag" :tag="tag"/>
         </div>
     </header>
 </template>

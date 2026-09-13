@@ -73,6 +73,18 @@
     "emptyEyebrow": "EMPTY / 000",
     "emptyDescription": "新的作品会出现在这里。"
   },
+  "tags": {
+    "label": "标签 / 006",
+    "title": "标签",
+    "description": "横跨文章与小说的自由标签。",
+    "entries": "{count} 项",
+    "articles": "文章",
+    "novels": "小说",
+    "backToTags": "全部标签",
+    "empty": "还没有标签。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "发布新内容后标签会出现在这里。"
+  },
   "article": {
     "subtype": {
       "note": "笔记",
@@ -209,6 +221,7 @@
     "backHome": "返回首页",
     "genericTitle": "出了点问题",
     "postNotFound": "找不到这篇文章",
-    "pageNotFound": "找不到这个页面"
+    "pageNotFound": "找不到这个页面",
+    "tagNotFound": "找不到这个标签"
   }
 }

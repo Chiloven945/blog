@@ -17,7 +17,6 @@ export interface PostCardItem {
     kind: Kind
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     cover?: string
     coverAlt?: string
@@ -37,7 +36,6 @@ export interface PostDocument {
     kind: Kind
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     series?: string
     seriesOrder?: number

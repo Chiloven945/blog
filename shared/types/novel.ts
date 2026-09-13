@@ -12,7 +12,6 @@ export interface NovelDocument {
     updated?: string
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     series?: string
     seriesOrder?: number
@@ -32,7 +31,6 @@ export interface NovelCardItem {
     updated?: string
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     series?: string
     seriesOrder?: number

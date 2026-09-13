@@ -73,6 +73,18 @@
     "emptyEyebrow": "EMPTY / 000",
     "emptyDescription": "新的作品會出現在這裡。"
   },
+  "tags": {
+    "label": "標籤 / 006",
+    "title": "標籤",
+    "description": "橫跨文章與小說的自由標籤。",
+    "entries": "{count} 項",
+    "articles": "文章",
+    "novels": "小說",
+    "backToTags": "全部標籤",
+    "empty": "還沒有標籤。",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "發佈新內容後標籤會出現在這裡。"
+  },
   "article": {
     "subtype": {
       "note": "筆記",
@@ -209,6 +221,7 @@
     "backHome": "返回首頁",
     "genericTitle": "出了點問題",
     "postNotFound": "找不到這篇文章",
-    "pageNotFound": "找不到這個頁面"
+    "pageNotFound": "找不到這個頁面",
+    "tagNotFound": "找不到這個標籤"
   }
 }

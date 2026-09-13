@@ -1,10 +1,9 @@
 import type {SystemNavItem} from '../types/navigation'
 
 // Fixed v2 primary navigation (`Home / Articles / Novels / Tags /
-// Archives / Friends`). Tags ship in a later milestone, so it stays
-// flagged unavailable: the floating nav renders it as disabled rather
-// than linking to a route that does not exist yet. Flip `available` to
-// true as each page lands.
+// Archives / Friends`). Flip `available` to true as each page lands; the
+// floating nav renders unavailable entries as disabled rather than
+// linking to a route that does not exist yet.
 export const siteNavigation: SystemNavItem[] = [
     {
         key: 'home',
@@ -32,7 +31,7 @@ export const siteNavigation: SystemNavItem[] = [
         to: '/tags',
         icon: 'i-lucide-tag',
         order: 40,
-        available: false
+        available: true
     },
     {
         key: 'archives',

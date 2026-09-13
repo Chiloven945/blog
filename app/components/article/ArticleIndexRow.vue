@@ -15,7 +15,6 @@ const subtypeLabel = computed(() =>
         ? t(subtype.value.labelKey)
         : null
 )
-const topic = computed(() => props.article.categories?.[0] ?? null)
 const formattedDate = computed(() => formatPostDate(props.article.date, locale.value))
 </script>
 
@@ -48,13 +47,6 @@ const formattedDate = computed(() => formatPostDate(props.article.date, locale.v
                 >
                     {{ article.description }}
                 </span>
-            </span>
-
-            <span
-                    v-if="topic"
-                    class="hidden shrink-0 font-mono text-xs text-muted lg:block"
-            >
-                {{ topic }}
             </span>
 
             <time :datetime="article.date" class="shrink-0 font-mono text-xs text-muted">

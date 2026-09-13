@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type {NovelDocument} from '#shared/types/novel'
+import TaxonomyLink from '~/components/taxonomy/TaxonomyLink.vue'
 
 const props = defineProps<{
     novel: NovelDocument
@@ -69,5 +70,12 @@ const published = computed(() => formatPostDate(props.novel.date, locale.value))
                 · {{ t('series.part', {n: String(novel.seriesOrder).padStart(2, '0')}) }}
             </template>
         </p>
+
+        <div
+                v-if="novel.tags?.length"
+                class="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1"
+        >
+            <TaxonomyLink v-for="tag in novel.tags" :key="tag" :tag="tag"/>
+        </div>
     </header>
 </template>

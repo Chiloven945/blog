@@ -73,6 +73,18 @@
     "emptyEyebrow": "EMPTY / 000",
     "emptyDescription": "New writing will appear here."
   },
+  "tags": {
+    "label": "TAGS / 006",
+    "title": "Tags",
+    "description": "Free-form tags across articles and novels.",
+    "entries": "{count} entries",
+    "articles": "Articles",
+    "novels": "Novels",
+    "backToTags": "All tags",
+    "empty": "No tags yet.",
+    "emptyEyebrow": "EMPTY / 000",
+    "emptyDescription": "Tags appear as new writing is published."
+  },
   "article": {
     "subtype": {
       "note": "Note",
@@ -209,6 +221,7 @@
     "backHome": "Back home",
     "genericTitle": "Something went wrong",
     "postNotFound": "Post not found",
-    "pageNotFound": "Page not found"
+    "pageNotFound": "Page not found",
+    "tagNotFound": "Tag not found"
   }
 }

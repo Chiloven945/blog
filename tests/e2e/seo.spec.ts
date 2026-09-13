@@ -14,11 +14,13 @@ test.describe(
                 const entries = [
                     '/',
                     '/articles',
+                    '/tags',
                     '/archives',
                     '/friends',
                     '/links',
                     '/about',
                     '/p/jep-401',
+                    '/p/causerie-1',
                     '/en',
                     '/zh-tw',
                 ]

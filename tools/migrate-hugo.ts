@@ -396,8 +396,10 @@ function buildPostFrontmatter(
 
     data.date = String(frontmatter.date)
     data.type = type
-    data.categories = toArray(frontmatter.categories)
-    data.tags = toArray(frontmatter.tags)
+    data.tags = [...new Set([
+        ...toArray(frontmatter.tags),
+        ...toArray(frontmatter.categories),
+    ])]
 
     const result: BuiltFrontmatter = {data}
 

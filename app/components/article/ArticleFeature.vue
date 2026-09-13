@@ -11,7 +11,6 @@ const subtype = computed(() => resolveArticleSubtype(props.article.subtype))
 const subtypeLabel = computed(() => (subtype.value
     ? t(subtype.value.labelKey)
     : null))
-const topics = computed(() => props.article.categories ?? [])
 const formattedDate = computed(() =>
     formatPostDate(props.article.updated || props.article.date, locale.value),
 )
@@ -46,10 +45,6 @@ const formattedDate = computed(() =>
                         class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-6 font-mono text-xs text-muted"
                 >
                     <time :datetime="article.updated || article.date">{{ formattedDate }}</time>
-
-                    <span v-for="topic in topics" :key="topic">
-                        #{{ topic }}
-                    </span>
                 </div>
             </div>
 

@@ -12,7 +12,6 @@ export interface ArticleDocument {
     updated?: string
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     series?: string
     seriesOrder?: number
@@ -40,7 +39,6 @@ export interface ArticleCardItem {
     updated?: string
     subtype?: string
     status?: string
-    categories?: string[]
     tags?: string[]
     series?: string
     cover?: string
