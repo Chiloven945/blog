@@ -100,6 +100,14 @@ export const homeSchema = z.object({
                     }),
                 )
                 .default([]),
+            notes: z
+                .array(
+                    z.object({
+                        id: z.string(),
+                        text: z.string(),
+                    }),
+                )
+                .default([]),
         })
         .default({}),
 

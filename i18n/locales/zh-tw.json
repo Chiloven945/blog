@@ -102,10 +102,13 @@
       "wip": "撰寫中",
       "deprecated": "已過時",
       "archived": "已封存"
-    }
+    },
+    "related": "相關文章"
   },
   "novel": {
     "sceneBreak": "場景分隔",
+    "related": "更多作品",
+    "firstPublished": "首次發表於 {date}",
     "subtype": {
       "shortStory": "短篇",
       "vignette": "小品",
@@ -154,7 +157,14 @@
   },
   "license": {
     "ccByNcSa": "CC BY-NC-SA 4.0",
-    "allRightsReserved": "保留所有權利"
+    "allRightsReserved": "保留所有權利",
+    "badgeAlt": "CC BY-NC-SA 4.0",
+    "articleStatement": "本文依據 {license} 授權條款授權。",
+    "siteLabel": "除另有說明外，本站內容均依據 CC BY-NC-SA 4.0 授權條款授權。",
+    "siteNote": "單篇作品可能依據不同的授權條款授權，以作品頁面所聲明的授權為準。"
+  },
+  "footnotes": {
+    "title": "註釋"
   },
   "search": {
     "label": "搜尋 / 003",

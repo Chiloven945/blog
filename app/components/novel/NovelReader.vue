@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import type {NovelDocument} from '#shared/types/novel'
+import type {NovelCardItem, NovelDocument} from '#shared/types/novel'
 import NovelTitlePage from './NovelTitlePage.vue'
 import NovelBody from './NovelBody.vue'
 import NovelColophon from './NovelColophon.vue'
+import NovelRelated from './NovelRelated.vue'
 import NovelProgress from './NovelProgress.vue'
 import NovelReadingToolbar from './NovelReadingToolbar.vue'
 
 defineProps<{
     novel: NovelDocument
     readingTime: number
+    related: NovelCardItem[]
 }>()
 
 const {t} = useI18n()
@@ -27,7 +29,9 @@ const {style} = useNovelReadingPreferences()
         <div class="novel-column mx-auto px-6">
             <NovelBody :novel="novel"/>
 
-            <NovelColophon :license="novel.license"/>
+            <NovelColophon :date="novel.date" :license="novel.license"/>
+
+            <NovelRelated :items="related"/>
 
             <section
                     v-if="novel.comments !== false"

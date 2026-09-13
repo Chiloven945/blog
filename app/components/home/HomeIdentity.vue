@@ -37,5 +37,21 @@ defineProps<{
                 </div>
             </dl>
         </div>
+
+        <ol
+                v-if="identity.notes?.length"
+                class="mt-10 space-y-2 border-t border-default pt-6 text-sm text-muted lg:mt-12"
+        >
+            <li
+                    v-for="(note, index) in identity.notes"
+                    :key="note.id"
+                    class="flex gap-3"
+            >
+                <span class="font-mono text-xs text-dimmed tabular-nums">
+                    {{ String(index + 1).padStart(2, '0') }}
+                </span>
+                <span>{{ note.text }}</span>
+            </li>
+        </ol>
     </section>
 </template>

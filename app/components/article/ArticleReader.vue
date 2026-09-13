@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import type {ArticleDocument} from '#shared/types/article'
+import type {ArticleCardItem, ArticleDocument} from '#shared/types/article'
 import ArticleHeader from './ArticleHeader.vue'
 import ArticleBody from './ArticleBody.vue'
 import ArticleToc from './ArticleToc.vue'
 import ArticleTools from './ArticleTools.vue'
 import ArticleSourceNotice from './ArticleSourceNotice.vue'
+import ArticleRelated from './ArticleRelated.vue'
 
 const props = defineProps<{
     article: ArticleDocument
     readingTime: number
+    related: ArticleCardItem[]
     surround: {
         prev: {
             title: string;
@@ -67,6 +69,8 @@ const showToc = computed(() =>
                 <PostLicense :license="article.license"/>
 
                 <PostSurround :next="surround.next" :prev="surround.prev"/>
+
+                <ArticleRelated :items="related"/>
 
                 <section
                         v-if="article.comments !== false"

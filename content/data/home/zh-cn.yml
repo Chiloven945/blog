@@ -26,6 +26,13 @@ identity:
       value: Java / Nuxt / TypeScript
     - label: 状态
       value: 持续构建
+  notes:
+    - id: name
+      text: 「ClovenBugle」原本是一个 Xbox 自动生成的名字，「ChilovenBustiangle」是它在字母上的变形。
+    - id: "945"
+      text: 后缀「945」来自被长度限制截短的「9455」，并沿用至今。
+    - id: greek
+      text: 还在慢慢学希腊语——也许吧，大概吧。
 
 manifesto:
   title: About

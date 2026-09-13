@@ -26,6 +26,13 @@ identity:
       value: Java / Nuxt / TypeScript
     - label: Status
       value: Building
+  notes:
+    - id: name
+      text: "“ClovenBugle” started as an auto-generated Xbox name; “ChilovenBustiangle” is its letter-by-letter mutation."
+    - id: "945"
+      text: "The “945” suffix comes from “9455”, shortened by a name-length limit and kept ever since."
+    - id: greek
+      text: Still slowly learning Greek — maybe, probably.
 
 manifesto:
   title: About

@@ -120,7 +120,9 @@
         background-color: transparent;
     }
 
-    /* Footnotes. */
+    /* Footnotes. The renderer emits an sr-only heading plus the localized
+       visible label injected through `--footnotes-label` (set by the
+       readers from i18n); refs and backlinks are styled per reader. */
     .post-body [data-footnotes] {
         margin-block: 2.5rem 0;
         border-top: 1px solid var(--ui-border);
@@ -129,8 +131,31 @@
         color: var(--ui-text-muted);
     }
 
+    .post-body [data-footnotes]::before {
+        content: var(--footnotes-label, "Notes");
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--ui-text-highlighted);
+    }
+
     .post-body [data-footnotes] ol {
         padding-inline-start: 1.25rem;
+        list-style: decimal;
+    }
+
+    .post-body [data-footnotes] li {
+        margin-block: 0.25rem;
+    }
+
+    .post-body [data-footnotes] li::marker {
+        color: var(--ui-text-dimmed);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .post-body a[data-footnote-ref],
+    .post-body a[data-footnote-backref] {
+        text-decoration: none;
     }
 
     /* Display math must scroll inside the column, never overflow it (§28.4). */

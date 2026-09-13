@@ -3,9 +3,11 @@
 // and footnotes. Keep it around for debugging the theme or MDC rendering.
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
+import {licenseKeys, resolveLicense} from '#shared/config/licenses'
 
 useSeoMeta({title: 'Style & Content Reference', robots: 'noindex'})
 
+const {t} = useI18n()
 const modalOpen = ref(false)
 const inputValue = ref('')
 
@@ -57,6 +59,19 @@ const galleryImages = [
 ]
 
 const sampleCode = 'export function greet(name: string) {\n  return `Hello, ${name}!`\n}'
+
+const licenseList = licenseKeys.map((key) => {
+    const entry = resolveLicense(key)
+
+    return {
+        key,
+        label: entry.labelKey
+            ? t(entry.labelKey)
+            : entry.label,
+        url: entry.url ?? null,
+        badge: entry.badge ?? null,
+    }
+})
 </script>
 
 <template>
@@ -312,6 +327,123 @@ const sampleCode = 'export function greet(name: string) {\n  return `Hello, ${na
                         </li>
                     </ol>
                 </section>
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <h2 class="text-xl font-bold text-highlighted">
+                Footnotes
+            </h2>
+
+            <div
+                    class="post-body prose-article space-y-3"
+                    data-footnote-example="article"
+            >
+                <p class="text-sm">
+                    Article footnote reference<sup><a
+                        id="dev-fnref-a1"
+                        data-footnote-ref
+                        href="#dev-fn-a1"
+                >1</a></sup>.
+                </p>
+                <section data-footnotes>
+                    <h2 class="sr-only">
+                        Footnotes
+                    </h2>
+                    <ol>
+                        <li id="dev-fn-a1">
+                            Article footnote text. <a
+                                data-footnote-backref
+                                href="#dev-fnref-a1"
+                        >↩</a>
+                        </li>
+                    </ol>
+                </section>
+            </div>
+
+            <div
+                    class="post-body prose-novel space-y-3"
+                    data-footnote-example="novel"
+            >
+                <p>
+                    小说脚注引用<sup><a
+                        id="dev-fnref-n1"
+                        data-footnote-ref
+                        href="#dev-fn-n1"
+                >1</a></sup>。
+                </p>
+                <section data-footnotes>
+                    <h2 class="sr-only">
+                        Footnotes
+                    </h2>
+                    <ol>
+                        <li id="dev-fn-n1">
+                            小说脚注文本。 <a
+                                data-footnote-backref
+                                href="#dev-fnref-n1"
+                        >↩</a>
+                        </li>
+                    </ol>
+                </section>
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <h2 class="text-xl font-bold text-highlighted">
+                Licenses
+            </h2>
+
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div
+                        v-for="license in licenseList"
+                        :key="license.key"
+                        class="flex items-center gap-3 rounded-sm border border-default p-4"
+                >
+                    <img
+                            v-if="license.badge"
+                            :alt="license.label"
+                            :src="license.badge"
+                            class="h-6 w-auto shrink-0"
+                            height="42"
+                            width="120"
+                    >
+                    <div class="min-w-0">
+                        <a
+                                v-if="license.url"
+                                :href="license.url"
+                                class="link block text-sm"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                        >
+                            {{ license.label }}
+                        </a>
+                        <span v-else class="block text-sm text-highlighted">{{ license.label }}</span>
+                        <code class="mt-0.5 block font-mono text-xs text-dimmed">{{ license.key }}</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-2">
+                <div>
+                    <p class="mb-2 text-sm text-muted">
+                        Article license block
+                    </p>
+                    <div class="post-body prose-article">
+                        <PostLicense license="cc-by-sa-4.0"/>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="mb-2 text-sm text-muted">
+                        Novel colophon
+                    </p>
+                    <div class="post-body prose-novel">
+                        <NovelColophon
+                                date="2026-01-01"
+                                license="all-rights-reserved"
+                        />
+                    </div>
+                </div>
             </div>
         </section>
 

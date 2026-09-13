@@ -102,10 +102,13 @@
       "wip": "In progress",
       "deprecated": "Deprecated",
       "archived": "Archived"
-    }
+    },
+    "related": "Related articles"
   },
   "novel": {
     "sceneBreak": "Scene break",
+    "related": "More fiction",
+    "firstPublished": "First published {date}",
     "subtype": {
       "shortStory": "Short story",
       "vignette": "Vignette",
@@ -154,7 +157,14 @@
   },
   "license": {
     "ccByNcSa": "CC BY-NC-SA 4.0",
-    "allRightsReserved": "All Rights Reserved"
+    "allRightsReserved": "All Rights Reserved",
+    "badgeAlt": "CC BY-NC-SA 4.0",
+    "articleStatement": "This work is licensed under the {license} license.",
+    "siteLabel": "Except where otherwise noted, site content is licensed under CC BY-NC-SA 4.0.",
+    "siteNote": "Individual works may be released under a different license; the license stated on the work's own page prevails."
+  },
+  "footnotes": {
+    "title": "Notes"
   },
   "search": {
     "label": "SEARCH / 003",

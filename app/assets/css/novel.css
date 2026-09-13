@@ -67,6 +67,37 @@
         letter-spacing: 0.02em;
         margin-block: 3rem 1.5rem;
     }
+
+    /* Traditional footnotes: a serif superscript with no box; the primary
+       colour only appears on hover or focus. */
+    .prose-novel [data-footnotes]::before {
+        font-family: var(--font-reading-serif), serif;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+    }
+
+    .prose-novel a[data-footnote-ref] {
+        font-family: var(--font-reading-serif), serif;
+        font-size: 0.6em;
+        line-height: 0;
+        vertical-align: super;
+        border: 0;
+        padding: 0;
+        color: inherit;
+    }
+
+    .prose-novel a[data-footnote-ref]:hover,
+    .prose-novel a[data-footnote-ref]:focus-visible {
+        border: 0;
+        color: var(--ui-primary);
+    }
+
+    .prose-novel a[data-footnote-backref] {
+        border: 0;
+        font-size: 0.85em;
+        color: var(--ui-text-muted);
+    }
 }
 
 /* --------------------------------------------------------------------------

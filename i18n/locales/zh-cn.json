@@ -102,10 +102,13 @@
       "wip": "撰写中",
       "deprecated": "已过时",
       "archived": "已归档"
-    }
+    },
+    "related": "相关文章"
   },
   "novel": {
     "sceneBreak": "场景分隔",
+    "related": "更多作品",
+    "firstPublished": "首次发布于 {date}",
     "subtype": {
       "shortStory": "短篇",
       "vignette": "小品",
@@ -154,7 +157,14 @@
   },
   "license": {
     "ccByNcSa": "CC BY-NC-SA 4.0",
-    "allRightsReserved": "保留所有权利"
+    "allRightsReserved": "保留所有权利",
+    "badgeAlt": "CC BY-NC-SA 4.0",
+    "articleStatement": "本文依据 {license} 许可协议授权。",
+    "siteLabel": "除另有说明外，本站内容均依据 CC BY-NC-SA 4.0 许可协议授权。",
+    "siteNote": "单篇作品可能依据不同的许可协议授权，以作品页面所声明的许可为准。"
+  },
+  "footnotes": {
+    "title": "注释"
   },
   "search": {
     "label": "搜索 / 003",

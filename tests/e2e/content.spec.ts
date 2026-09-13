@@ -79,11 +79,11 @@ test.describe(
             async ({page}) => {
                 await gotoHydrated(page, '/p/causerie-2')
 
-            await expect(page.locator('main h1')).toContainText('信使')
-            await expect(page.locator('main .novel-scene-break')).toHaveCount(1)
-            // Content after the scene break must still render.
-            await expect(page.locator('main')).toContainText('至少，信是热的')
-            await expect(page.locator('main')).toContainText('保留所有权利')
+                await expect(page.locator('main h1')).toContainText('信使')
+                await expect(page.locator('main .novel-scene-break')).toHaveCount(1)
+                // Content after the scene break must still render.
+                await expect(page.locator('main')).toContainText('至少，信是热的')
+                await expect(page.locator('main')).toContainText('保留所有权利')
                 expect(await page.getByRole('navigation', {name: 'Table of contents'}).count())
                     .toBe(0)
 
@@ -91,6 +91,76 @@ test.describe(
                     el => getComputedStyle(el).fontFamily,
                 )
                 expect(family).toContain('Source Han Serif')
+            }
+        )
+
+        test(
+            'footnote references jump to notes and backlinks return',
+            async ({page}) => {
+                await gotoHydrated(page, '/about')
+
+                await page.locator('a[data-footnote-ref]').first().click()
+                await expect(page).toHaveURL(/#user-content-fn-1$/)
+
+                await page.locator('a[data-footnote-backref]').first().click()
+                await expect(page).toHaveURL(/#user-content-fnref-1$/)
+            }
+        )
+
+        test(
+            'article and novel footnote styles differ and are labelled',
+            async ({page}) => {
+                await gotoHydrated(page, '/dev/style')
+
+                const articleRef = page
+                    .locator('[data-footnote-example="article"] a[data-footnote-ref]')
+                    .first()
+                const novelRef = page
+                    .locator('[data-footnote-example="novel"] a[data-footnote-ref]')
+                    .first()
+
+                const articleFamily = await articleRef.evaluate(el =>
+                    getComputedStyle(el).fontFamily,
+                )
+                const novelFamily = await novelRef.evaluate(el =>
+                    getComputedStyle(el).fontFamily,
+                )
+                expect(articleFamily).toContain('Google Sans Flex')
+                expect(novelFamily).toContain('Libre Baskerville')
+
+                const label = await page
+                    .locator('[data-footnote-example="article"] [data-footnotes]')
+                    .evaluate(el => getComputedStyle(el, '::before').content)
+                expect(label).toContain('Notes')
+            }
+        )
+
+        test(
+            'license: CC badge has alt text and All Rights Reserved does not link to CC',
+            async ({page}) => {
+                await gotoHydrated(page, '/p/jep-512')
+                await expect(page.locator('main img[alt="CC BY-NC-SA 4.0"]').first())
+                    .toBeVisible()
+                await expect(page.locator('main a[href*="creativecommons.org"]').first())
+                    .toBeVisible()
+
+                await gotoHydrated(page, '/p/causerie-1')
+                await expect(page.locator('main')).toContainText('保留所有权利')
+                await expect(page.locator('main a[href*="creativecommons.org"]'))
+                    .toHaveCount(0)
+            }
+        )
+
+        test(
+            'related content is rendered per kind',
+            async ({page}) => {
+                await gotoHydrated(page, '/p/jep-512')
+                await expect(page.locator('#related-articles')).toBeVisible()
+                await expect(page.locator('#related-novels')).toHaveCount(0)
+
+                await gotoHydrated(page, '/p/causerie-1')
+                await expect(page.locator('#related-novels')).toBeVisible()
+                await expect(page.locator('#related-articles')).toHaveCount(0)
             }
         )
     }

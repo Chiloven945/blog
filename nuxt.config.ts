@@ -53,8 +53,12 @@ export default defineNuxtConfig({
                         'toml',
                     ],
                 },
-                // Math: $inline$ / $$block$$ → KaTeX.
+                // GFM is declared explicitly (tables, task lists, and the
+                // `[^1]` footnote pipeline) instead of relying on the
+                // renderer's transitive defaults.
                 remarkPlugins: {
+                    'remark-gfm': {},
+                    // Math: $inline$ / $$block$$ → KaTeX.
                     'remark-math': {},
                 },
                 rehypePlugins: {

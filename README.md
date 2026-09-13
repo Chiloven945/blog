@@ -26,6 +26,12 @@ dependency-light runtime.
   timeline, friends, and free-form content pages.
 - **Tags** — a `/tags` index with count-tiered blocks and `/tags/:tag` pages that keep article and
   novel results in separate lists; tags are normalized per locale and clickable from the readers.
+- **Footnotes & licensing** — an explicit GFM footnote pipeline with per-reader styles and a
+  localized notes heading; a license registry covering the full Creative Commons family (CC BY,
+  BY-SA, BY-ND, BY-NC, BY-NC-SA, BY-NC-ND), CC0, the Public Domain Mark, and All Rights Reserved,
+  rendered as an article license block, a novel colophon, and a footer CC badge.
+- **Related content** — deterministic same-kind recommendations scored by series, tags, subtype, and
+  recency, shown after each article or novel.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
@@ -114,18 +120,18 @@ featured: false
 ---
 ```
 
-| Field        | Default        | Notes                                               |
-|--------------|----------------|-----------------------------------------------------|
-| `date`       | required       | `YYYY-MM-DD` or an ISO timestamp                    |
-| `subtype`    | required       | Article or novel subtype (per collection)           |
-| `status`     | `published`    | Articles: `published`; novels default to `complete` |
-| `tags`       | `[]`           | Free-form tags, normalized per locale               |
-| `cover`      | –              | Path under `public/`                                |
-| `license`    | per kind       | Key from `shared/config/licenses.ts`                |
-| `comments`   | `true`         | Set to `false` to hide Giscus                       |
-| `toc`        | `true`/`false` | Articles `true`; novels default to `false`          |
-| `series`     | –              | Series slug; set `seriesOrder` alongside it         |
-| `featured`   | `false`        |                                                     |
+| Field      | Default        | Notes                                               |
+|------------|----------------|-----------------------------------------------------|
+| `date`     | required       | `YYYY-MM-DD` or an ISO timestamp                    |
+| `subtype`  | required       | Article or novel subtype (per collection)           |
+| `status`   | `published`    | Articles: `published`; novels default to `complete` |
+| `tags`     | `[]`           | Free-form tags, normalized per locale               |
+| `cover`    | –              | Path under `public/`                                |
+| `license`  | per kind       | Key from `shared/config/licenses.ts`                |
+| `comments` | `true`         | Set to `false` to hide Giscus                       |
+| `toc`      | `true`/`false` | Articles `true`; novels default to `false`          |
+| `series`   | –              | Series slug; set `seriesOrder` alongside it         |
+| `featured` | `false`        |                                                     |
 
 Articles default to `license: cc-by-nc-sa-4.0`; novels default to `all-rights-reserved`. Production
 hides `status: draft` (develop with `?drafts=1`).

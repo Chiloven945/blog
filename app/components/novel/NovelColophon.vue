@@ -1,36 +1,47 @@
 <script lang="ts" setup>
-import {type LicenseKey, licenses} from '#shared/config/licenses'
+import {defaultNovelLicense, resolveLicense} from '#shared/config/licenses'
+import {siteConfig} from '#shared/config/site'
 
 const props = defineProps<{
     license?: string
+    date?: string
 }>()
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
 
-const entry = computed(() =>
-    licenses[(props.license ?? 'all-rights-reserved') as LicenseKey] ?? licenses['all-rights-reserved'],
-)
-const label = computed(() => t(entry.value.labelKey))
-const licenseUrl = computed(() => ('url' in entry.value
-    ? entry.value.url
-    : null))
+const entry = computed(() => resolveLicense(props.license, defaultNovelLicense))
+const label = computed(() => entry.value.labelKey
+    ? t(entry.value.labelKey)
+    : entry.value.label)
+const licenseUrl = computed(() => entry.value.url ?? null)
+const published = computed(() => (props.date
+    ? formatPostDate(props.date, locale.value)
+    : ''))
 </script>
 
 <template>
-    <div class="novel-colophon mt-16 border-t border-default pt-6 text-sm text-muted">
+    <footer class="novel-colophon mt-16 border-t border-default pt-6 text-center text-sm text-muted">
         <p class="font-mono text-xs tracking-[0.25em] uppercase">
             {{ t('post.license') }}
         </p>
 
-        <a
-                v-if="licenseUrl"
-                :href="licenseUrl"
-                class="link mt-2 inline-block"
-                rel="noopener noreferrer"
-                target="_blank"
-        >
-            {{ label }}
-        </a>
-        <span v-else class="mt-2 inline-block">{{ label }}</span>
-    </div>
+        <p class="mt-3">© {{ siteConfig.author }}</p>
+
+        <p class="mt-0.5">
+            <a
+                    v-if="licenseUrl"
+                    :href="licenseUrl"
+                    class="link"
+                    rel="noopener noreferrer"
+                    target="_blank"
+            >
+                {{ label }}
+            </a>
+            <span v-else>{{ label }}</span>
+        </p>
+
+        <p v-if="published" class="mt-1 text-xs text-dimmed">
+            {{ t('novel.firstPublished', {date: published}) }}
+        </p>
+    </footer>
 </template>

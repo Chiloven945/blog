@@ -16,15 +16,20 @@ const path = computed(() => route.path)
 
 // `/p/:slug` is shared by articles and novels; resolve both collections and
 // delegate to the matching reader (the two readers never share a component).
-const {data: article} = await useAsyncData(
+// The async-data handles are created first so the related composables can be
+// registered while the Nuxt instance is still available.
+const articleAsync = useAsyncData(
     () => `article-${active.value.articles}-${path.value}`,
     () => queryCollection(active.value.articles).path(path.value).first(),
 )
 
-const {data: novel} = await useAsyncData(
+const novelAsync = useAsyncData(
     () => `novel-${active.value.novels}-${path.value}`,
     () => queryCollection(active.value.novels).path(path.value).first(),
 )
+
+const article = articleAsync.data
+const novel = novelAsync.data
 
 const kind = computed<Kind>(() => (article.value
     ? 'article'
@@ -45,6 +50,12 @@ const novelDoc = computed<NovelDocument | null>(() =>
         ? novel.value as unknown as NovelDocument
         : null,
 )
+
+const {related: relatedArticles} = useRelatedArticles(articleDoc)
+const {related: relatedNovels} = useRelatedNovels(novelDoc)
+
+await articleAsync
+await novelAsync
 
 // Let the floating navigation highlight Articles or Novels on a post.
 const navPostKind = useState<'article' | 'novel' | null>('nav-post-kind', () => null)
@@ -110,6 +121,7 @@ usePageMeta({
             v-if="articleDoc && surround"
             :article="articleDoc"
             :reading-time="readingTime"
+            :related="relatedArticles"
             :surround="surround"
     />
 
@@ -117,5 +129,6 @@ usePageMeta({
             v-else-if="novelDoc"
             :novel="novelDoc"
             :reading-time="readingTime"
+            :related="relatedNovels"
     />
 </template>
