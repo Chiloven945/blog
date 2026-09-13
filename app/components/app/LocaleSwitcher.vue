@@ -9,18 +9,22 @@ withDefaults(defineProps<{
     size: 'md',
 })
 
-const {t} = useI18n()
+const {t, setLocale} = useI18n()
 const availability = useLocaleAvailability()
 
 const items = computed(() => [
     availability.value.map(item => ({
-        label: item.available ? item.name : `${item.name} · ${t('common.unavailable')}`,
+        label: item.available
+            ? item.name
+            : `${item.name} · ${t('common.unavailable')}`,
         type: 'checkbox' as const,
         checked: item.current,
         disabled: item.current || !item.available,
         onSelect: () => {
             if (!item.current && item.available) {
-                navigateTo(item.to)
+                // setLocale() updates the locale cookie and navigates to the
+                // same route in the target locale.
+                void setLocale(item.code)
             }
         },
     })),

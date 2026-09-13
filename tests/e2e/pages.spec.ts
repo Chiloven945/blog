@@ -112,7 +112,7 @@ test.describe('locales', () => {
         'serves English under /en',
         async ({page}) => {
             await gotoHydrated(page, '/en/articles')
-            await expect(page.locator('html')).toHaveAttribute('lang', 'en-US')
+            await expect(page.locator('html')).toHaveAttribute('lang', 'en')
             await expect(page.locator('main h1').first()).toContainText('Articles')
         }
     )

@@ -22,7 +22,7 @@ const systemRoutes = new Set([
 type ContentPathIndex = Record<string, string[]>
 
 export interface LocaleOption {
-    code: string
+    code: ContentLocale
     name: string
     current: boolean
     available: boolean
@@ -48,17 +48,6 @@ export function stripLocalePrefix(
         : `/${relative}`
 }
 
-/** Build the target path for a locale from a locale-less relative path. */
-export function localizedContentPath(
-    relative: string,
-    locale: ContentLocale
-): string {
-    const targetPrefix = localePrefixes[locale] ?? ''
-    return relative === '/'
-        ? targetPrefix || '/'
-        : `${targetPrefix}${relative}`
-}
-
 export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
     const {locale, locales} = useI18n()
     const route = useRoute()
@@ -77,20 +66,18 @@ export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
                         queryCollection(collections.series).select('path').all(),
                         queryCollection(collections.pages).select('path').all(),
                     ])
-                    const paths = [
-                        ...articles,
-                        ...novels,
-                        ...series,
-                        ...pages
-                    ].map(item => (item as { path: string }).path,)
+                    // Store locale-less paths; the current route is compared
+                    // against the target locale's index.
+                    const paths = [...articles, ...novels, ...series, ...pages]
+                        .map(item => stripLocalePrefix((item as { path: string }).path, code))
 
                     // Tag pages are locale-local: only mark a tag reachable
                     // when the target locale actually carries it.
                     const tags = [...articles, ...novels]
                         .flatMap(item => (item as { tags?: string[] }).tags ?? [])
-                        .map(tag => localizedContentPath(tagPath(tag), code))
+                        .map(tag => tagPath(tag))
 
-                    return [code, [...paths, ...new Set(tags)]] as const
+                    return [code, [...new Set([...paths, ...tags])]] as const
                 }),
             )
 
@@ -106,11 +93,10 @@ export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
 
         return (locales.value as LocaleObject[]).map((item) => {
             const code = item.code as ContentLocale
-            const targetPath = localizedContentPath(relative, code)
-            const available = alwaysAvailable || (index[code] ?? []).includes(targetPath)
+            const available = alwaysAvailable || (index[code] ?? []).includes(relative)
 
             return {
-                code: item.code,
+                code: item.code as ContentLocale,
                 name: item.name ?? item.code,
                 current: item.code === current,
                 available,

@@ -154,12 +154,18 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        // Every locale carries an explicit URL prefix; unprefixed paths are
-        // language-entry redirectors only.
+        // Every locale carries an explicit URL prefix, including the default
+        // (English). Unprefixed paths are language-entry redirectors only.
         strategy: 'prefix',
-        defaultLocale: 'zh-cn',
+        defaultLocale: 'en',
         baseUrl: siteConfig.domain,
         locales: [
+            {
+                code: 'en',
+                language: 'en',
+                name: 'English',
+                file: 'en.json'
+            },
             {
                 code: 'zh-cn',
                 language: 'zh-CN',
@@ -172,12 +178,21 @@ export default defineNuxtConfig({
                 name: '繁體中文',
                 file: 'zh-tw.json'
             },
-            {
-                code: 'en',
-                language: 'en-US',
-                name: 'English',
-                file: 'en.json'
-            },
         ],
+        // Browser/system language is only consulted for unprefixed entry URLs,
+        // where the saved preference wins; explicit locale URLs never change.
+        // `alwaysRedirect` must stay false: Nuxt i18n uses it to skip
+        // detection on already-prefixed paths, and enabling it makes the
+        // client locale middleware rewrite explicit /en|/zh-cn|/zh-tw URLs
+        // from the cookie. `redirectOn` is 'root' rather than 'no prefix'
+        // because the static 404.html/200.html fallbacks are unprefixed and
+        // 'no prefix' turns them into redirect stubs.
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'blog_locale',
+            alwaysRedirect: false,
+            redirectOn: 'root',
+            fallbackLocale: 'en',
+        },
     },
 })

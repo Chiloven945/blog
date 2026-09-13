@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
     author: 'Chiloven945',
     domain: 'https://www.chiloven.top',
     since: 2024,
-    defaultLocale: 'zh-cn',
+    defaultLocale: 'en',
     defaultLicense: 'cc-by-nc-sa-4.0',
     comments: {
         provider: 'giscus',

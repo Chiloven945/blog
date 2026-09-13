@@ -18,28 +18,46 @@ type RawSearchSection = {
 }
 
 function toStringArray(value: unknown): string[] | undefined {
-    return Array.isArray(value) ? value.map(String) : undefined
+    return Array.isArray(value)
+        ? value.map(String)
+        : undefined
 }
 
 function toSearchSection(
     raw: RawSearchSection,
     kind?: 'article' | 'novel'
 ): SearchSection {
-    const id = typeof raw.id === 'string' ? raw.id : ''
+    const id = typeof raw.id === 'string'
+        ? raw.id
+        : ''
     const hash = id.indexOf('#')
 
     return {
         id,
-        path: hash === -1 ? id : id.slice(0, hash),
-        anchor: hash === -1 ? undefined : id.slice(hash + 1),
-        title: typeof raw.title === 'string' ? raw.title : '',
+        path: hash === -1
+            ? id
+            : id.slice(0, hash),
+        anchor: hash === -1
+            ? undefined
+            : id.slice(hash + 1),
+        title: typeof raw.title === 'string'
+            ? raw.title
+            : '',
         titles: toStringArray(raw.titles) ?? [],
-        level: typeof raw.level === 'number' ? raw.level : 1,
-        content: typeof raw.content === 'string' ? raw.content : '',
+        level: typeof raw.level === 'number'
+            ? raw.level
+            : 1,
+        content: typeof raw.content === 'string'
+            ? raw.content
+            : '',
         kind,
-        subtype: typeof raw.subtype === 'string' ? raw.subtype : undefined,
+        subtype: typeof raw.subtype === 'string'
+            ? raw.subtype
+            : undefined,
         tags: toStringArray(raw.tags),
-        date: typeof raw.date === 'string' ? raw.date : undefined,
+        date: typeof raw.date === 'string'
+            ? raw.date
+            : undefined,
     }
 }
 
@@ -54,9 +72,14 @@ export function useSearch() {
     const {locale} = useI18n()
     const active = useActiveContentCollection()
 
-    const status = useState<SearchStatus>(`search-status-${locale.value}`, () => 'idle')
-    const sections = useState<SearchSection[]>(`search-index-${locale.value}`, () => [])
+    // Locale is an explicit data dimension: one index per language, so
+    // switching languages never reuses another locale's results.
+    const statuses = useState<Record<string, SearchStatus>>('search-status', () => ({}))
+    const indices = useState<Record<string, SearchSection[]>>('search-index', () => ({}))
     const query = ref('')
+
+    const status = computed<SearchStatus>(() => statuses.value[locale.value] ?? 'idle')
+    const sections = computed<SearchSection[]>(() => indices.value[locale.value] ?? [])
 
     async function buildIndex(): Promise<SearchSection[]> {
         const [articleSections, novelSections, pageSections] = await Promise.all([
@@ -90,17 +113,20 @@ export function useSearch() {
     }
 
     async function ensureIndex() {
-        if (status.value === 'ready' || status.value === 'loading') {
+        const code = locale.value
+
+        if (statuses.value[code] === 'ready' || statuses.value[code] === 'loading') {
             return
         }
 
-        status.value = 'loading'
+        statuses.value = {...statuses.value, [code]: 'loading'}
 
         try {
-            sections.value = await buildIndex()
-            status.value = 'ready'
+            const built = await buildIndex()
+            indices.value = {...indices.value, [code]: built}
+            statuses.value = {...statuses.value, [code]: 'ready'}
         } catch (error) {
-            status.value = 'error'
+            statuses.value = {...statuses.value, [code]: 'error'}
             console.error('[search] failed to build the search index', error)
         }
     }
