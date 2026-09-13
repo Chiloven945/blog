@@ -39,13 +39,13 @@ function noteIndex(id?: string): number {
             class="border-b border-default"
     >
         <div class="container-page py-14 lg:py-20">
-            <div class="grid gap-6 lg:grid-cols-12 lg:gap-12">
-                <div class="lg:col-span-1">
-                    <span class="home-kicker home-vertical hidden text-muted lg:inline">NAMES</span>
-                    <span class="home-kicker text-muted lg:hidden">NAMES</span>
+            <div class="grid gap-6 md:grid-cols-12 md:gap-12 lg:grid-cols-12 lg:gap-12">
+                <div class="md:col-span-1 lg:col-span-1">
+                    <span class="home-kicker home-vertical hidden text-muted md:inline lg:inline">NAMES</span>
+                    <span class="home-kicker text-muted md:hidden lg:hidden">NAMES</span>
                 </div>
 
-                <div class="lg:col-span-11">
+                <div class="md:col-span-11 lg:col-span-11">
                     <ol class="border-t border-default">
                         <li
                                 v-for="(name, index) in names"

@@ -3,11 +3,10 @@ import NavigationItem from './NavigationItem.vue'
 import NavigationMore from './NavigationMore.vue'
 
 const {t} = useI18n()
-const {open} = useSearchModal()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
 
-const dockItems = computed(() => items.value.filter(item => ['home', 'articles', 'novels'].includes(item.key)))
+const dockItems = computed(() => items.value.filter(item => ['home', 'articles', 'novels', 'friends'].includes(item.key)))
 const moreOpen = ref(false)
 </script>
 
@@ -23,16 +22,6 @@ const moreOpen = ref(false)
                 :item="item"
                 variant="mobile"
         />
-
-        <button
-                :aria-label="t('nav.search')"
-                class="group flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-sm py-1.5 text-[0.6875rem] font-medium text-muted transition-ui hover:bg-elevated hover:text-highlighted focus-ring"
-                type="button"
-                @click="open()"
-        >
-            <UIcon class="size-5 shrink-0" name="i-lucide-search"/>
-            <span class="truncate">{{ t('nav.search') }}</span>
-        </button>
 
         <button
                 :aria-label="t('common.more')"

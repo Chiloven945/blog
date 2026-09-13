@@ -45,7 +45,7 @@ const {t} = useI18n()
         <span aria-hidden="true" class="mx-1 h-6 w-px bg-accented"/>
 
         <SearchButton/>
-        <LocaleSwitcher/>
+        <LocaleSwitcher hide-chevron/>
         <ThemeButton/>
     </nav>
 </template>

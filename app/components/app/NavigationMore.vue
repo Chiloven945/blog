@@ -5,13 +5,13 @@ import ThemeButton from './ThemeButton.vue'
 
 const emit = defineEmits<{ navigate: [] }>()
 const {t} = useI18n()
+const localePath = useLocalePath()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
 
 const moreItems = computed(() => items.value.filter(item => [
     'tags',
-    'archives',
-    'friends'
+    'archives'
 ].includes(item.key)))
 </script>
 
@@ -26,6 +26,16 @@ const moreItems = computed(() => items.value.filter(item => [
                     variant="row"
                     @click="emit('navigate')"
             />
+
+            <NuxtLink
+                    :aria-label="t('nav.search')"
+                    :to="localePath('/search')"
+                    class="flex w-full items-center gap-3 rounded-sm px-3 py-2.5 text-sm text-muted transition-ui hover:bg-elevated hover:text-highlighted focus-ring"
+                    @click="emit('navigate')"
+            >
+                <UIcon class="size-5 shrink-0" name="i-lucide-search"/>
+                <span class="truncate">{{ t('nav.search') }}</span>
+            </NuxtLink>
         </div>
 
         <div class="border-t border-default pt-4">

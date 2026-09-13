@@ -173,6 +173,7 @@
     "description": "Find keywords across posts and pages in the current language.",
     "placeholder": "Search posts and pages…",
     "loading": "Building the index…",
+    "emptyEyebrow": "EMPTY / 000",
     "startTyping": "Type a keyword to start searching.",
     "noResults": "No results for “{query}”.",
     "results": "{count} results",

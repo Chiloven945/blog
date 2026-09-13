@@ -20,10 +20,10 @@ defineProps<{
                 FYI
             </h2>
 
-            <div class="home-mosaic mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
+            <div class="home-mosaic mt-8 grid-cols-2 sm:grid-cols-2 lg:grid-cols-6">
                 <div
                         v-reveal
-                        class="reveal home-tone-deep col-span-1 flex min-h-[10rem] flex-col justify-between p-6 lg:col-span-4 lg:row-span-2 lg:p-8"
+                        class="reveal home-tone-deep col-span-2 flex min-h-[10rem] flex-col justify-between p-6 sm:col-span-2 lg:col-span-4 lg:row-span-2 lg:p-8"
                 >
                     <span class="text-4xl lg:text-5xl">{{ facts[0]?.icon }}</span>
                     <p class="text-2xl font-bold lg:text-3xl">{{ facts[0]?.text }}</p>
@@ -31,7 +31,7 @@ defineProps<{
 
                 <div
                         v-reveal="90"
-                        class="reveal home-tone-soft col-span-1 min-h-[10rem] p-6 sm:col-span-1 lg:col-span-2 lg:row-span-2"
+                        class="reveal home-tone-soft col-span-2 min-h-[10rem] p-6 sm:col-span-2 lg:col-span-2 lg:row-span-2"
                 >
                     <span class="home-kicker opacity-60">LANGUAGES</span>
                     <ul class="mt-4">

@@ -173,6 +173,7 @@
     "description": "在當前語言的文章與頁面正文中尋找關鍵詞。",
     "placeholder": "搜尋文章與頁面…",
     "loading": "正在建立索引…",
+    "emptyEyebrow": "EMPTY / 000",
     "startTyping": "輸入關鍵詞開始搜尋。",
     "noResults": "找不到與「{query}」相關的內容。",
     "results": "{count} 個結果",

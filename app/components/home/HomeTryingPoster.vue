@@ -38,12 +38,12 @@ function pad(value: number): string {
                 Trying
             </h2>
 
-            <div class="home-mosaic mt-8 sm:grid-cols-2">
+            <div class="home-mosaic mt-8 grid-cols-2 sm:grid-cols-2">
                 <div
                         v-for="(item, index) in trying"
                         :key="item.text"
                         v-reveal="index * 55"
-                        :class="index % 4 === 3 ? 'home-tone-soft sm:col-span-2' : 'home-tone-faint'"
+                        :class="index % 4 === 3 ? 'home-tone-soft col-span-2 sm:col-span-2' : 'home-tone-faint col-span-1'"
                         class="reveal flex min-h-[6rem] items-start gap-4 p-5"
                 >
                     <span class="font-display-serif text-3xl font-bold text-primary tabular-nums">

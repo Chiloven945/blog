@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 withDefaults(defineProps<{
     square?: boolean
+    hideChevron?: boolean
     size?: 'sm' | 'md' | 'lg'
 }>(), {
     square: false,
+    hideChevron: false,
     size: 'md',
 })
 
@@ -33,7 +35,7 @@ const current = computed(() => availability.value.find(item => item.current)?.na
                 :aria-label="t('common.language')"
                 :size="size"
                 :square="square"
-                :trailing-icon="square ? undefined : 'i-lucide-chevron-down'"
+                :trailing-icon="square || hideChevron ? undefined : 'i-lucide-chevron-down'"
                 color="neutral"
                 icon="i-lucide-languages"
                 variant="ghost"

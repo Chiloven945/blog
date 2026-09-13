@@ -16,9 +16,9 @@ const failed = ref(false)
         <div class="container-page py-14 lg:py-20">
             <div
                     v-reveal
-                    class="reveal grid gap-8 lg:grid-cols-12 lg:items-center"
+                    class="reveal grid gap-8 md:grid-cols-12 md:items-center lg:grid-cols-12 lg:items-center"
             >
-                <div class="lg:col-span-4">
+                <div class="md:col-span-4 lg:col-span-4">
                     <p class="home-kicker opacity-60">TOOLS / USED / NOT CLAIMED MASTERY</p>
                     <p
                             v-if="skills.description"
@@ -28,7 +28,7 @@ const failed = ref(false)
                     </p>
                 </div>
 
-                <div class="lg:col-span-8">
+                <div class="md:col-span-8 lg:col-span-8">
                     <div class="rounded-sm border border-white/15 bg-black/25 p-4">
                         <img
                                 v-if="skills.image && !failed"

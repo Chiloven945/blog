@@ -18,13 +18,13 @@ function pad(value: number): string {
             class="border-b border-default"
     >
         <div class="container-page py-14 lg:py-20">
-            <div class="home-mosaic grid-cols-1 lg:grid-cols-12">
+            <div class="home-mosaic grid-cols-1 md:grid-cols-2 lg:grid-cols-12">
                 <div
                         v-for="(stat, index) in stats"
                         :key="stat.id"
                         v-reveal="index * 90"
+                        :class="index === 0 ? 'home-tone-soft md:col-span-1 lg:col-span-7' : 'home-tone-faint md:col-span-1 lg:col-span-5'"
                         class="reveal flex flex-col p-6 lg:p-8"
-                        :class="index === 0 ? 'home-tone-soft lg:col-span-7' : 'home-tone-faint lg:col-span-5'"
                 >
                     <div class="flex items-center justify-between gap-4">
                         <span class="home-kicker opacity-60">STAT / {{ pad(index + 1) }}</span>

@@ -102,11 +102,22 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onGlobalKeydown))
     >
         <template #content>
             <div class="flex flex-col" @keydown="onKeydown">
-                <div class="border-b border-default px-3 py-2">
-                    <SearchInput
-                            ref="searchInput"
-                            v-model="query"
-                            :placeholder="t('search.placeholder')"
+                <div class="flex items-center gap-2 border-b border-default px-3 py-2">
+                    <div class="min-w-0 flex-1">
+                        <SearchInput
+                                ref="searchInput"
+                                v-model="query"
+                                :placeholder="t('search.placeholder')"
+                        />
+                    </div>
+
+                    <UButton
+                            :aria-label="t('search.hintClose')"
+                            class="md:hidden"
+                            color="neutral"
+                            icon="i-lucide-x"
+                            variant="ghost"
+                            @click="close()"
                     />
                 </div>
 

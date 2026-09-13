@@ -173,6 +173,7 @@
     "description": "在当前语言的文章与页面正文中查找关键词。",
     "placeholder": "搜索文章与页面…",
     "loading": "正在建立索引…",
+    "emptyEyebrow": "EMPTY / 000",
     "startTyping": "输入关键词开始搜索。",
     "noResults": "没有找到与 “{query}” 相关的内容。",
     "results": "{count} 个结果",

@@ -20,13 +20,5 @@ const {open} = useSearchModal()
             icon="i-lucide-search"
             variant="ghost"
             @click="open()"
-    >
-        <template v-if="!square">
-            <span class="hidden md:inline">{{ t('nav.search') }}</span>
-            <span class="hidden items-center gap-0.5 md:inline-flex">
-                <UKbd value="meta"/>
-                <UKbd value="k"/>
-            </span>
-        </template>
-    </UButton>
+    />
 </template>

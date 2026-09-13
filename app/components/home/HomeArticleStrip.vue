@@ -49,12 +49,12 @@ function pad(value: number): string {
 
             <div
                     v-if="lead"
-                    class="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-10"
+                    class="mt-8 grid gap-8 md:grid-cols-12 md:gap-10 lg:grid-cols-12 lg:gap-10"
             >
                 <NuxtLink
                         v-reveal
                         :to="lead.path"
-                        class="reveal group col-span-1 border-t-2 border-primary pt-4 lg:col-span-7"
+                        class="reveal group col-span-1 border-t-2 border-primary pt-4 md:col-span-7 lg:col-span-7"
                 >
                     <span class="home-kicker text-dimmed">01 / {{ subtypeLabel(lead) }}</span>
                     <h3 class="mt-3 font-display-sans text-2xl font-bold text-highlighted transition-colors group-hover:text-primary lg:text-4xl">
@@ -88,7 +88,7 @@ function pad(value: number): string {
                     />
                 </NuxtLink>
 
-                <div class="col-span-1 flex flex-col lg:col-span-5">
+                <div class="col-span-1 flex flex-col md:col-span-5 lg:col-span-5">
                     <NuxtLink
                             v-for="(article, index) in rest"
                             :key="article.path"
