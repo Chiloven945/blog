@@ -62,6 +62,31 @@ export function scoreRelated(current: RelatedCandidate, candidate: RelatedCandid
     return score
 }
 
+/**
+ * Whether two works share a real relation (series, tag, or subtype).
+ * Recency and `featured` only rank works that already relate; they must
+ * never manufacture a "Related" section on their own.
+ */
+export function isRelated(
+    current: RelatedCandidate,
+    candidate: RelatedCandidate
+): boolean {
+    if (current.series
+        && candidate.series
+        && current.series === candidate.series
+    ) {
+        return true
+    }
+
+    const currentTags = new Set((current.tags ?? []).map(normalizeTagKey))
+
+    if ((candidate.tags ?? []).some(tag => currentTags.has(normalizeTagKey(tag)))) {
+        return true
+    }
+
+    return Boolean(current.subtype && candidate.subtype === current.subtype)
+}
+
 /** Rank same-kind candidates for `current`, excluding itself and drafts. */
 export function rankRelated<T extends RelatedCandidate>(
     current: RelatedCandidate,
@@ -69,12 +94,17 @@ export function rankRelated<T extends RelatedCandidate>(
     limit = 3,
 ): T[] {
     return candidates
-        .filter(candidate => candidate.path !== current.path && candidate.status !== 'draft')
+        .filter(candidate =>
+            candidate.path !== current.path
+            && candidate.status !== 'draft'
+            && isRelated(current, candidate)
+        )
         .map(candidate => ({candidate, score: scoreRelated(current, candidate)}))
         .sort((a, b) =>
             b.score - a.score
             || (b.candidate.date ?? '').localeCompare(a.candidate.date ?? '')
-            || a.candidate.path.localeCompare(b.candidate.path))
+            || a.candidate.path.localeCompare(b.candidate.path)
+        )
         .slice(0, limit)
         .map(entry => entry.candidate)
 }

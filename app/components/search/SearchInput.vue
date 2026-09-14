@@ -3,6 +3,10 @@ const props = defineProps<{
     modelValue: string
     placeholder?: string
     variant?: 'none' | 'outline' | 'soft' | 'subtle' | 'ghost'
+    combobox?: boolean
+    expanded?: boolean
+    controls?: string
+    activeDescendant?: string
 }>()
 
 const emit = defineEmits<{
@@ -25,9 +29,14 @@ defineExpose({focus})
 <template>
     <UInput
             ref="input"
+            :aria-activedescendant="props.combobox ? props.activeDescendant : undefined"
+            :aria-autocomplete="props.combobox ? 'list' : undefined"
+            :aria-controls="props.combobox ? props.controls : undefined"
+            :aria-expanded="props.combobox ? props.expanded : undefined"
             :aria-label="props.placeholder"
             :model-value="props.modelValue"
             :placeholder="props.placeholder"
+            :role="props.combobox ? 'combobox' : undefined"
             :variant="props.variant ?? 'none'"
             autofocus
             class="w-full"

@@ -12,8 +12,15 @@ const isMobile = useMediaQuery('(max-width: 767px)')
 
 const activeIndex = ref(0)
 const searchInput = useTemplateRef<{ focus: () => void }>('searchInput')
+const resultsEl = useTemplateRef<HTMLElement>('resultsEl')
 
 const terms = computed(() => tokenizeSearchQuery(query.value))
+
+const activeDescendant = computed(() =>
+    isOpen.value && results.value.length
+        ? `search-result-${activeIndex.value}`
+        : undefined
+)
 
 const modalUi = computed(() => ({
     content: isMobile.value
@@ -50,6 +57,19 @@ function move(delta: number) {
     }
 
     activeIndex.value = (activeIndex.value + delta + total) % total
+    void nextTick(scrollActiveIntoView)
+}
+
+/** Keep the keyboard-selected option visible in the scrolling list. */
+function scrollActiveIntoView() {
+    const container = resultsEl.value
+
+    if (!container) {
+        return
+    }
+
+    const active = container.querySelectorAll<HTMLElement>('[data-testid="search-result"]')[activeIndex.value]
+    active?.scrollIntoView({block: 'nearest'})
 }
 
 function select(index = activeIndex.value) {
@@ -61,7 +81,10 @@ function select(index = activeIndex.value) {
 
     close()
 
-    navigateTo(item.anchor ? `${item.path}#${item.anchor}` : item.path)
+    navigateTo(item.anchor
+        ? `${item.path}#${item.anchor}`
+        : item.path
+    )
 }
 
 function onKeydown(event: KeyboardEvent) {
@@ -107,7 +130,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onGlobalKeydown))
                         <SearchInput
                                 ref="searchInput"
                                 v-model="query"
+                                :active-descendant="activeDescendant"
+                                :controls="'search-results-listbox'"
+                                :expanded="isOpen"
                                 :placeholder="t('search.placeholder')"
+                                combobox
                         />
                     </div>
 
@@ -122,6 +149,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onGlobalKeydown))
                 </div>
 
                 <div
+                        id="search-results-listbox"
+                        ref="resultsEl"
                         :class="isMobile
                             ? 'flex-1 overflow-y-auto p-2'
                             : 'max-h-[min(60vh,32rem)] min-h-24 overflow-y-auto p-2'"
@@ -153,6 +182,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onGlobalKeydown))
                                 v-for="(item, index) in results"
                                 :key="item.id"
                                 :active="index === activeIndex"
+                                :index="index"
                                 :item="item"
                                 :terms="terms"
                                 @select="select(index)"

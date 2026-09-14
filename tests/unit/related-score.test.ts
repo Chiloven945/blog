@@ -1,7 +1,14 @@
 import {describe, expect, it} from 'vitest'
-import {rankRelated, type RelatedCandidate, scoreRelated} from '../../app/utils/related-score'
+import {
+    isRelated,
+    rankRelated,
+    type RelatedCandidate,
+    scoreRelated
+} from '../../app/utils/related-score'
 
-function candidate(partial: Partial<RelatedCandidate> & { path: string }): RelatedCandidate {
+function candidate(
+    partial: Partial<RelatedCandidate> & { path: string }
+): RelatedCandidate {
     return {title: partial.path, date: '2026-01-01', ...partial}
 }
 
@@ -56,6 +63,24 @@ describe(
                 expect(scoreRelated(current, other)).toBe(0)
             }
         )
+
+        it(
+            'recognises a real relation through series, tag, or subtype',
+            () => {
+                const current = candidate({
+                    path: '/p/a',
+                    series: 'jep',
+                    tags: ['java'],
+                    subtype: 'translation'
+                })
+
+                expect(isRelated(current, candidate({path: '/p/b', series: 'jep'}))).toBe(true)
+                expect(isRelated(current, candidate({path: '/p/c', tags: ['Java']}))).toBe(true)
+                expect(isRelated(current, candidate({path: '/p/d', subtype: 'translation'})))
+                    .toBe(true)
+                expect(isRelated(current, candidate({path: '/p/e', tags: ['nuxt']}))).toBe(false)
+            }
+        )
     }
 )
 
@@ -92,6 +117,27 @@ describe(
 
                 expect(ranked).toHaveLength(1)
                 expect(ranked[0]!.path).toBe('/p/related')
+            }
+        )
+
+        it(
+            'never manufactures a relation from recency or featured alone',
+            () => {
+                const strangers = [
+                    candidate({
+                        path: '/p/featured',
+                        tags: ['nuxt'],
+                        featured: true,
+                        date: '2026-12-31'
+                    }),
+                    candidate({
+                        path: '/p/recent',
+                        tags: ['other'],
+                        date: '2026-02-01'
+                    }),
+                ]
+
+                expect(rankRelated(current, strangers)).toEqual([])
             }
         )
     }

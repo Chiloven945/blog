@@ -9,8 +9,8 @@
         display: flex;
         min-height: 100vh;
         flex-direction: column;
-        /* Mobile: floating brand + bottom dock. */
-        padding-top: 4.5rem;
+        /* Mobile: only the floating bottom dock reserves space. */
+        padding-top: 0;
         padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
     }
 
@@ -28,6 +28,14 @@
             padding-top: 0;
             padding-inline-start: 6rem;
         }
+    }
+
+    /* Reading mode hides the navigation, so the shell must release the
+       space it reserved for the dock/rail and let the body recenter. */
+    html.reading-mode .app-shell {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-inline-start: 0;
     }
 
     /* Centered page container: 1280px max, responsive gutters. */

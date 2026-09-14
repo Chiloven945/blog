@@ -64,5 +64,22 @@ test.describe(
                 await expectNoHorizontalOverflow(page, 'post mobile')
             }
         )
+
+        test(
+            'mobile shell has no phantom top reservation',
+            async ({page}) => {
+                const paddingTop = () =>
+                    page.locator('.app-shell')
+                        .evaluate(el => getComputedStyle(el).paddingTop)
+
+                await page.setViewportSize({width: 390, height: 844})
+                await gotoHydrated(page, '/zh-cn')
+                await expect.poll(paddingTop).toBe('0px')
+
+                // Tablet still reserves space for the floating top dock.
+                await page.setViewportSize({width: 768, height: 1024})
+                await expect.poll(paddingTop).toBe('88px')
+            }
+        )
     }
 )

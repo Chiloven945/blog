@@ -5,6 +5,7 @@ import {highlightSegments} from '~/utils/search'
 const props = defineProps<{
     item: SearchResultItem
     terms: string[]
+    index: number
     active?: boolean
 }>()
 
@@ -20,6 +21,7 @@ const breadcrumb = computed(() => props.item.titles.join(' / '))
 
 <template>
     <button
+            :id="`search-result-${props.index}`"
             :aria-selected="props.active"
             :class="props.active ? 'bg-elevated' : 'hover:bg-elevated'"
             :data-testid="'search-result'"
@@ -33,7 +35,7 @@ const breadcrumb = computed(() => props.item.titles.join(' / '))
         <span class="min-w-0 flex-1">
             <span class="flex items-center gap-2">
                 <span class="truncate font-medium text-highlighted">
-                    <template v-for="(segment, index) in titleSegments" :key="index">
+                    <template v-for="(segment, segmentIndex) in titleSegments" :key="segmentIndex">
                         <mark
                                 v-if="segment.match"
                                 class="rounded-[2px] bg-primary/15 px-0.5 text-primary"
@@ -61,7 +63,7 @@ const breadcrumb = computed(() => props.item.titles.join(' / '))
                     v-if="snippetSegments.length"
                     class="mt-1 line-clamp-2 block text-sm/6 text-muted"
             >
-                <template v-for="(segment, index) in snippetSegments" :key="index">
+                <template v-for="(segment, segmentIndex) in snippetSegments" :key="segmentIndex">
                     <mark
                             v-if="segment.match"
                             class="rounded-[2px] bg-primary/15 px-0.5 text-primary"

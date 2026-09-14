@@ -124,8 +124,9 @@ function select(item: SearchResultItem) {
 
                 <div class="mt-4 divide-y divide-default">
                     <SearchResult
-                            v-for="item in results"
+                            v-for="(item, index) in results"
                             :key="item.id"
+                            :index="index"
                             :item="item"
                             :terms="terms"
                             @select="select(item)"

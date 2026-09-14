@@ -4,6 +4,7 @@ import {
     searchSections,
     type SearchStatus,
 } from '~/utils/search'
+import {resolveContentCollection} from '~/composables/useActiveContentCollection'
 
 type RawSearchSection = {
     id?: unknown
@@ -70,7 +71,6 @@ const extraFields = ['subtype', 'tags', 'date'] as const
  */
 export function useSearch() {
     const {locale} = useI18n()
-    const active = useActiveContentCollection()
 
     // Locale is an explicit data dimension: one index per language, so
     // switching languages never reuses another locale's results.
@@ -78,22 +78,30 @@ export function useSearch() {
     const indices = useState<Record<string, SearchSection[]>>('search-index', () => ({}))
     const query = ref('')
 
-    const status = computed<SearchStatus>(() => statuses.value[locale.value] ?? 'idle')
-    const sections = computed<SearchSection[]>(() => indices.value[locale.value] ?? [])
+    const status = computed<SearchStatus>(() =>
+        statuses.value[locale.value] ?? 'idle'
+    )
+    const sections = computed<SearchSection[]>(() =>
+        indices.value[locale.value] ?? []
+    )
 
-    async function buildIndex(): Promise<SearchSection[]> {
+    async function buildIndex(code: string): Promise<SearchSection[]> {
+        // Resolve the collections from the requested locale explicitly, so an
+        // index is always built from the language it is stored under, even if
+        // the active locale changes while the queries are in flight.
+        const collections = resolveContentCollection(code)
         const [articleSections, novelSections, pageSections] = await Promise.all([
-            queryCollectionSearchSections(active.value.articles, {
+            queryCollectionSearchSections(collections.articles, {
                 minHeading: 'h2',
                 maxHeading: 'h4',
                 extraFields: [...extraFields],
             }),
-            queryCollectionSearchSections(active.value.novels, {
+            queryCollectionSearchSections(collections.novels, {
                 minHeading: 'h2',
                 maxHeading: 'h4',
                 extraFields: [...extraFields],
             }),
-            queryCollectionSearchSections(active.value.pages, {
+            queryCollectionSearchSections(collections.pages, {
                 minHeading: 'h2',
                 maxHeading: 'h4',
             }),
@@ -122,7 +130,7 @@ export function useSearch() {
         statuses.value = {...statuses.value, [code]: 'loading'}
 
         try {
-            const built = await buildIndex()
+            const built = await buildIndex(code)
             indices.value = {...indices.value, [code]: built}
             statuses.value = {...statuses.value, [code]: 'ready'}
         } catch (error) {

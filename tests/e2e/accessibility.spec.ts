@@ -82,13 +82,58 @@ test.describe(
                     await expect(dialog).toBeVisible()
                 }
 
-                const input = dialog.getByRole('textbox')
+                const input = dialog.getByRole('combobox')
+                await expect(input).toHaveAttribute('aria-expanded', 'true')
                 await input.fill('jep')
                 await expect(dialog.getByRole('option').first()).toBeVisible()
 
+                // The input keeps focus while the active option is tracked.
+                await expect(input).toHaveAttribute('aria-activedescendant', 'search-result-0')
                 await page.keyboard.press('ArrowDown')
+                await expect(input).toHaveAttribute('aria-activedescendant', 'search-result-1')
+
                 await page.keyboard.press('Escape')
                 await expect(dialog).toBeHidden()
+            }
+        )
+
+        test(
+            'search keeps the keyboard-selected result visible',
+            async ({page}) => {
+                await page.setViewportSize({width: 1280, height: 720})
+                await gotoHydrated(page, '/en')
+
+                const dialog = page.getByRole('dialog')
+                await page.keyboard.press('Control+k')
+
+                try {
+                    await expect(dialog).toBeVisible({timeout: 2_500})
+                } catch {
+                    await page.keyboard.press('Control+k')
+                    await expect(dialog).toBeVisible()
+                }
+
+                await dialog.getByRole('combobox').fill('a')
+
+                const options = dialog.getByRole('option')
+                await expect(options.first()).toBeVisible()
+
+                const count = await options.count()
+                const steps = Math.min(count - 1, 12)
+                for (let i = 0; i < steps; i++) {
+                    await page.keyboard.press('ArrowDown')
+                }
+
+                const listBox = await dialog.locator('[role="listbox"]').boundingBox()
+                const activeBox = await dialog.locator('[aria-selected="true"]').boundingBox()
+
+                expect(listBox).not.toBeNull()
+                expect(activeBox).not.toBeNull()
+                expect(activeBox!.y).toBeGreaterThanOrEqual(listBox!.y - 1)
+                expect(activeBox!.y + activeBox!.height)
+                    .toBeLessThanOrEqual(listBox!.y + listBox!.height + 1)
+
+                await page.keyboard.press('Escape')
             }
         )
 
@@ -109,15 +154,24 @@ test.describe(
         )
 
         test(
-            'novel reading mode toggles and exits with Escape',
+            'novel reading mode releases the shell reservation',
             async ({page}) => {
                 await page.setViewportSize({width: 1280, height: 900})
                 await gotoHydrated(page, '/zh-cn/novels/wip-a')
 
                 const html = page.locator('html')
+                const shell = page.locator('.app-shell')
                 const toolbar = page.locator('[role="group"][aria-label="阅读设置"]')
+                const inlineStart = () => shell.evaluate(el => getComputedStyle(el).paddingInlineStart)
+
+                // The desktop rail reserves 96px until reading mode hides it.
+                await expect.poll(inlineStart).toBe('96px')
+
                 await toolbar.getByRole('button', {name: '阅读模式'}).click()
                 await expect(html).toHaveClass(/reading-mode/)
+                await expect.poll(inlineStart).toBe('0px')
+                await expect.poll(() => shell.evaluate(el => getComputedStyle(el).paddingTop))
+                    .toBe('0px')
 
                 await page.keyboard.press('Escape')
                 await expect(html).not.toHaveClass(/reading-mode/)
