@@ -1,7 +1,6 @@
 import type {ArticleCardItem} from '#shared/types/article'
 import type {NovelCardItem} from '#shared/types/novel'
 import {normalizeTagKey} from '#shared/utils/taxonomy'
-import {filterDrafts} from '~/utils/content'
 
 export interface TaxonomyTag {
     key: string
@@ -55,19 +54,21 @@ export async function useTagIndex() {
         () => `tag-index-${locale.value}`,
         async () => {
             const [articles, novels] = await Promise.all([
-                queryCollection(active.value.articles)
-                    .select(...articleFields)
+                applyPublicStatus(
+                    queryCollection(active.value.articles).select(...articleFields)
+                )
                     .order('date', 'DESC')
                     .all(),
-                queryCollection(active.value.novels)
-                    .select(...novelFields)
+                applyPublicStatus(
+                    queryCollection(active.value.novels).select(...novelFields)
+                )
                     .order('date', 'DESC')
                     .all(),
             ])
 
             return {
-                articles: filterDrafts(articles as unknown as ArticleCardItem[]),
-                novels: filterDrafts(novels as unknown as NovelCardItem[]),
+                articles: articles as unknown as ArticleCardItem[],
+                novels: novels as unknown as NovelCardItem[],
             }
         },
         {default: () => ({articles: [], novels: []})},

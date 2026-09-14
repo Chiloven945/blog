@@ -40,12 +40,26 @@ const readingTime = computed(() => getReadingTime(article.value?.body))
 const {data: surround} = await useAsyncData(
     () => `article-surround-${active.value.articles}-${path.value}`,
     async () => {
-        const items = await queryCollection(active.value.articles)
-            .select('path', 'title', 'date')
-            .order('date', 'ASC')
-            .all()
+        const query = queryCollectionItemSurroundings(
+            active.value.articles,
+            path.value,
+            {fields: ['title', 'date']},
+        )
+        const items = await (draftsEnabled()
+                ? query
+                : query.where('status', '<>', 'draft')
+        ).order('date', 'ASC')
 
-        return getPostSurround(items, path.value)
+        const [prev, next] = items
+
+        return {
+            prev: prev
+                ? {title: prev.title, path: prev.path}
+                : null,
+            next: next
+                ? {title: next.title, path: next.path}
+                : null,
+        }
     },
 )
 

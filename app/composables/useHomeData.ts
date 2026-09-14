@@ -29,18 +29,22 @@ export async function useHomeData() {
     const articlesAsync = useAsyncData(
         () => `home-articles-${active.value.articles}`,
         () =>
-            queryCollection(active.value.articles)
-                .select(...fields)
+            applyPublicStatus(
+                queryCollection(active.value.articles).select(...fields)
+            )
                 .order('date', 'DESC')
+                .limit(LIMIT)
                 .all(),
     )
 
     const novelsAsync = useAsyncData(
         () => `home-novels-${active.value.novels}`,
         () =>
-            queryCollection(active.value.novels)
-                .select(...fields)
+            applyPublicStatus(
+                queryCollection(active.value.novels).select(...fields)
+            )
                 .order('date', 'DESC')
+                .limit(LIMIT)
                 .all(),
     )
 
@@ -48,11 +52,11 @@ export async function useHomeData() {
     const {data: novelsData} = await novelsAsync
 
     const latestArticles = computed(() =>
-        filterDrafts((articlesData.value ?? []) as unknown as ArticleCardItem[]).slice(0, LIMIT),
+        (articlesData.value ?? []) as unknown as ArticleCardItem[],
     )
 
     const latestNovels = computed(() =>
-        filterDrafts((novelsData.value ?? []) as unknown as NovelCardItem[]).slice(0, LIMIT),
+        (novelsData.value ?? []) as unknown as NovelCardItem[],
     )
 
     return {latestArticles, latestNovels}

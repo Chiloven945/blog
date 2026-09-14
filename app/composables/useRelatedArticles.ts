@@ -11,20 +11,22 @@ export function useRelatedArticles(current: Ref<ArticleDocument | null>, limit =
 
     const {data} = useAsyncData(
         () => `related-articles-${active.value.articles}`,
-        () => queryCollection(active.value.articles)
-            .select(
-                'path',
-                'title',
-                'description',
-                'date',
-                'subtype',
-                'status',
-                'tags',
-                'series',
-                'cover',
-                'coverAlt',
-                'featured',
-            )
+        () => applyPublicStatus(
+            queryCollection(active.value.articles)
+                .select(
+                    'path',
+                    'title',
+                    'description',
+                    'date',
+                    'subtype',
+                    'status',
+                    'tags',
+                    'series',
+                    'cover',
+                    'coverAlt',
+                    'featured',
+                )
+        )
             .order('date', 'DESC')
             .all(),
     )
@@ -36,7 +38,7 @@ export function useRelatedArticles(current: Ref<ArticleDocument | null>, limit =
             return []
         }
 
-        const items = filterDrafts((data.value ?? []) as unknown as ArticleCardItem[])
+        const items = (data.value ?? []) as unknown as ArticleCardItem[]
 
         return rankRelated(item, items, limit)
     })

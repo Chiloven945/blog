@@ -92,6 +92,25 @@ test.describe(
                 await expect(page.locator('html')).toHaveAttribute('lang', 'zh-TW')
             }
         )
+
+        test(
+            'a tag detail page switches to the target tag index',
+            async ({page, context}) => {
+                await page.setViewportSize(desktop)
+                await gotoHydrated(page, '/en/tags/java')
+
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: 'Language'})
+                    .click()
+                await page.getByRole('menuitemcheckbox', {name: '简体中文'}).click()
+
+                await expect(page).toHaveURL(/\/zh-cn\/tags$/)
+                await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN')
+
+                const cookie = (await context.cookies()).find(item => item.name === 'blog_locale')
+                expect(cookie?.value).toBe('zh-cn')
+            }
+        )
     }
 )
 

@@ -38,9 +38,22 @@ function loadLocale(code: string): Record<string, string> {
     return flatten(JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>)
 }
 
-function slugs(kind: 'articles' | 'novels', locale: string): string[] {
+function statusOf(
+    kind: 'articles' | 'novels',
+    locale: string,
+    file: string
+): string | undefined {
+    const text = readFileSync(join(root, 'content', kind, locale, file), 'utf8')
+    const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text)
+    const status = /^status:\s*(.+)$/m.exec(match?.[1] ?? '')
+
+    return status?.[1]?.trim().replace(/^["']|["']$/g, '')
+}
+
+function publishedSlugs(kind: 'articles' | 'novels', locale: string): string[] {
     return readdirSync(join(root, 'content', kind, locale))
         .filter(name => name.endsWith('.md'))
+        .filter(name => statusOf(kind, locale, name) !== 'draft')
         .sort()
 }
 
@@ -96,23 +109,23 @@ describe(
 
 describe('content integrity', () => {
     it(
-        'keeps the same article slugs in every locale',
+        'keeps the same published article slugs in every locale',
         () => {
-            const reference = slugs('articles', 'en')
+            const reference = publishedSlugs('articles', 'en')
 
             for (const code of locales) {
-                expect(slugs('articles', code), code).toEqual(reference)
+                expect(publishedSlugs('articles', code), code).toEqual(reference)
             }
         }
     )
 
     it(
-        'keeps the same novel slugs in every locale',
+        'keeps the same published novel slugs in every locale',
         () => {
-            const reference = slugs('novels', 'en')
+            const reference = publishedSlugs('novels', 'en')
 
             for (const code of locales) {
-                expect(slugs('novels', code), code).toEqual(reference)
+                expect(publishedSlugs('novels', code), code).toEqual(reference)
             }
         }
     )

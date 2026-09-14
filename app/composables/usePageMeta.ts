@@ -60,10 +60,6 @@ export function usePageMeta(options: PageMetaOptions = {}) {
         const links: Array<{ rel: 'alternate'; type: string; hreflang: string; href: string }> = []
 
         for (const item of availability.value) {
-            if (!item.available) {
-                continue
-            }
-
             links.push({
                 rel: 'alternate',
                 type: 'text/html',
@@ -73,8 +69,8 @@ export function usePageMeta(options: PageMetaOptions = {}) {
         }
 
         const xDefault =
-            availability.value.find(item => item.code === siteConfig.defaultLocale && item.available) ??
-            availability.value.find(item => item.available)
+            availability.value.find(item => item.code === siteConfig.defaultLocale) ??
+            availability.value[0]
 
         if (xDefault) {
             links.push({
@@ -92,7 +88,7 @@ export function usePageMeta(options: PageMetaOptions = {}) {
     // active locale itself is emitted once as `og:locale` by app.vue.
     const ogLocaleAlternates = computed(() =>
         availability.value
-            .filter(item => !item.current && item.available)
+            .filter(item => !item.current)
             .map(item => ({
                 property: 'og:locale:alternate',
                 content: resolveOgLocale(item.code),

@@ -27,8 +27,9 @@ const {data} = await useAsyncData<ArticleCardItem[]>(
             'featured',
         ] as const
 
-        const items = await queryCollection(active.value.articles)
-            .select(...fields)
+        const items = await applyPublicStatus(
+            queryCollection(active.value.articles).select(...fields)
+        )
             .order('date', 'DESC')
             .all()
 
@@ -36,7 +37,7 @@ const {data} = await useAsyncData<ArticleCardItem[]>(
     },
 )
 
-const articles = computed(() => filterDrafts(data.value ?? []))
+const articles = computed(() => data.value ?? [])
 const subtypeOptions = useArticleSubtypes()
 
 const availableSubtypes = computed(() => {

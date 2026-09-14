@@ -96,12 +96,16 @@ export async function useArchives() {
         () => `archives-${key.value}`,
         async () => {
             const [articles, novels] = await Promise.all([
-                queryCollection(active.value.articles)
-                    .select('path', 'title', 'date', 'subtype', 'status')
+                applyPublicStatus(
+                    queryCollection(active.value.articles)
+                        .select('path', 'title', 'date', 'subtype', 'status')
+                )
                     .order('date', 'DESC')
                     .all(),
-                queryCollection(active.value.novels)
-                    .select('path', 'title', 'date', 'subtype', 'status')
+                applyPublicStatus(
+                    queryCollection(active.value.novels)
+                        .select('path', 'title', 'date', 'subtype', 'status')
+                )
                     .order('date', 'DESC')
                     .all(),
             ])
@@ -118,7 +122,7 @@ export async function useArchives() {
     )
 
     const posts = computed<ArchivePost[]>(() =>
-        filterDrafts(data.value ?? [])
+        (data.value ?? [])
             .map(post => (
                 {
                     path: post.path,

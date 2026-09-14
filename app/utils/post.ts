@@ -1,5 +1,4 @@
 import {type Kind, kinds} from '~~/shared/config/kinds'
-import {parseDate} from './date'
 
 const skipTags = new Set(['pre', 'style', 'script'])
 
@@ -51,44 +50,4 @@ export function getReadingTime(
 
 export function resolveKind(kind: string) {
     return kinds[kind as Kind] ?? kinds.article
-}
-
-export interface PostSurroundItem {
-    title: string
-    path: string
-}
-
-export interface PostSurroundResult {
-    prev: PostSurroundItem | null
-    next: PostSurroundItem | null
-}
-
-export function getPostSurround(
-    posts: Array<{ path: string; title: string; date: string }>,
-    currentPath: string,
-): PostSurroundResult {
-    const ordered = [...posts].sort((a, b) => {
-        const diff = parseDate(a.date).getTime() - parseDate(b.date).getTime()
-        return diff !== 0
-            ? diff
-            : a.path.localeCompare(b.path)
-    })
-
-    const index = ordered.findIndex(post => post.path === currentPath)
-
-    if (index === -1) {
-        return {prev: null, next: null}
-    }
-
-    const prev = ordered[index - 1]
-    const next = ordered[index + 1]
-
-    return {
-        prev: prev
-            ? {title: prev.title, path: prev.path}
-            : null,
-        next: next
-            ? {title: next.title, path: next.path}
-            : null,
-    }
 }

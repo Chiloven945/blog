@@ -1,7 +1,6 @@
 import type {ComputedRef} from 'vue'
 import type {LocaleObject} from '@nuxtjs/i18n'
-import {tagPath} from '#shared/utils/taxonomy'
-import {contentCollections, type ContentLocale} from './useActiveContentCollection'
+import type {ContentLocale} from './useActiveContentCollection'
 
 const localePrefixes: Record<ContentLocale, string> = {
     'zh-cn': '/zh-cn',
@@ -9,24 +8,16 @@ const localePrefixes: Record<ContentLocale, string> = {
     en: '/en',
 }
 
-const systemRoutes = new Set([
-    '/',
-    '/articles',
-    '/novels',
-    '/tags',
-    '/search',
-    '/archives',
-    '/friends'
-])
-
-type ContentPathIndex = Record<string, string[]>
+const tagDetailPattern = /^\/tags\/[^/]+\/?$/
 
 export interface LocaleOption {
     code: ContentLocale
     name: string
     current: boolean
-    available: boolean
+    /** Path to open for this locale (tag detail falls back to the tag index). */
     to: string
+    /** True when the current route is a locale-local tag detail page. */
+    tagDetail: boolean
 }
 
 /** Remove the active locale prefix from a route path. */
@@ -48,59 +39,34 @@ export function stripLocalePrefix(
         : `/${relative}`
 }
 
+/**
+ * Locale menu options. Translation parity is enforced at build time, so this
+ * never queries Content to decide which locales are reachable; it only builds
+ * the switch targets from the current route.
+ */
 export function useLocaleAvailability(): ComputedRef<LocaleOption[]> {
     const {locale, locales} = useI18n()
     const route = useRoute()
     const switchLocalePath = useSwitchLocalePath()
 
-    const {data} = useAsyncData<ContentPathIndex>(
-        'locale-content-paths',
-        async () => {
-            const codes = Object.keys(contentCollections) as ContentLocale[]
-            const entries = await Promise.all(
-                codes.map(async (code) => {
-                    const collections = contentCollections[code]
-                    const [articles, novels, series, pages] = await Promise.all([
-                        queryCollection(collections.articles).select('path', 'tags').all(),
-                        queryCollection(collections.novels).select('path', 'tags').all(),
-                        queryCollection(collections.series).select('path').all(),
-                        queryCollection(collections.pages).select('path').all(),
-                    ])
-                    // Store locale-less paths; the current route is compared
-                    // against the target locale's index.
-                    const paths = [...articles, ...novels, ...series, ...pages]
-                        .map(item => stripLocalePrefix((item as { path: string }).path, code))
-
-                    // Tag pages are locale-local: only mark a tag reachable
-                    // when the target locale actually carries it.
-                    const tags = [...articles, ...novels]
-                        .flatMap(item => (item as { tags?: string[] }).tags ?? [])
-                        .map(tag => tagPath(tag))
-
-                    return [code, [...new Set([...paths, ...tags])]] as const
-                }),
-            )
-
-            return Object.fromEntries(entries) as ContentPathIndex
-        },
-    )
-
     return computed(() => {
         const current = locale.value as ContentLocale
         const relative = stripLocalePrefix(route.path, current)
-        const alwaysAvailable = systemRoutes.has(relative) || relative.startsWith('/dev')
-        const index = data.value ?? {}
+        const tagDetail = tagDetailPattern.test(relative)
 
         return (locales.value as LocaleObject[]).map((item) => {
             const code = item.code as ContentLocale
-            const available = alwaysAvailable || (index[code] ?? []).includes(relative)
 
             return {
-                code: item.code as ContentLocale,
+                code,
                 name: item.name ?? item.code,
                 current: item.code === current,
-                available,
-                to: switchLocalePath(item.code),
+                // Tags are locale-local, so a tag detail page switches to the
+                // target locale's tag index instead of guessing a translation.
+                to: tagDetail
+                    ? `${localePrefixes[code] ?? ''}/tags`
+                    : switchLocalePath(item.code),
+                tagDetail,
             }
         })
     })

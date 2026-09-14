@@ -12,21 +12,23 @@ export function useRelatedNovels(current: Ref<NovelDocument | null>, limit = 3) 
 
     const {data} = useAsyncData(
         () => `related-novels-${active.value.novels}`,
-        () => queryCollection(active.value.novels)
-            .select(
-                'path',
-                'title',
-                'description',
-                'date',
-                'subtype',
-                'status',
-                'tags',
-                'series',
-                'seriesOrder',
-                'cover',
-                'coverAlt',
-                'featured',
-            )
+        () => applyPublicStatus(
+            queryCollection(active.value.novels)
+                .select(
+                    'path',
+                    'title',
+                    'description',
+                    'date',
+                    'subtype',
+                    'status',
+                    'tags',
+                    'series',
+                    'seriesOrder',
+                    'cover',
+                    'coverAlt',
+                    'featured',
+                )
+        )
             .order('date', 'DESC')
             .all(),
     )
@@ -38,7 +40,7 @@ export function useRelatedNovels(current: Ref<NovelDocument | null>, limit = 3) 
             return []
         }
 
-        const items = filterDrafts((data.value ?? []) as unknown as NovelCardItem[])
+        const items = (data.value ?? []) as unknown as NovelCardItem[]
 
         return rankRelated(item, items, limit)
     })

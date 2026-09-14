@@ -28,8 +28,9 @@ const {data} = await useAsyncData<NovelCardItem[]>(
             'featured',
         ] as const
 
-        const items = await queryCollection(active.value.novels)
-            .select(...fields)
+        const items = await applyPublicStatus(
+            queryCollection(active.value.novels).select(...fields)
+        )
             .order('date', 'DESC')
             .all()
 
@@ -37,7 +38,7 @@ const {data} = await useAsyncData<NovelCardItem[]>(
     },
 )
 
-const novels = computed(() => filterDrafts(data.value ?? []))
+const novels = computed(() => data.value ?? [])
 const subtypeOptions = useNovelSubtypes()
 const statusOptions = useNovelStatuses()
 
