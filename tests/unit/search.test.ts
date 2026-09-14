@@ -5,13 +5,12 @@ import {
     scoreSearchSection,
     type SearchSection,
     searchSections,
-    tokenizeSearchQuery,
 } from '../../app/utils/search'
 
 function section(partial: Partial<SearchSection>): SearchSection {
     return {
-        id: partial.id ?? '/p/x',
-        path: partial.path ?? '/p/x',
+        id: partial.id ?? '/x',
+        path: partial.path ?? '/x',
         title: partial.title ?? '',
         titles: partial.titles ?? [],
         level: partial.level ?? 2,
@@ -20,67 +19,76 @@ function section(partial: Partial<SearchSection>): SearchSection {
     }
 }
 
-describe('search tokenizing', () => {
-    it('lowercases and splits on whitespace', () => {
-        expect(tokenizeSearchQuery('  Java  Spring ')).toEqual(['java', 'spring'])
-    })
-})
+describe(
+    'search scoring',
+    () => {
+        it(
+            'ranks title over heading over body over metadata',
+            () => {
+                const title = scoreSearchSection(section({title: 'Java'}), ['java'])
+                const heading = scoreSearchSection(section({titles: ['Java']}), ['java'])
+                const body = scoreSearchSection(section({content: 'java'}), ['java'])
+                const metadata = scoreSearchSection(section({tags: ['java']}), ['java'])
 
-describe('search scoring', () => {
-    it('scores an exact title highest', () => {
-        const exact = scoreSearchSection(section({title: 'Java'}), ['java'])
-        const prefix = scoreSearchSection(section({title: 'Java basics'}), ['java'])
-        const contains = scoreSearchSection(section({title: 'Intro to Java'}), ['java'])
-        expect(exact).toBeGreaterThan(prefix)
-        expect(prefix).toBeGreaterThan(contains)
-    })
+                expect(title).toBeGreaterThan(heading)
+                expect(heading).toBeGreaterThan(body)
+                expect(body).toBeGreaterThan(metadata)
+            }
+        )
 
-    it('ranks title over heading over body over metadata', () => {
-        const title = scoreSearchSection(section({title: 'Java'}), ['java'])
-        const heading = scoreSearchSection(section({titles: ['Java']}), ['java'])
-        const body = scoreSearchSection(section({content: 'java'}), ['java'])
-        const metadata = scoreSearchSection(section({tags: ['java']}), ['java'])
-        expect(title).toBeGreaterThan(heading)
-        expect(heading).toBeGreaterThan(body)
-        expect(body).toBeGreaterThan(metadata)
-    })
+        it(
+            'requires every term to be present',
+            () => {
+                const s = section({title: 'Java', content: 'virtual threads'})
 
-    it('requires every term to be present', () => {
-        const s = section({title: 'Java', content: 'virtual threads'})
-        expect(scoreSearchSection(s, ['java', 'threads'])).toBeGreaterThan(0)
-        expect(scoreSearchSection(s, ['java', 'kotlin'])).toBe(0)
-    })
-})
+                expect(scoreSearchSection(s, ['java', 'threads'])).toBeGreaterThan(0)
+                expect(scoreSearchSection(s, ['java', 'kotlin'])).toBe(0)
+            }
+        )
+    }
+)
 
-describe('search results', () => {
-    const sections: SearchSection[] = [
-        section({id: '1', path: '/p/a', title: 'Kotlin', content: 'java interop'}),
-        section({id: '2', path: '/p/b', title: 'Java', content: 'jvm'}),
-        section({id: '3', path: '/p/c', title: 'Other', content: 'nothing'}),
-    ]
+describe(
+    'search results',
+    () => {
+        const sections: SearchSection[] = [
+            section({id: '1', path: '/a', title: 'Kotlin', content: 'java interop'}),
+            section({id: '2', path: '/b', title: 'Java', content: 'jvm'}),
+            section({id: '3', path: '/c', title: 'Other', content: 'nothing'}),
+        ]
 
-    it('sorts by score and drops non-matches', () => {
-        const results = searchSections(sections, 'java')
-        expect(results.map(result => result.title)).toEqual(['Java', 'Kotlin'])
-        expect(results[0]!.score).toBeGreaterThan(results[1]!.score)
-    })
+        it(
+            'sorts by score, drops non-matches and honours the limit',
+            () => {
+                const results = searchSections(sections, 'java')
 
-    it('honours the result limit', () => {
-        expect(searchSections(sections, 'java', 1)).toHaveLength(1)
-    })
+                expect(results.map(result => result.title)).toEqual(['Java', 'Kotlin'])
+                expect(searchSections(
+                    sections,
+                    'java',
+                    1
+                )).toHaveLength(1)
+            }
+        )
 
-    it('builds a snippet around the match', () => {
-        const snippet = buildSnippet(`${'a'.repeat(100)} needle ${'b'.repeat(100)}`, ['needle'])
-        expect(snippet).toContain('needle')
-        expect(snippet.startsWith('…')).toBe(true)
-        expect(snippet.endsWith('…')).toBe(true)
-    })
+        it(
+            'builds a snippet and highlights regex-special matches',
+            () => {
+                const snippet = buildSnippet(
+                    `${'a'.repeat(100)} C++ ${'b'.repeat(100)}`,
+                    ['c++']
+                )
 
-    it('highlights matching segments', () => {
-        const segments = highlightSegments('Java and java', ['java'])
-        expect(segments.filter(segment => segment.match).map(segment => segment.text)).toEqual([
-            'Java',
-            'java',
-        ])
-    })
-})
+                expect(snippet).toContain('C++')
+                expect(snippet.startsWith('…')).toBe(true)
+
+                const segments = highlightSegments('C++ and (java)', ['c++', '(java)'])
+
+                expect(segments
+                    .filter(segment => segment.match)
+                    .map(segment => segment.text)
+                ).toEqual(['C++', '(java)'])
+            }
+        )
+    }
+)

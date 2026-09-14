@@ -1,9 +1,9 @@
 import {defineConfig, devices} from '@playwright/test'
 
-// Static regression suite for the generated site.
-// `bun test:e2e` builds `.output/public` and serves it with a clean-URL
-// static server so production behaviour (no dev HMR, real payloads) is what
-// gets tested.
+// The suite runs against the built Nitro server (`bun run build`), so the
+// language-entry redirect, the locale cookie and the server-rendered HTML are
+// exercised the same way they are in production. Chromium is the reference
+// engine; Firefox/WebKit are checked manually before a release.
 const chromiumExecutable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
 
 export default defineConfig({
@@ -13,18 +13,16 @@ export default defineConfig({
     retries: process.env.CI
         ? 2
         : 1,
-    // Run sequentially to keep layout and timing checks stable.
+    // Run sequentially so the intentionally stateful language/cookie checks
+    // stay deterministic.
     workers: 1,
-    reporter: process.env.CI
-        ? [['list'], ['html', {open: 'never'}]]
-        : [['list'], ['html', {open: 'never'}]],
+    reporter: [['list'], ['html', {open: 'never'}]],
     timeout: 30_000,
     expect: {timeout: 5_000},
     use: {
         baseURL: 'http://localhost:4173',
-        // Keep browser-language detection on the default locale so the root
-        // URL does not redirect away from the default locale.
-        locale: 'zh-CN',
+        // Default browser language for tests that do not override it.
+        locale: 'en-US',
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
     },
@@ -40,12 +38,10 @@ export default defineConfig({
                     : {}),
             },
         },
-        {name: 'firefox', use: {...devices['Desktop Firefox']}},
-        {name: 'webkit', use: {...devices['Desktop Safari']}},
     ],
     webServer: {
-        command: 'bun run generate && bun tests/e2e/static-server.ts',
-        url: 'http://localhost:4173/zh-cn',
+        command: 'bun run build && PORT=4173 node .output/server/index.mjs',
+        url: 'http://localhost:4173/en',
         reuseExistingServer: !process.env.CI,
         timeout: 600_000,
     },

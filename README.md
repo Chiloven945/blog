@@ -177,25 +177,24 @@ UI copy lives in `i18n/locales/`; long-form content lives under `content/`.
 
 ## Testing
 
-Unit tests cover the date, reading-time, search-scoring, archive-grouping, and locale/collection
-helpers, plus i18n key parity:
+Unit tests cover search scoring, related scoring, taxonomy keys, the Giscus discussion term, and
+i18n/content integrity (locale message-key parity and content slug parity):
 
 ```bash
 bun run test
 ```
 
-End-to-end tests build the static site and serve `.output/public` with a clean-URL server, then
-check pages across all three locales, responsive widths from 360px to 1440px, light and dark themes,
-reduced motion, no-JavaScript rendering, keyboard navigation, screen-reader landmarks, internal
-links, RSS, and the sitemap:
+End-to-end tests build the production server (`bun run build`) and run against it, covering the core
+pages and readers, navigation, language entry/fallback/switch, theme, search, filters, three
+responsive breakpoints, accessibility, and SEO (internal links, RSS, sitemap, canonical/hreflang):
 
 ```bash
-bunx playwright install          # Chromium, Firefox, WebKit
+bunx playwright install          # Chromium
 bun run test:e2e
 ```
 
-The suite runs on Chromium, Firefox, and WebKit. On systems where Playwright cannot manage its own
-Chromium, point it at a system build:
+The suite runs on Chromium; Firefox and WebKit are checked manually before a release. On systems
+where Playwright cannot manage its own Chromium, point it at a system build:
 
 ```bash
 PLAYWRIGHT_CHROMIUM_EXECUTABLE=/path/to/chromium bun run test:e2e

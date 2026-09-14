@@ -107,7 +107,7 @@ function setFilter(key: 'type' | 'status', value: string) {
         query.status = value
     }
 
-    router.replace({query})
+    router.push({query})
 }
 
 if (import.meta.client) {

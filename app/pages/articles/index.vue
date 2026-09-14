@@ -89,7 +89,7 @@ function setType(value: string) {
         query.type = value
     }
 
-    router.replace({query})
+    router.push({query})
 }
 
 if (import.meta.client) {
