@@ -1,5 +1,23 @@
 import {siteConfig} from './shared/config/site'
 
+const localeCodes = ['en', 'zh-cn', 'zh-tw'] as const
+
+// Every indexable page is prerendered to a static file. The feeds and the
+// static search indexes have no inbound links during the crawl, so they are
+// listed explicitly.
+const prerenderSeeds = localeCodes.flatMap(locale => [
+    `/${locale}`,
+    `/${locale}/articles`,
+    `/${locale}/novels`,
+    `/${locale}/tags`,
+    `/${locale}/archives`,
+    `/${locale}/friends`,
+    `/${locale}/search`,
+    `/${locale}/dev/style`,
+    `/${locale}/rss.xml`,
+    `/search-index/${locale}.json`,
+])
+
 export default defineNuxtConfig({
     compatibilityDate: '2026-09-11',
     devtools: {enabled: true},
@@ -116,23 +134,25 @@ export default defineNuxtConfig({
     },
 
     nitro: {
-        // `cloudflare` resolves to the legacy Workers Sites preset
-        // (service-worker entry + `--site`). The module-worker preset is
-        // the current one and matches the repository's wrangler.jsonc
-        // (`main` plus an `assets` binding).
-        preset: 'cloudflare_module',
-        cloudflare: {
-            // Keep the repository's wrangler.jsonc as the single source
-            // of truth instead of letting Nitro generate one.
-            deployConfig: false,
-        },
+        // No Cloudflare SSR preset: production is fully prerendered static
+        // assets, and a tiny Worker only handles unprefixed entry redirects.
         prerender: {
-            // The feeds have no inbound links during the crawl, so list the
-            // three localized feeds explicitly.
+            crawlLinks: true,
             routes: [
-                '/en/rss.xml',
-                '/zh-cn/rss.xml',
-                '/zh-tw/rss.xml'
+                ...prerenderSeeds,
+                '/sitemap.xml',
+                '/robots.txt',
+            ],
+            ignore: [
+                // Unprefixed paths are language-entry redirectors only and
+                // must never be generated as standalone pages. Nitro matches
+                // string ignore entries as path prefixes (a bare '/' would
+                // skip every route), so regexes are used to target only the
+                // unprefixed page paths without catching /search-index/*,
+                // /sitemap.xml or /robots.txt.
+                /^\/$/,
+                /^\/(articles|novels|tags|archives|friends|dev)(\/|$)/,
+                /^\/search$/,
             ],
         },
     },

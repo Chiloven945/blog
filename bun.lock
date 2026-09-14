@@ -25,6 +25,7 @@
         "zod": "^3.25.76",
       },
       "devDependencies": {
+        "@iconify-json/lucide": "^1.2.132",
         "@nuxt/eslint": "^1.17.0",
         "@playwright/test": "^1.63.0",
         "eslint": "^10.10.0",
@@ -252,6 +253,8 @@
     "@humanwhocodes/module-importer": ["@humanwhocodes/module-importer@1.0.1", "", {}, "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA=="],
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
+
+    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.132", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-YgblweuQSz0AVG+zPvfECiYrJeTEFSKEthFSfwVB3OMJrL3dJ6QS0gX2akImqg3IEMRK1wVooAEAPbd7Kzj4FA=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.735", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Rgg6zquEBNV0SJpay1gZCUPjc8QbYo9D+gmnTsgR0vlGAa/pkKI1o9yUK7nRRMcn87VPC4QUcOLZcCvtJ+vaNg=="],
 
