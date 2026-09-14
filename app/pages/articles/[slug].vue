@@ -3,8 +3,6 @@ import type {ArticleDocument} from '#shared/types/article'
 import ArticleReader from '~/components/article/ArticleReader.vue'
 import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
-definePageMeta({layout: 'post'})
-
 const route = useRoute()
 const {t, locale} = useI18n()
 

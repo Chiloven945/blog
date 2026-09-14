@@ -3,8 +3,6 @@ import type {NovelDocument} from '#shared/types/novel'
 import NovelReader from '~/components/novel/NovelReader.vue'
 import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
-definePageMeta({layout: 'post'})
-
 const route = useRoute()
 const {t, locale} = useI18n()
 
