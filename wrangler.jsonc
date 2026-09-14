@@ -5,7 +5,10 @@
   "compatibility_date": "2026-09-14",
   "assets": {
     "binding": "ASSETS",
-    "directory": ".output/public"
+    "directory": ".output/public",
+    // Prerendered pages live at `<path>/index.html`; dropping the trailing
+    // slash keeps the served URL identical to the canonical/sitemap URL.
+    "html_handling": "drop-trailing-slash"
   },
   "observability": {
     "enabled": true

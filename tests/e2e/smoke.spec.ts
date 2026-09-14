@@ -93,15 +93,12 @@ test.describe(
     '404',
     () => {
         test(
-            'an unknown route renders the not-found page',
-            async ({page}) => {
-                const response = await page.goto('/en/does-not-exist')
-                expect(response?.status()).toBe(404)
-
-                await expect(page.locator('main')).toContainText('LOST')
-                await expect(page.locator('#main')).toHaveCount(1)
-                await expect(page.locator('.site-nav:visible')).toHaveCount(1)
-                await expect(page.getByRole('button', {name: 'Back home'})).toBeVisible()
+            'an unknown localized route returns 404',
+            async ({request}) => {
+                // The static deployment serves a bare 404 for invalid localized
+                // paths; the Worker must not rewrite them to another locale.
+                const response = await request.get('/en/does-not-exist')
+                expect(response.status()).toBe(404)
             }
         )
 

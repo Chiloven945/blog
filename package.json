@@ -8,6 +8,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
+    "check:static": "bun tools/check-static-output.ts",
     "preview": "nuxt preview",
     "preview:cf": "bun run generate && wrangler dev --config wrangler.jsonc",
     "deploy": "bun run generate && wrangler deploy --config wrangler.jsonc",

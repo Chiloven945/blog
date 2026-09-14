@@ -4,70 +4,12 @@ import {
     searchSections,
     type SearchStatus,
 } from '~/utils/search'
-import {resolveContentCollection} from '~/composables/useActiveContentCollection'
-
-type RawSearchSection = {
-    id?: unknown
-    title?: unknown
-    titles?: unknown
-    level?: unknown
-    content?: unknown
-    subtype?: unknown
-    status?: unknown
-    tags?: unknown
-    date?: unknown
-}
-
-function toStringArray(value: unknown): string[] | undefined {
-    return Array.isArray(value)
-        ? value.map(String)
-        : undefined
-}
-
-function toSearchSection(
-    raw: RawSearchSection,
-    kind?: 'article' | 'novel'
-): SearchSection {
-    const id = typeof raw.id === 'string'
-        ? raw.id
-        : ''
-    const hash = id.indexOf('#')
-
-    return {
-        id,
-        path: hash === -1
-            ? id
-            : id.slice(0, hash),
-        anchor: hash === -1
-            ? undefined
-            : id.slice(hash + 1),
-        title: typeof raw.title === 'string'
-            ? raw.title
-            : '',
-        titles: toStringArray(raw.titles) ?? [],
-        level: typeof raw.level === 'number'
-            ? raw.level
-            : 1,
-        content: typeof raw.content === 'string'
-            ? raw.content
-            : '',
-        kind,
-        subtype: typeof raw.subtype === 'string'
-            ? raw.subtype
-            : undefined,
-        tags: toStringArray(raw.tags),
-        date: typeof raw.date === 'string'
-            ? raw.date
-            : undefined,
-    }
-}
-
-const extraFields = ['subtype', 'tags', 'date'] as const
 
 /**
  * Search sections for the active locale.
- * The index is built lazily in the browser from the article + novel + pages
- * collections and scored locally with a simple first-version ranking.
+ * The index is a build-time static JSON asset fetched lazily on the first
+ * search and cached per locale, so the browser never scans the Content
+ * database. Scoring stays local.
  */
 export function useSearch() {
     const {locale} = useI18n()
@@ -86,38 +28,9 @@ export function useSearch() {
     )
 
     async function buildIndex(code: string): Promise<SearchSection[]> {
-        // Resolve the collections from the requested locale explicitly, so an
-        // index is always built from the language it is stored under, even if
-        // the active locale changes while the queries are in flight.
-        const collections = resolveContentCollection(code)
-        const [articleSections, novelSections, pageSections] = await Promise.all([
-            queryCollectionSearchSections(collections.articles, {
-                minHeading: 'h2',
-                maxHeading: 'h4',
-                extraFields: [...extraFields],
-            }),
-            queryCollectionSearchSections(collections.novels, {
-                minHeading: 'h2',
-                maxHeading: 'h4',
-                extraFields: [...extraFields],
-            }),
-            queryCollectionSearchSections(collections.pages, {
-                minHeading: 'h2',
-                maxHeading: 'h4',
-            }),
-        ])
-
-        return [
-            ...articleSections.map(section =>
-                toSearchSection(section as unknown as RawSearchSection, 'article'),
-            ),
-            ...novelSections.map(section =>
-                toSearchSection(section as unknown as RawSearchSection, 'novel'),
-            ),
-            ...pageSections.map(section =>
-                toSearchSection(section as unknown as RawSearchSection),
-            ),
-        ]
+        // The index is a build-time static JSON asset, so the browser never
+        // initialises the Content database just to search.
+        return await $fetch<SearchSection[]>(`/search-index/${code}.json`)
     }
 
     async function ensureIndex() {

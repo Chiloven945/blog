@@ -84,12 +84,22 @@ test.describe(
             'an explicit locale URL is not rewritten by the stored preference',
             async ({page, context}) => {
                 await context.addCookies([
-                    {name: 'blog_locale', value: 'en', url: 'http://localhost:4173/'},
+                    {name: 'blog_locale', value: 'en', url: 'http://localhost:8787/'},
                 ])
 
                 await gotoHydrated(page, '/zh-tw/articles/jep-512')
                 await expect(page).toHaveURL(/\/zh-tw\/articles\/jep-512$/)
                 await expect(page.locator('html')).toHaveAttribute('lang', 'zh-TW')
+            }
+        )
+
+        test(
+            'an unprefixed content path redirects into the detected locale',
+            async ({page}) => {
+                await page.goto('/articles/jep-512')
+
+                await expect(page).toHaveURL(/\/en\/articles\/jep-512$/)
+                await expect(page.locator('main h1').first()).toBeVisible()
             }
         )
 
@@ -141,6 +151,26 @@ test.describe(
                 await page.goto('/')
                 await expect(page).toHaveURL(/\/en$/)
                 await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+            }
+        )
+    }
+)
+
+test.describe(
+    'saved preference',
+    () => {
+        test.use({locale: 'fr-FR'})
+
+        test(
+            'a stored preference wins over the browser language',
+            async ({page, context}) => {
+                await context.addCookies([
+                    {name: 'blog_locale', value: 'zh-tw', url: 'http://localhost:8787/'},
+                ])
+
+                await page.goto('/')
+                await expect(page).toHaveURL(/\/zh-tw$/)
+                await expect(page.locator('html')).toHaveAttribute('lang', 'zh-TW')
             }
         )
     }
@@ -225,7 +255,35 @@ test.describe(
                 const first = page.locator('[data-testid="search-result"]').first()
                 await expect(first).toBeVisible({timeout: 20_000})
                 await first.click()
-                await expect(page).toHaveURL(/^http:\/\/localhost:4173\/en\//)
+                await expect(page).toHaveURL(/^http:\/\/localhost:8787\/en\//)
+            }
+        )
+
+        test(
+            'loads the static search index instead of scanning the content database',
+            async ({page}) => {
+                const requested: string[] = []
+                page.on('request', request => requested.push(request.url()))
+
+                await gotoHydrated(page, '/en')
+                await page.keyboard.press('Control+k')
+
+                const dialog = page.getByRole('dialog')
+
+                try {
+                    await expect(dialog).toBeVisible({timeout: 2_500})
+                } catch {
+                    await page.keyboard.press('Control+k')
+                    await expect(dialog).toBeVisible()
+                }
+
+                await dialog.getByRole('combobox').fill('jep')
+                await expect(dialog.getByRole('option').first()).toBeVisible()
+
+                expect(
+                    requested.some(url => url.endsWith('/search-index/en.json')),
+                    'static search index request',
+                ).toBe(true)
             }
         )
     }

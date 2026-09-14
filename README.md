@@ -169,16 +169,19 @@ UI copy lives in `i18n/locales/`; long-form content lives under `content/`.
 
 ## Scripts
 
-| Script              | Description                         |
-|---------------------|-------------------------------------|
-| `bun run dev`       | Start the dev server                |
-| `bun run build`     | Build for production                |
-| `bun run generate`  | Static-generate to `.output/public` |
-| `bun run preview`   | Preview the build                   |
-| `bun run typecheck` | Run Nuxt type checking              |
-| `bun run lint`      | Run ESLint                          |
-| `bun run test`      | Run unit tests (Vitest)             |
-| `bun run test:e2e`  | Run end-to-end tests (Playwright)   |
+| Script                 | Description                                    |
+|------------------------|------------------------------------------------|
+| `bun run dev`          | Start the dev server                           |
+| `bun run build`        | Build for production                           |
+| `bun run generate`     | Static-generate to `.output/public`            |
+| `bun run check:static` | Verify the generated static output             |
+| `bun run preview`      | Preview the build                              |
+| `bun run preview:cf`   | Generate and preview on the Cloudflare runtime |
+| `bun run deploy`       | Generate and deploy to Cloudflare              |
+| `bun run typecheck`    | Run Nuxt type checking                         |
+| `bun run lint`         | Run ESLint                                     |
+| `bun run test`         | Run unit tests (Vitest)                        |
+| `bun run test:e2e`     | Run end-to-end tests (Playwright)              |
 
 ## Testing
 
@@ -189,14 +192,19 @@ i18n/content integrity (locale message-key parity and content slug parity):
 bun run test
 ```
 
-End-to-end tests build the production server (`bun run build`) and run against it, covering the core
-pages and readers, navigation, language entry/fallback/switch, theme, search, filters, three
-responsive breakpoints, accessibility, and SEO (internal links, RSS, sitemap, canonical/hreflang):
+End-to-end tests generate the static site (`bun run generate`) and serve it with `wrangler dev`, so
+the prerendered assets and the tiny locale-redirect Worker run exactly as they do in production.
+They cover the core pages and readers, navigation, language entry/fallback/switch, the unprefixed
+redirects, theme, search, filters, three responsive breakpoints, accessibility, and SEO (internal
+links, RSS, sitemap, canonical/hreflang):
 
 ```bash
 bunx playwright install          # Chromium
 bun run test:e2e
 ```
+
+`bun run check:static` verifies the deployment invariants of the generated output (localized pages
+present, no unprefixed pages, feeds, search indexes, sitemap, robots, and 404).
 
 The suite runs on Chromium; Firefox and WebKit are checked manually before a release. On systems
 where Playwright cannot manage its own Chromium, point it at a system build:
@@ -207,9 +215,10 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE=/path/to/chromium bun run test:e2e
 
 ## Deployment
 
-`bun run build` produces a Nitro server bundle for server-side rendering in `.output`. Production
-runs on Cloudflare Workers at <https://www.chiloven.top> (custom domain, root base path). For hosts
-that serve files only, `bun run generate` emits a fully static `.output/public` instead.
+`bun run generate` emits a fully static `.output/public` (localized HTML, feeds, search indexes,
+sitemap, and robots), and `bun run check:static` verifies the deployment invariants. Production runs
+on Cloudflare Workers at <https://www.chiloven.top> (custom domain, root base path): the prerendered
+assets are served directly, and a tiny Worker only resolves unprefixed language-entry paths.
 
 ## License
 
