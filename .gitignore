@@ -38,3 +38,8 @@ blog-FINAL-AUDIT-CLEANUP-v2.md
 
 # Editor
 *.swp
+
+# Cloudflare Wrangler
+.wrangler
+.dev.vars*
+!.dev.vars.example

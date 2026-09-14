@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "blog",
+  "main": ".output/server/index.mjs",
+  "compatibility_date": "2026-09-14",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".output/public"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blog-content",
+      "database_id": "2f51cae5-9169-4ae5-beea-e908ced40eb1"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

@@ -18,6 +18,11 @@ export default defineNuxtConfig({
     css: ['~/assets/css/main.css'],
 
     content: {
+        database: {
+            type: 'd1',
+            bindingName: 'DB',
+        },
+
         renderer: {
             alias: {
                 // Nuxt UI maps `::callout` to ProseCallout; use our own
@@ -25,6 +30,7 @@ export default defineNuxtConfig({
                 callout: 'Callout',
             },
         },
+
         build: {
             markdown: {
                 // Light + dark Shiki themes. The `dark` key
@@ -115,10 +121,24 @@ export default defineNuxtConfig({
     },
 
     nitro: {
+        // `cloudflare` resolves to the legacy Workers Sites preset
+        // (service-worker entry + `--site`). The module-worker preset is
+        // the current one and matches the repository's wrangler.jsonc
+        // (`main` plus an `assets` binding).
+        preset: 'cloudflare_module',
+        cloudflare: {
+            // Keep the repository's wrangler.jsonc as the single source
+            // of truth instead of letting Nitro generate one.
+            deployConfig: false,
+        },
         prerender: {
             // The feeds have no inbound links during the crawl, so list the
             // three localized feeds explicitly.
-            routes: ['/en/rss.xml', '/zh-cn/rss.xml', '/zh-tw/rss.xml'],
+            routes: [
+                '/en/rss.xml',
+                '/zh-cn/rss.xml',
+                '/zh-tw/rss.xml'
+            ],
         },
     },
 

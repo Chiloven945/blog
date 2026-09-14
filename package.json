@@ -9,6 +9,9 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "preview:cf": "bun run build && wrangler dev",
+    "deploy": "bun run build && wrangler deploy",
+    "cf:typegen": "wrangler types",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "lint": "eslint .",
@@ -42,6 +45,7 @@
     "typescript": "6",
     "vitest": "^5.0.0",
     "vue-tsc": "^3.3.11",
+    "wrangler": "^4.131.2",
     "yaml": "^2.9.0"
   },
   "trustedDependencies": [
