@@ -1,18 +1,19 @@
 # Chiloven's Blog
 
-A static, trilingual personal blog built with **Nuxt 4**, **Nuxt UI 4**, and **Nuxt Content 3**.
-Typography-first and editorial in tone, with a light/dark theme, per-language content, and a small,
-dependency-light runtime.
+A trilingual personal blog and reading site built with **Nuxt 4**, **Nuxt UI 4**, and **Nuxt Content
+3**. Typography-first and editorial in tone, with a light/dark theme, per-language content, and a
+small, dependency-light runtime.
 
 **Live:** <https://www.chiloven.top>
 
 ## Features
 
-- **Trilingual** — Simplified Chinese (default), Traditional Chinese, and English, with
-  locale-prefixed routes and a language switcher that marks languages whose translation does not
-  exist yet.
-- **Content-driven** — posts and pages are Markdown/MDC files managed by Nuxt Content; no database,
-  CMS, or auth.
+- **Trilingual** — English (default), Simplified Chinese, and Traditional Chinese, each with its own
+  prefixed canonical route. Unprefixed paths act as language-entry redirectors, choosing the saved
+  preference or the browser language and falling back to English; the switcher marks languages whose
+  translation does not exist yet.
+- **Content-driven** — articles, novels, and pages are Markdown/MDC files managed by Nuxt Content;
+  no database, CMS, or auth.
 - **Reading experience** — a dedicated article reader with a contents/tools rail (reading progress,
   copy link, back to top), reading time, source notices for translations, license, footnotes, and
   comments; and a separate serif novel reader with a title page, scene breaks, a reading toolbar
@@ -36,14 +37,15 @@ dependency-light runtime.
   recency, shown after each article or novel.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
-- **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
+- **SEO** — locale-prefixed canonical URLs, Open Graph, Twitter cards, hreflang alternates, a
+  locale-aware sitemap, and robots.
 - **Comments & feed** — lazy, color-mode/locale-aware Giscus comments with a single locale-neutral
   discussion key shared by all three locales, and a per-language RSS feed (`/en/rss.xml`,
   `/zh-cn/rss.xml`, `/zh-tw/rss.xml`).
 - **Accessible motion** — reveal animations are an enhancement and respect
   `prefers-reduced-motion`; content is fully visible without JavaScript.
 
-## Tech stack
+## Technologies
 
 | Concern                   | Choice                                                                                                      |
 |---------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -52,9 +54,10 @@ dependency-light runtime.
 | UI primitives             | [Nuxt UI 4](https://ui.nuxt.com)                                                                            |
 | Content                   | [Nuxt Content 3](https://content.nuxt.com) + MDC                                                            |
 | Images / Fonts            | `@nuxt/image`, `@nuxt/fonts`, self-hosted Source Han / Google Sans Flex / Libre Baskerville / Cascadia Code |
-| i18n                      | `@nuxtjs/i18n` (`zh-cn`, `zh-tw`, `en`)                                                                     |
+| i18n                      | `@nuxtjs/i18n` (`en`, `zh-cn`, `zh-tw`)                                                                     |
 | SEO                       | `@nuxtjs/sitemap`, `@nuxtjs/robots`                                                                         |
-| Comments                  | Giscus                                                                                                      |
+| Comments                  | Giscus (locale-neutral discussion key)                                                                      |
+| Deployment                | Cloudflare Workers (Nitro server build)                                                                     |
 | Testing                   | Vitest (unit), Playwright (end-to-end)                                                                      |
 | Linting                   | ESLint (`@nuxt/eslint`)                                                                                     |
 
@@ -76,12 +79,12 @@ The dev server runs at <http://localhost:3000>.
 
 ```text
 app/
-  assets/css/     theme, typography, motion, and utility layers
-  components/     app shell, home mosaic, article, novel, taxonomy, search, archives, friends
-  composables/    content selection, search, archives, navigation, motion, SEO
-  layouts/        default, home, post
-  pages/          home, articles, novels, tags, archives, friends, search, custom pages, posts
-  utils/          date, post, search, locale, and content helpers
+  assets/css/     theme, typography, motion, home, article, novel, and utility layers
+  components/     app shell, home mosaic, article, novel, content, taxonomy, search, archives, friends
+  composables/    content selection, search, archives, tags, navigation, motion, SEO
+  layouts/        default, home
+  pages/          home, articles, novels, tags, archives, friends, search, and custom pages
+  utils/          article, novel, search, date, locale, related, fonts, and content helpers
 content/
   articles/<locale>/  article Markdown
   novels/<locale>/    novel Markdown
@@ -111,13 +114,13 @@ and a slug must be unique across articles and novels within a locale. Series des
 
 ```yaml
 ---
-title: My post
+title: My article
 description: A short summary.
 date: "2026-09-11"
 subtype: tutorial        # article subtype (shared/config/article-subtypes.ts)
 status: published        # article status (shared/config/statuses.ts)
 tags: [ Java, JEP ]
-cover: /images/posts/my-post/cover.png
+cover: /images/posts/my-article/cover.png
 comments: true
 toc: true
 featured: false
@@ -150,9 +153,10 @@ come from the single `content/data/links.yml` source, and friend links are colle
 
 ## Internationalization
 
-The site ships **Simplified Chinese** (`zh-cn`, default), **Traditional Chinese** (`zh-tw`), and
-**English** (`en`). Every locale carries an explicit URL prefix (`prefix` strategy), so unprefixed
-paths are language-entry redirectors only:
+The site ships **English** (`en`, default), **Simplified Chinese** (`zh-cn`), and **Traditional
+Chinese** (`zh-tw`). Every locale carries an explicit URL prefix, so unprefixed paths are
+language-entry redirectors only. Entry detection reads the saved locale preference cookie first,
+then the browser/system language, and falls back to English:
 
 | Content     | en                    | zh-cn                    | zh-tw                    |
 |-------------|-----------------------|--------------------------|--------------------------|
@@ -202,11 +206,11 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE=/path/to/chromium bun run test:e2e
 
 ## Deployment
 
-`bun run generate` writes a fully static site to `.output/public` that can be served from any host.
-Production runs on GitHub Pages at
-<https://www.chiloven.top> (custom domain, root base path).
+`bun run build` produces a Nitro server bundle for server-side rendering in `.output`. Production
+runs on Cloudflare Workers at <https://www.chiloven.top> (custom domain, root base path). For hosts
+that serve files only, `bun run generate` emits a fully static `.output/public` instead.
 
 ## License
 
-Written content is licensed under **CC BY-NC-SA 4.0** unless a post overrides its `license` field;
+Written content is licensed under **CC BY-NC-SA 4.0** unless a work overrides its `license` field;
 novels are All Rights Reserved. The source code is available in this repository.
