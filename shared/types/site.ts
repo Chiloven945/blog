@@ -4,7 +4,7 @@ export interface CommentsConfig {
     repoId: string
     category: string
     categoryId: string
-    mapping: 'pathname'
+    mapping: 'specific'
     strict: '0' | '1'
     reactionsEnabled: '0' | '1'
     emitMetadata: '0' | '1'

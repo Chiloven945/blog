@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import Giscus from '@giscus/vue'
 import {siteConfig} from '#shared/config/site'
+import {normalizeGiscusTerm} from '~/utils/giscus'
 
+const route = useRoute()
 const {locale} = useI18n()
 const colorMode = useColorMode()
 
@@ -46,7 +48,13 @@ onBeforeUnmount(() => {
     observer = null
 })
 
-const theme = computed(() => (colorMode.value === 'dark' ? 'dark' : 'light'))
+const theme = computed(() => (colorMode.value === 'dark'
+    ? 'dark'
+    : 'light'))
+
+// Discussion identity is locale-neutral: /en/articles/x, /zh-cn/articles/x and
+// /zh-tw/articles/x all resolve to the same term so they share one discussion.
+const term = computed(() => normalizeGiscusTerm(route.path))
 
 const giscusLang = computed(() => {
     const map: Record<string, string> = {
@@ -65,7 +73,7 @@ const {comments} = siteConfig
     <div ref="container" class="mt-6">
         <Giscus
                 v-if="visible"
-                :key="`${theme}-${giscusLang}`"
+                :key="`${term}-${theme}-${giscusLang}`"
                 :category="comments.category"
                 :category-id="comments.categoryId"
                 :emit-metadata="comments.emitMetadata"
@@ -77,6 +85,7 @@ const {comments} = siteConfig
                 :repo="comments.repo"
                 :repo-id="comments.repoId"
                 :strict="comments.strict"
+                :term="term"
                 :theme="theme"
         />
     </div>

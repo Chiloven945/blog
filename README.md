@@ -37,8 +37,9 @@ dependency-light runtime.
 - **Floating navigation** — a desktop left rail, a centered tablet top dock, and a mobile bottom
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
-- **Comments & feed** — lazy, color-mode/locale-aware Giscus comments and an RSS feed at `/rss.xml`
-  (legacy alias `/index.xml`).
+- **Comments & feed** — lazy, color-mode/locale-aware Giscus comments with a single locale-neutral
+  discussion key shared by all three locales, and an RSS feed at `/rss.xml` (legacy alias
+  `/index.xml`).
 - **Accessible motion** — reveal animations are an enhancement and respect
   `prefers-reduced-motion`; content is fully visible without JavaScript.
 
