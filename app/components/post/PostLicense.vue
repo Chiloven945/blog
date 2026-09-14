@@ -43,7 +43,7 @@ const badge = computed(() => entry.value.badge ?? null)
                 <a
                         v-if="licenseUrl"
                         :href="licenseUrl"
-                        class="link"
+                        class="link tap-target"
                         rel="noopener noreferrer"
                         target="_blank"
                 >

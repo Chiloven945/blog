@@ -43,7 +43,7 @@ const formattedDate = computed(() => formatPostDate(props.article.date, locale.v
                 </span>
                 <span
                         v-if="article.description"
-                        class="mt-0.5 block truncate text-sm text-muted"
+                        class="mt-0.5 line-clamp-2 text-sm text-muted md:line-clamp-1"
                 >
                     {{ article.description }}
                 </span>

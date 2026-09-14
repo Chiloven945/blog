@@ -42,7 +42,7 @@ function date(item: NovelCardItem): string {
                     FICTION</h2>
                 <NuxtLink
                         :to="localePath('/novels')"
-                        class="link text-sm"
+                        class="link tap-target text-sm"
                 >
                     ALL FICTION →
                 </NuxtLink>

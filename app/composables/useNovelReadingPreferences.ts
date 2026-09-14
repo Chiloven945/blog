@@ -33,9 +33,9 @@ const leadings: Record<NovelLeading, string> = {
 }
 
 const widths: Record<NovelWidth, string> = {
-    narrow: '32rem',
-    normal: '36rem',
-    wide: '42rem',
+    narrow: '36rem',
+    normal: '42rem',
+    wide: '48rem',
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

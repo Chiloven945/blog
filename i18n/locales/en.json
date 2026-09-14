@@ -213,12 +213,12 @@
     "comments": "Comments"
   },
   "error": {
-    "notFoundEyebrow": "404 / LOST",
-    "notFoundTitle": "You took a wrong turn.",
+    "notFoundEyebrow": "404 / Route Not Found",
+    "notFoundTitle": "Not all those who wander are lost.",
     "backHome": "Back home",
-    "genericTitle": "Something went wrong",
-    "postNotFound": "Post not found",
-    "pageNotFound": "Page not found",
-    "tagNotFound": "Tag not found"
+    "genericTitle": "Something went wrong.",
+    "postNotFound": "Post not found.",
+    "pageNotFound": "Page not found.",
+    "tagNotFound": "Tag not found."
   }
 }

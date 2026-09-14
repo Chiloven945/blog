@@ -46,7 +46,7 @@ function blockClass(link: LinkItem, index: number): string {
                 </h2>
                 <a
                         :href="rssHref"
-                        class="link text-sm"
+                        class="link tap-target text-sm"
                 >RSS →</a>
             </div>
 

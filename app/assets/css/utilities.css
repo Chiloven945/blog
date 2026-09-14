@@ -163,7 +163,28 @@
 
     .post-body a[data-footnote-ref],
     .post-body a[data-footnote-backref] {
+        position: relative;
         text-decoration: none;
+    }
+
+    /* Footnote markers are tiny; give them a real hit area. */
+    .post-body a[data-footnote-ref]::after,
+    .post-body a[data-footnote-backref]::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100%, 24px);
+        height: max(100%, 24px);
+        transform: translate(-50%, -50%);
+    }
+
+    @media (pointer: coarse) {
+        .post-body a[data-footnote-ref]::after,
+        .post-body a[data-footnote-backref]::after {
+            width: max(100%, 44px);
+            height: 44px;
+        }
     }
 
     /* Display math must scroll inside the column, never overflow it (§28.4). */
@@ -213,6 +234,29 @@
         line-height: 1;
         font-weight: 700;
         letter-spacing: -0.02em;
+    }
+
+    /* Enlarge the hit area of small text controls without changing their
+       painted size. WCAG 2.5.8 asks for 24px; coarse pointers get 44px. */
+    .tap-target {
+        position: relative;
+    }
+
+    .tap-target::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100%, 24px);
+        height: max(100%, 24px);
+        transform: translate(-50%, -50%);
+    }
+
+    @media (pointer: coarse) {
+        .tap-target::after {
+            width: max(100%, 44px);
+            height: 44px;
+        }
     }
 }
 

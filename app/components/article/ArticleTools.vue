@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
         <!-- Pinned bottom: quick actions. -->
         <div class="mt-6 flex shrink-0 flex-col items-start gap-1 text-sm">
             <button
-                    class="focus-ring inline-flex items-center gap-2 text-muted transition-colors hover:text-highlighted"
+                    class="tap-target focus-ring inline-flex items-center gap-2 text-muted transition-colors hover:text-highlighted"
                     type="button"
                     @click="copyLink"
             >
@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
             </button>
 
             <button
-                    class="focus-ring inline-flex items-center gap-2 text-muted transition-colors hover:text-highlighted"
+                    class="tap-target focus-ring inline-flex items-center gap-2 text-muted transition-colors hover:text-highlighted"
                     type="button"
                     @click="backToTop"
             >

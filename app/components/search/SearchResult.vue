@@ -34,7 +34,7 @@ const breadcrumb = computed(() => props.item.titles.join(' / '))
 
         <span class="min-w-0 flex-1">
             <span class="flex items-center gap-2">
-                <span class="truncate font-medium text-highlighted">
+                <span class="line-clamp-2 font-medium text-highlighted md:line-clamp-1">
                     <template v-for="(segment, segmentIndex) in titleSegments" :key="segmentIndex">
                         <mark
                                 v-if="segment.match"

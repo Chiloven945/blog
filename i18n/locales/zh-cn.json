@@ -213,12 +213,12 @@
     "comments": "评论"
   },
   "error": {
-    "notFoundEyebrow": "404 / 迷失",
-    "notFoundTitle": "你走错路了。",
+    "notFoundEyebrow": "404 / Route Not Found",
+    "notFoundTitle": "关山难越，\n谁悲失路之人？",
     "backHome": "返回首页",
-    "genericTitle": "出了点问题",
-    "postNotFound": "找不到这篇文章",
-    "pageNotFound": "找不到这个页面",
-    "tagNotFound": "找不到这个标签"
+    "genericTitle": "出了点问题。",
+    "postNotFound": "找不到这篇文章。",
+    "pageNotFound": "找不到这个页面。",
+    "tagNotFound": "找不到这个标签。"
   }
 }

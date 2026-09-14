@@ -249,12 +249,14 @@ test.describe(
                 await page.setViewportSize(desktop)
                 await gotoHydrated(page, '/en/novels/causerie-2')
 
-                const toolbar = page.locator('[role="group"][aria-label="Reading settings"]')
-                await expect(toolbar.getByRole('group', {name: 'Text size'})).toBeVisible()
-                await expect(toolbar.getByRole('group', {name: 'Line spacing'})).toBeVisible()
-                await expect(toolbar.getByRole('group', {name: 'Column width'})).toBeVisible()
+                await page.getByRole('button', {name: 'Reading settings'}).click()
 
-                await toolbar.getByRole('button', {name: 'Reading mode'}).click()
+                const panel = page.getByRole('dialog')
+                await expect(panel.getByRole('group', {name: 'Text size'})).toBeVisible()
+                await expect(panel.getByRole('group', {name: 'Line spacing'})).toBeVisible()
+                await expect(panel.getByRole('group', {name: 'Column width'})).toBeVisible()
+
+                await panel.getByRole('switch', {name: 'Reading mode'}).click()
                 await expect(page.locator('html')).toHaveClass(/reading-mode/)
 
                 await page.keyboard.press('Escape')
@@ -273,7 +275,8 @@ test.describe(
                 const sheet = page.getByRole('dialog')
                 await expect(sheet.getByRole('group', {name: 'Text size'})).toBeVisible()
                 await expect(sheet.getByRole('group', {name: 'Line spacing'})).toBeVisible()
-                await expect(sheet.getByRole('button', {name: 'Reading mode'})).toBeVisible()
+                await expect(sheet.getByRole('switch', {name: 'Reading mode'})).toBeVisible()
+                await expect(sheet.getByRole('group', {name: 'Column width'})).toHaveCount(0)
             }
         )
     }

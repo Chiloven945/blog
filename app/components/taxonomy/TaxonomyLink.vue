@@ -13,7 +13,7 @@ const to = computed(() => localePath(tagPath(props.tag)))
 <template>
     <NuxtLink
             :to="to"
-            class="focus-ring rounded-xs font-mono text-xs text-muted transition-colors hover:text-primary"
+            class="tap-target focus-ring rounded-xs font-mono text-xs text-muted transition-colors hover:text-primary"
     >
         #{{ tag }}<span
             v-if="count !== undefined"

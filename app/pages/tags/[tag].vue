@@ -33,7 +33,7 @@ usePageMeta({
         <header class="border-b border-default pb-8">
             <NuxtLink
                     :to="localePath('/tags')"
-                    class="focus-ring rounded-xs font-mono text-xs tracking-[0.2em] text-muted uppercase transition-colors hover:text-primary"
+                    class="tap-target focus-ring rounded-xs font-mono text-xs tracking-[0.2em] text-muted uppercase transition-colors hover:text-primary"
             >
                 {{ t('tags.backToTags') }}
             </NuxtLink>

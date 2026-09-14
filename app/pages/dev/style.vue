@@ -146,9 +146,9 @@ const licenseList = licenseKeys.map((key) => {
                 Typography
             </h2>
             <div class="space-y-2">
-                <h1 class="text-4xl font-bold">
+                <p class="text-4xl font-bold">
                     Heading 1 — 标题
-                </h1>
+                </p>
                 <h2 class="text-3xl font-bold">
                     Heading 2 — 标题
                 </h2>

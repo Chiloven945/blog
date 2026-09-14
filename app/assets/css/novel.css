@@ -114,7 +114,7 @@ html.novel-reading:not(.reading-mode) .site-nav {
 }
 
 html.novel-reading:not(.reading-mode) .site-nav:hover,
-html.novel-reading:not(.reading-mode) .site-nav:focus-within {
+html.novel-reading:not(.reading-mode) .site-nav:has(:focus-visible) {
     opacity: 1;
 }
 
@@ -124,8 +124,25 @@ html.reading-mode .app-footer {
     pointer-events: none;
 }
 
+/* The reading controls get the same quiet treatment as the navigation so the
+   two opaque buttons do not stand out against the faded bar; focus restores
+   full contrast. */
+.novel-reading-controls {
+    transition: opacity var(--duration-base) var(--ease-out);
+}
+
+html.novel-reading:not(.reading-mode) .novel-reading-controls {
+    opacity: 0.5;
+}
+
+html.novel-reading:not(.reading-mode) .novel-reading-controls:hover,
+html.novel-reading:not(.reading-mode) .novel-reading-controls:has(:focus-visible) {
+    opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .site-nav {
+    .site-nav,
+    .novel-reading-controls {
         transition: none;
     }
 }

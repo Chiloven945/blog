@@ -41,7 +41,7 @@ function pad(value: number): string {
                 <h2 class="home-kicker text-muted">ARTICLES / LATEST</h2>
                 <NuxtLink
                         :to="localePath('/articles')"
-                        class="link text-sm"
+                        class="link tap-target text-sm"
                 >
                     ALL ARTICLES →
                 </NuxtLink>

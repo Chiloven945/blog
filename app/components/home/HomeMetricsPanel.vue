@@ -31,7 +31,7 @@ function pad(value: number): string {
                         <a
                                 :aria-label="stat.label"
                                 :href="stat.url"
-                                class="link text-xs"
+                                class="link tap-target text-xs"
                                 rel="noopener noreferrer"
                                 target="_blank"
                         >

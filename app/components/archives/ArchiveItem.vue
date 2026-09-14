@@ -20,7 +20,7 @@ defineProps<{
             </time>
 
             <span
-                    class="min-w-0 flex-1 truncate font-medium text-highlighted transition-colors group-hover:text-primary"
+                    class="min-w-0 flex-1 line-clamp-2 font-medium text-highlighted transition-colors group-hover:text-primary md:line-clamp-1"
             >
                 {{ post.title }}
             </span>

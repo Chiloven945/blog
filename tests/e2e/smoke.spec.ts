@@ -99,6 +99,8 @@ test.describe(
                 expect(response?.status()).toBe(404)
 
                 await expect(page.locator('main')).toContainText('LOST')
+                await expect(page.locator('#main')).toHaveCount(1)
+                await expect(page.locator('.site-nav:visible')).toHaveCount(1)
                 await expect(page.getByRole('button', {name: 'Back home'})).toBeVisible()
             }
         )
