@@ -30,6 +30,7 @@ const preRef = ref<HTMLElement | null>(null)
 const label = computed(() => props.filename || props.language || 'text')
 const showHeader = computed(() => !props.hideHeader && Boolean(label.value))
 const showCopy = computed(() => props.copy !== false)
+const isMermaid = computed(() => props.language.toLowerCase() === 'mermaid')
 
 let timer: ReturnType<typeof setTimeout> | undefined
 
@@ -49,7 +50,15 @@ async function copyCode() {
 </script>
 
 <template>
-    <div class="prose-pre group relative my-5">
+    <MermaidDiagram
+            v-if="isMermaid"
+            :code="code"
+    />
+
+    <div
+            v-else
+            class="prose-pre group relative my-5"
+    >
         <div
                 v-if="showHeader"
                 class="flex items-center justify-between gap-2 rounded-t-sm border border-b-0 border-default bg-muted px-3 py-1.5"

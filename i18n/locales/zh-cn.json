@@ -167,6 +167,11 @@
   "footnotes": {
     "title": "注释"
   },
+  "mermaid": {
+    "copySource": "复制图表源码",
+    "copied": "已复制",
+    "error": "此图表无法渲染，已在上方显示源码。"
+  },
   "search": {
     "label": "搜索 / 003",
     "title": "搜索",

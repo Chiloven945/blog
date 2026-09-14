@@ -43,6 +43,22 @@ test.describe(
 )
 
 test.describe(
+    'diagrams',
+    () => {
+        test(
+            'the style reference renders Mermaid diagrams as SVG',
+            async ({page}) => {
+                await gotoHydrated(page, '/en/dev/style')
+
+                const diagrams = page.locator('[data-mermaid]')
+                await expect(diagrams).toHaveCount(2)
+                await expect(diagrams.first().locator('svg')).toBeVisible({timeout: 15_000})
+            }
+        )
+    }
+)
+
+test.describe(
     'readers',
     () => {
         test(

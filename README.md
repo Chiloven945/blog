@@ -19,7 +19,8 @@ small, dependency-light runtime.
   comments; and a separate serif novel reader with a title page, scene breaks, a reading toolbar
   (text size, line spacing, column width, indent), a chrome-free reading mode, and a progress line.
 - **Rich Markdown** — syntax-highlighted code with line numbers and copy, callouts, figures,
-  galleries, link cards, KaTeX math, and custom anchors.
+  galleries, link cards, KaTeX math, custom anchors, and client-rendered Mermaid diagrams (the raw
+  source is server-rendered as the fallback).
 - **Search** — a `Ctrl/Cmd + K` command palette and a shareable `/search?q=`
   page, scoped to the active language.
 - **Sections** — a solid-tone mosaic homepage built from the authored profile (names, facts,

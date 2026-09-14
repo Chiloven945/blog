@@ -60,6 +60,18 @@ const galleryImages = [
 
 const sampleCode = 'export function greet(name: string) {\n  return `Hello, ${name}!`\n}'
 
+const mermaidFlowchart = `graph TD
+    A[Request] --> B{Cached?}
+    B -- Yes --> C[Serve cache]
+    B -- No --> D[Build page]
+    D --> C`
+
+const mermaidSequence = `sequenceDiagram
+    participant U as User
+    participant S as Server
+    U->>S: GET /articles
+    S-->>U: 200 HTML`
+
 const licenseList = licenseKeys.map((key) => {
     const entry = resolveLicense(key)
 
@@ -449,6 +461,25 @@ const licenseList = licenseKeys.map((key) => {
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="space-y-4">
+            <h2 class="text-xl font-bold text-highlighted">
+                Diagrams
+            </h2>
+            <p class="text-sm text-muted">
+                Markdown fenced code blocks with the <code>mermaid</code> language
+                render as diagrams (client-side, with the raw source as the no-JS
+                fallback).
+            </p>
+            <ProsePre
+                    :code="mermaidFlowchart"
+                    language="mermaid"
+            />
+            <ProsePre
+                    :code="mermaidSequence"
+                    language="mermaid"
+            />
         </section>
 
         <section class="space-y-4">
