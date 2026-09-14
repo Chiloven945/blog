@@ -1,5 +1,6 @@
 import {siteConfig} from '#shared/config/site'
 import {useLocaleAvailability} from '~/composables/useLocaleAvailability'
+import {resolveOgLocale} from '~/utils/locale'
 
 type PageMetaType = 'website' | 'article'
 
@@ -40,7 +41,9 @@ export function usePageMeta(options: PageMetaOptions = {}) {
             return path
         }
 
-        return `${siteUrl}${path.startsWith('/') ? path : `/${path}`}`
+        return `${siteUrl}${path.startsWith('/')
+            ? path
+            : `/${path}`}`
     }
 
     const canonical = computed(() => {
@@ -85,6 +88,17 @@ export function usePageMeta(options: PageMetaOptions = {}) {
         return links
     })
 
+    // Advertise the other available translations to social crawlers. The
+    // active locale itself is emitted once as `og:locale` by app.vue.
+    const ogLocaleAlternates = computed(() =>
+        availability.value
+            .filter(item => !item.current && item.available)
+            .map(item => ({
+                property: 'og:locale:alternate',
+                content: resolveOgLocale(item.code),
+            })),
+    )
+
     useSeoMeta({
         title,
         description,
@@ -113,5 +127,6 @@ export function usePageMeta(options: PageMetaOptions = {}) {
                 href: item.href,
             })),
         ],
+        meta: ogLocaleAlternates.value,
     }))
 }

@@ -132,7 +132,9 @@ export default defineNuxtConfig({
     },
 
     sitemap: {
-        // Search results are query-driven; the /dev/* routes are temporary.
+        // Search results are query-driven and /dev/* is a design reference.
+        // Unprefixed legacy paths are redirectors, never canonical pages, and
+        // feed endpoints are not pages, so none of them may enter the sitemap.
         exclude: [
             '/search',
             '/en/search',
@@ -142,6 +144,17 @@ export default defineNuxtConfig({
             '/en/dev/**',
             '/zh-tw/dev/**',
             '/zh-cn/dev/**',
+            '/blog',
+            '/en/blog',
+            '/zh-tw/blog',
+            '/about',
+            '/en/about',
+            '/zh-tw/about',
+            '/links',
+            '/en/links',
+            '/zh-tw/links',
+            '/rss.xml',
+            '/index.xml',
         ],
     },
 

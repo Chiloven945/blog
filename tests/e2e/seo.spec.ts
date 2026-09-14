@@ -96,6 +96,8 @@ test.describe(
                 )
                 expect(paths.length).toBeGreaterThan(0)
 
+                const documents: string[] = []
+
                 for (const path of paths) {
                     const response = await request.get(path)
                     expect(response.status(), path).toBe(200)
@@ -103,7 +105,29 @@ test.describe(
                     const xml = await response.text()
                     expect(xml, path).not.toContain('/search')
                     expect(xml, path).toContain('/articles/')
+                    documents.push(xml)
                 }
+
+                const locs = [
+                    ...documents.join('\n').matchAll(/<loc>([^<]+)<\/loc>/g),
+                ].map(match => new URL(match[1]!).pathname)
+
+                // All three locale canonicals are present for a representative
+                // article and novel.
+                for (const path of [
+                    '/en/articles/jep-512',
+                    '/zh-cn/articles/jep-512',
+                    '/zh-tw/articles/jep-512',
+                    '/en/novels/causerie-1',
+                ]) {
+                    expect(locs, path).toContain(path)
+                }
+
+                // No unprefixed dispatcher URL may enter the sitemap.
+                const bare = locs.filter(
+                    path => !/^\/(en|zh-cn|zh-tw)(\/|$)/.test(path),
+                )
+                expect(bare, 'unprefixed sitemap entries').toEqual([])
             }
         )
 
@@ -126,6 +150,38 @@ test.describe(
                 expect(hreflang).toContain(`zh-CN=${siteUrl}/zh-cn/articles/jep-512`)
                 expect(hreflang).toContain(`en=${siteUrl}/en/articles/jep-512`)
                 expect(hreflang).toContain(`zh-TW=${siteUrl}/zh-tw/articles/jep-512`)
+                expect(hreflang).toContain(`x-default=${siteUrl}/en/articles/jep-512`)
+            }
+        )
+
+        test(
+            'emits a prefixed canonical and alternates on the home page',
+            async ({page}) => {
+                await gotoHydrated(page, '/en')
+
+                await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
+                    'href',
+                    `${siteUrl}/en`,
+                )
+
+                const hreflang = await page.$$eval(
+                    'link[rel=alternate][hreflang]',
+                    links =>
+                        links.map(link =>
+                            `${link.getAttribute('hreflang')}=${link.getAttribute('href')}`
+                        ),
+                )
+                expect(hreflang).toContain(`en=${siteUrl}/en`)
+                expect(hreflang).toContain(`zh-CN=${siteUrl}/zh-cn`)
+                expect(hreflang).toContain(`zh-TW=${siteUrl}/zh-tw`)
+                expect(hreflang).toContain(`x-default=${siteUrl}/en`)
+
+                const ogLocales = await page.$$eval(
+                    'meta[property="og:locale:alternate"]',
+                    metas => metas.map(meta => meta.getAttribute('content')),
+                )
+                expect(ogLocales).toContain('zh_CN')
+                expect(ogLocales).toContain('zh_TW')
             }
         )
 
