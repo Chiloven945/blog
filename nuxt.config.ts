@@ -18,11 +18,6 @@ export default defineNuxtConfig({
     css: ['~/assets/css/main.css'],
 
     content: {
-        database: {
-            type: 'd1',
-            bindingName: 'DB',
-        },
-
         renderer: {
             alias: {
                 // Nuxt UI maps `::callout` to ProseCallout; use our own

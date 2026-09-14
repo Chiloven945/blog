@@ -30,7 +30,7 @@ playwright/.cache
 tmp-screenshots/
 
 # Development-only planning
-blog-FINAL-AUDIT-CLEANUP-v2.md
+blog-CLOUDFLARE-FREE-STATIC-REFACTOR.md
 
 # IDE / OS
 .DS_Store
