@@ -16,7 +16,7 @@ useHead(() => ({
             rel: 'alternate',
             type: 'application/rss+xml',
             title: siteConfig.name,
-            href: `${siteConfig.domain}/rss.xml`,
+            href: `${siteConfig.domain}/${locale.value}/rss.xml`,
         },
         // Only the active locale's UI sans is preloaded; the reading serif
         // is preloaded per route (see pages/articles/[slug].vue and

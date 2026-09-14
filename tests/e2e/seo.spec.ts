@@ -67,9 +67,9 @@ test.describe(
     'feeds and sitemap',
     () => {
         test(
-            'serves the RSS feed and its legacy alias',
+            'serves a localized RSS feed per language',
             async ({request}) => {
-                for (const path of ['/rss.xml', '/index.xml']) {
+                for (const path of ['/en/rss.xml', '/zh-cn/rss.xml', '/zh-tw/rss.xml']) {
                     const response = await request.get(path)
                     expect(response.status(), path).toBe(200)
                     expect(response.headers()['content-type'] ?? '', path).toContain('xml')
@@ -78,6 +78,16 @@ test.describe(
                     expect(body, path).toContain('<rss')
                     expect(body, path).toContain('<item>')
                     expect(body, path).toContain(siteUrl)
+                }
+            }
+        )
+
+        test(
+            'no longer serves an unprefixed feed',
+            async ({request}) => {
+                for (const path of ['/rss.xml', '/index.xml']) {
+                    const response = await request.get(path)
+                    expect(response.status(), path).toBe(404)
                 }
             }
         )

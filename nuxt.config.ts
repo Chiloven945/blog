@@ -100,69 +100,25 @@ export default defineNuxtConfig({
         domains: [],
     },
 
-    // Legacy entry URLs. Canonical pages always carry a locale prefix; the
-    // old /blog, /about and /links paths remain as redirectors.
-    routeRules: {
-        '/blog': {
-            redirect: {
-                to: '/zh-cn/articles',
-                statusCode: 301
-            }
-        },
-        '/en/blog': {
-            redirect: {
-                to: '/en/articles',
-                statusCode: 301
-            }
-        },
-        '/zh-tw/blog': {
-            redirect: {
-                to: '/zh-tw/articles',
-                statusCode: 301
-            }
-        },
-
-        // About and Links are homepage sections in v2; keep the old URLs.
-        '/about': {redirect: {to: '/zh-cn#about', statusCode: 301}},
-        '/en/about': {redirect: {to: '/en#about', statusCode: 301}},
-        '/zh-tw/about': {redirect: {to: '/zh-tw#about', statusCode: 301}},
-        '/links': {redirect: {to: '/zh-cn#links', statusCode: 301}},
-        '/en/links': {redirect: {to: '/en#links', statusCode: 301}},
-        '/zh-tw/links': {redirect: {to: '/zh-tw#links', statusCode: 301}},
-    },
-
     sitemap: {
         // Search results are query-driven and /dev/* is a design reference.
-        // Unprefixed legacy paths are redirectors, never canonical pages, and
-        // feed endpoints are not pages, so none of them may enter the sitemap.
         exclude: [
             '/search',
             '/en/search',
-            '/zh-tw/search',
             '/zh-cn/search',
+            '/zh-tw/search',
             '/dev/**',
             '/en/dev/**',
-            '/zh-tw/dev/**',
             '/zh-cn/dev/**',
-            '/blog',
-            '/en/blog',
-            '/zh-tw/blog',
-            '/about',
-            '/en/about',
-            '/zh-tw/about',
-            '/links',
-            '/en/links',
-            '/zh-tw/links',
-            '/rss.xml',
-            '/index.xml',
+            '/zh-tw/dev/**',
         ],
     },
 
     nitro: {
         prerender: {
-            // The feeds have no inbound links during the crawl, so list them
-            // explicitly. /index.xml is the legacy feed alias.
-            routes: ['/rss.xml', '/index.xml'],
+            // The feeds have no inbound links during the crawl, so list the
+            // three localized feeds explicitly.
+            routes: ['/en/rss.xml', '/zh-cn/rss.xml', '/zh-tw/rss.xml'],
         },
     },
 

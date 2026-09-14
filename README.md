@@ -38,8 +38,8 @@ dependency-light runtime.
   dock with a More sheet; keyboard-focusable, with labels revealed on hover/focus and a skip link.
 - **SEO** — canonical URLs, Open Graph, Twitter cards, hreflang alternates, sitemap, and robots.
 - **Comments & feed** — lazy, color-mode/locale-aware Giscus comments with a single locale-neutral
-  discussion key shared by all three locales, and an RSS feed at `/rss.xml` (legacy alias
-  `/index.xml`).
+  discussion key shared by all three locales, and a per-language RSS feed (`/en/rss.xml`,
+  `/zh-cn/rss.xml`, `/zh-tw/rss.xml`).
 - **Accessible motion** — reveal animations are an enhancement and respect
   `prefers-reduced-motion`; content is fully visible without JavaScript.
 
@@ -92,10 +92,9 @@ content/
   data/friends.yml    friend links
 i18n/locales/     UI strings per locale
 public/           fonts, images, and other static assets
-server/           RSS feed routes
+server/           localized RSS feed routes
 shared/           site/kind/subtype config and shared schemas/types
 tests/            unit (Vitest) and e2e (Playwright) tests
-tools/            content validation and the Hugo migration script
 ```
 
 `/dev/style` is an unlisted, `noindex` reference page for design tokens, components, prose, math,
@@ -143,22 +142,11 @@ hides `status: draft` (develop with `?drafts=1`).
 
 Custom pages live in `content/pages/<locale>/<slug>.md` and render through the catch-all route.
 Primary navigation is the fixed floating set (Home / Articles / Novels / Tags / Archives / Friends);
-About and Links are homepage sections (`/#about`, `/#links`), and the old `/about` and `/links` URLs
-redirect there.
+About and Links are homepage sections (`/#about`, `/#links`).
 
 The homepage profile is authored per locale in `content/data/profile/<locale>.yml`, personal links
 come from the single `content/data/links.yml` source, and friend links are collected in
 `content/data/friends.yml`.
-
-Before publishing, validate everything:
-
-```bash
-bun run content:check
-```
-
-This checks the frontmatter schema, article/novel subtypes and statuses, license keys, slug format,
-article/novel slug collisions, series references and ordering, duplicate tags, ISO dates, cover
-images, and missing translations.
 
 ## Internationalization
 
@@ -176,18 +164,16 @@ UI copy lives in `i18n/locales/`; long-form content lives under `content/`.
 
 ## Scripts
 
-| Script                  | Description                              |
-|-------------------------|------------------------------------------|
-| `bun run dev`           | Start the dev server                     |
-| `bun run build`         | Build for production                     |
-| `bun run generate`      | Static-generate to `.output/public`      |
-| `bun run preview`       | Preview the build                        |
-| `bun run typecheck`     | Run Nuxt type checking                   |
-| `bun run lint`          | Run ESLint                               |
-| `bun run test`          | Run unit tests (Vitest)                  |
-| `bun run test:e2e`      | Run end-to-end tests (Playwright)        |
-| `bun run content:check` | Validate content                         |
-| `bun run migrate:hugo`  | Import content from the legacy Hugo site |
+| Script              | Description                         |
+|---------------------|-------------------------------------|
+| `bun run dev`       | Start the dev server                |
+| `bun run build`     | Build for production                |
+| `bun run generate`  | Static-generate to `.output/public` |
+| `bun run preview`   | Preview the build                   |
+| `bun run typecheck` | Run Nuxt type checking              |
+| `bun run lint`      | Run ESLint                          |
+| `bun run test`      | Run unit tests (Vitest)             |
+| `bun run test:e2e`  | Run end-to-end tests (Playwright)   |
 
 ## Testing
 

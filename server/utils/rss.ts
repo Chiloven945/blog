@@ -3,6 +3,45 @@ import {queryCollection} from '@nuxt/content/server'
 import {toHtml} from 'hast-util-to-html'
 import type {H3Event} from 'h3'
 import {siteConfig} from '../../shared/config/site'
+import enMessages from '../../i18n/locales/en.json'
+import zhCnMessages from '../../i18n/locales/zh-cn.json'
+import zhTwMessages from '../../i18n/locales/zh-tw.json'
+
+export type RssLocale = 'en' | 'zh-cn' | 'zh-tw'
+
+interface RssLocaleConfig {
+    articles: 'articlesEn' | 'articlesZhCn' | 'articlesZhTw'
+    novels: 'novelsEn' | 'novelsZhCn' | 'novelsZhTw'
+    language: string
+    title: string
+    description: string
+}
+
+const rssLocaleConfig: Record<RssLocale, RssLocaleConfig> = {
+    en: {
+        articles: 'articlesEn',
+        novels: 'novelsEn',
+        language: 'en',
+        title: enMessages.site.title,
+        description: enMessages.site.description,
+    },
+    'zh-cn': {
+        articles: 'articlesZhCn',
+        novels: 'novelsZhCn',
+        language: 'zh-CN',
+        title: zhCnMessages.site.title,
+        description: zhCnMessages.site.description,
+    },
+    'zh-tw': {
+        articles: 'articlesZhTw',
+        novels: 'novelsZhTw',
+        language: 'zh-TW',
+        title: zhTwMessages.site.title,
+        description: zhTwMessages.site.description,
+    },
+}
+
+export const rssLocales = Object.keys(rssLocaleConfig) as RssLocale[]
 
 interface RawPost {
     path: string
@@ -192,13 +231,18 @@ function renderBody(body: unknown): string {
     return toHtml(cleaned as never)
 }
 
-export async function buildRss(event: H3Event): Promise<string> {
+export async function buildRss(
+    event: H3Event,
+    locale: RssLocale
+): Promise<string> {
+    const config = rssLocaleConfig[locale]
+
     const [articles, novels] = await Promise.all([
-        queryCollection(event, 'articlesZhCn')
+        queryCollection(event, config.articles)
             .select('path', 'title', 'description', 'date', 'status', 'subtype', 'body')
             .order('date', 'DESC')
             .all(),
-        queryCollection(event, 'novelsZhCn')
+        queryCollection(event, config.novels)
             .select('path', 'title', 'description', 'date', 'status', 'subtype', 'body')
             .order('date', 'DESC')
             .all(),
@@ -217,8 +261,8 @@ export async function buildRss(event: H3Event): Promise<string> {
                 : 0
     }) as unknown as RawPost[]
 
-    const feedUrl = `${siteUrl()}/rss.xml`
-    const homeUrl = `${siteUrl()}/`
+    const feedUrl = `${siteUrl()}/${locale}/rss.xml`
+    const homeUrl = `${siteUrl()}/${locale}`
 
     const items = posts
         .filter(post => post.status !== 'draft')
@@ -255,10 +299,10 @@ export async function buildRss(event: H3Event): Promise<string> {
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">',
         '<channel>',
-        `<title>${escapeXml(siteConfig.name)}</title>`,
+        `<title>${escapeXml(config.title)}</title>`,
         `<link>${homeUrl}</link>`,
-        `<description>${escapeXml(siteConfig.name)}</description>`,
-        '<language>zh-cn</language>',
+        `<description>${escapeXml(config.description)}</description>`,
+        `<language>${config.language}</language>`,
         `<atom:link href="${feedUrl}" rel="self" type="application/rss+xml"/>`,
         `<lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,
         items,

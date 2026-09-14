@@ -2,7 +2,7 @@
 import {licenses} from '#shared/config/licenses'
 import {siteConfig} from '#shared/config/site'
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
 const {featured} = useLinks()
 
 const year = new Date().getFullYear()
@@ -56,7 +56,7 @@ function isExternal(url: string): boolean {
                             :key="link.id"
                     >
                         <a
-                                :href="link.url"
+                                :href="localizeInternalUrl(link.url, locale)"
                                 :rel="isExternal(link.url) ? 'noopener noreferrer' : undefined"
                                 :target="isExternal(link.url) ? '_blank' : undefined"
                                 class="text-sm opacity-85 transition-opacity hover:opacity-100 hover:underline"

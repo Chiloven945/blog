@@ -4,10 +4,11 @@ import LocaleSwitcher from './LocaleSwitcher.vue'
 import ThemeButton from './ThemeButton.vue'
 
 const emit = defineEmits<{ navigate: [] }>()
-const {t} = useI18n()
+const {t, locale} = useI18n()
 const localePath = useLocalePath()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
+const rssHref = computed(() => `/${locale.value}/rss.xml`)
 
 const moreItems = computed(() => items.value.filter(item => [
     'tags',
@@ -54,9 +55,9 @@ const moreItems = computed(() => items.value.filter(item => [
             </div>
 
             <a
+                    :href="rssHref"
                     aria-label="RSS"
                     class="flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm text-muted transition-ui hover:bg-elevated hover:text-highlighted focus-ring"
-                    href="/rss.xml"
             >
                 <UIcon class="size-5 shrink-0" name="i-lucide-rss"/>
                 <span>RSS</span>

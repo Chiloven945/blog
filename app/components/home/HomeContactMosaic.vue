@@ -6,6 +6,7 @@ defineProps<{
 }>()
 
 const {locale} = useI18n()
+const rssHref = computed(() => `/${locale.value}/rss.xml`)
 
 function description(link: LinkItem): string {
     return link.description[locale.value] ?? link.description.en ?? ''
@@ -44,8 +45,8 @@ function blockClass(link: LinkItem, index: number): string {
                     CONTACT
                 </h2>
                 <a
+                        :href="rssHref"
                         class="link text-sm"
-                        href="/rss.xml"
                 >RSS →</a>
             </div>
 
@@ -56,7 +57,7 @@ function blockClass(link: LinkItem, index: number): string {
                         v-reveal="index * 40"
                         :aria-label="link.label"
                         :class="blockClass(link, index)"
-                        :href="link.url"
+                        :href="localizeInternalUrl(link.url, locale)"
                         :rel="isExternal(link) ? 'noopener noreferrer' : undefined"
                         :target="isExternal(link) ? '_blank' : undefined"
                         class="reveal group flex min-h-[4.5rem] flex-col justify-between p-5 lg:min-h-[7rem]"
