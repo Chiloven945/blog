@@ -21,6 +21,7 @@ export interface NovelDocument {
     comments?: boolean
     toc?: boolean
     featured?: boolean
+    nsfw?: boolean
 }
 
 export interface NovelCardItem {
@@ -37,4 +38,5 @@ export interface NovelCardItem {
     cover?: string
     coverAlt?: string
     featured?: boolean
+    nsfw?: boolean
 }

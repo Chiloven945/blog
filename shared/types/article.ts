@@ -22,6 +22,7 @@ export interface ArticleDocument {
     comments?: boolean
     toc?: boolean
     featured?: boolean
+    nsfw?: boolean
 }
 
 export interface ArticleSource {
@@ -44,4 +45,5 @@ export interface ArticleCardItem {
     cover?: string
     coverAlt?: string
     featured?: boolean
+    nsfw?: boolean
 }

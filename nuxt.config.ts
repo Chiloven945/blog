@@ -1,22 +1,28 @@
 import {siteConfig} from './shared/config/site'
+import {discoverNsfwRoutes} from './tools/discover-nsfw-routes'
 
 const localeCodes = ['en', 'zh-cn', 'zh-tw'] as const
 
 // Every indexable page is prerendered to a static file. The feeds and the
 // static search indexes have no inbound links during the crawl, so they are
 // listed explicitly.
-const prerenderSeeds = localeCodes.flatMap(locale => [
-    `/${locale}`,
-    `/${locale}/articles`,
-    `/${locale}/novels`,
-    `/${locale}/tags`,
-    `/${locale}/archives`,
-    `/${locale}/friends`,
-    `/${locale}/search`,
-    `/${locale}/dev/style`,
-    `/${locale}/rss.xml`,
-    `/search-index/${locale}.json`,
-])
+const prerenderSeeds = [
+    ...localeCodes.flatMap(locale => [
+        `/${locale}`,
+        `/${locale}/articles`,
+        `/${locale}/novels`,
+        `/${locale}/tags`,
+        `/${locale}/archives`,
+        `/${locale}/friends`,
+        `/${locale}/search`,
+        `/${locale}/dev/style`,
+        `/${locale}/rss.xml`,
+        `/search-index/${locale}.json`,
+    ]),
+    // NSFW pages are not linked from normal HTML while the preference is off,
+    // so `crawlLinks` cannot discover them.
+    ...discoverNsfwRoutes(),
+]
 
 export default defineNuxtConfig({
     compatibilityDate: '2026-09-11',
@@ -120,7 +126,8 @@ export default defineNuxtConfig({
     },
 
     sitemap: {
-        // Search results are query-driven and /dev/* is a design reference.
+        // Search results are query-driven, /dev/* is a design reference, and
+        // NSFW pages are never part of the public sitemap.
         exclude: [
             '/search',
             '/en/search',
@@ -130,6 +137,11 @@ export default defineNuxtConfig({
             '/en/dev/**',
             '/zh-cn/dev/**',
             '/zh-tw/dev/**',
+            '/en/nsfw/**',
+            '/zh-cn/nsfw/**',
+            '/zh-tw/nsfw/**',
+            '/nsfw-data/**',
+            '/nsfw-assets/**',
         ],
     },
 
@@ -151,7 +163,7 @@ export default defineNuxtConfig({
                 // unprefixed page paths without catching /search-index/*,
                 // /sitemap.xml or /robots.txt.
                 /^\/$/,
-                /^\/(articles|novels|tags|archives|friends|dev)(\/|$)/,
+                /^\/(articles|novels|tags|archives|friends|dev|nsfw)(\/|$)/,
                 /^\/search$/,
             ],
         },
