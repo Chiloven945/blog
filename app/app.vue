@@ -5,6 +5,10 @@ import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 const {t, locale} = useI18n()
 const head = useLocaleHead({seo: false})
 
+// Restore the NSFW preference after hydration. The state is shared via
+// `useState`, so the settings UI and NSFW surfaces read the same values.
+useNsfwPreferences()
+
 useHead(() => ({
     htmlAttrs: head.value.htmlAttrs ?? {},
     meta: [

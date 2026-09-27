@@ -11,6 +11,23 @@ const {t} = useI18n()
 const modalOpen = ref(false)
 const inputValue = ref('')
 
+// Simulated NSFW preference controls used to verify the composable. No real
+// NSFW content is referenced here.
+const {
+    hydrated: nsfwHydrated,
+    enabled: nsfwEnabled,
+    blur: nsfwBlur,
+    effectiveBlur: nsfwEffectiveBlur,
+    enable: nsfwEnable,
+    disable: nsfwDisable,
+    setBlur: nsfwSetBlur,
+    isRevealed: nsfwIsRevealed,
+    reveal: nsfwReveal,
+    hide: nsfwHide,
+    clearRevealed: nsfwClearRevealed,
+} = useNsfwPreferences()
+const nsfwDemoId = 'nsfw:article:demo'
+
 const semanticColors = [
     {key: 'primary', token: '--ui-primary'},
     {key: 'secondary', token: '--ui-secondary'},
@@ -480,6 +497,105 @@ const licenseList = licenseKeys.map((key) => {
                     :code="mermaidSequence"
                     language="mermaid"
             />
+        </section>
+
+        <section class="space-y-4">
+            <h2 class="text-xl font-bold text-highlighted">
+                NSFW preferences
+            </h2>
+            <p class="text-sm text-muted">
+                Simulated controls for the NSFW preference composable. No NSFW content is used.
+            </p>
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4">
+                <div>
+                    <dt class="font-mono text-xs text-muted uppercase">
+                        Hydrated
+                    </dt>
+                    <dd class="tabular-nums" data-nsfw-hydrated>
+                        {{ nsfwHydrated }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-mono text-xs text-muted uppercase">
+                        Enabled
+                    </dt>
+                    <dd class="tabular-nums" data-nsfw-enabled>
+                        {{ nsfwEnabled }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-mono text-xs text-muted uppercase">
+                        Blur
+                    </dt>
+                    <dd class="tabular-nums" data-nsfw-blur>
+                        {{ nsfwBlur }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-mono text-xs text-muted uppercase">
+                        Effective blur
+                    </dt>
+                    <dd class="tabular-nums" data-nsfw-effective-blur>
+                        {{ nsfwEffectiveBlur }}
+                    </dd>
+                </div>
+            </dl>
+            <div class="flex flex-wrap items-center gap-2">
+                <UButton
+                        size="sm"
+                        @click="nsfwEnable"
+                >
+                    Enable
+                </UButton>
+                <UButton
+                        color="neutral"
+                        size="sm"
+                        variant="outline"
+                        @click="nsfwDisable"
+                >
+                    Disable
+                </UButton>
+                <UButton
+                        color="neutral"
+                        size="sm"
+                        variant="outline"
+                        @click="nsfwSetBlur(!nsfwBlur)"
+                >
+                    Toggle blur
+                </UButton>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <div
+                        :class="nsfwEffectiveBlur && !nsfwIsRevealed(nsfwDemoId) ? 'blur-sm' : ''"
+                        class="rounded-sm border border-default px-4 py-3 text-sm transition-ui"
+                        data-nsfw-demo
+                >
+                    Demo NSFW preview
+                </div>
+                <UButton
+                        size="xs"
+                        variant="soft"
+                        @click="nsfwReveal(nsfwDemoId)"
+                >
+                    Reveal
+                </UButton>
+                <UButton
+                        color="neutral"
+                        size="xs"
+                        variant="soft"
+                        @click="nsfwHide(nsfwDemoId)"
+                >
+                    Hide
+                </UButton>
+                <UButton
+                        color="neutral"
+                        size="xs"
+                        variant="soft"
+                        @click="nsfwClearRevealed"
+                >
+                    Clear
+                </UButton>
+            </div>
         </section>
 
         <section class="space-y-4">
