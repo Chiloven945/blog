@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import NavigationItem from './NavigationItem.vue'
 import NavigationMore from './NavigationMore.vue'
-import SettingsButton from '../settings/SettingsButton.vue'
 
 const {t} = useI18n()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
 
-const dockItems = computed(() => items.value.filter(item => ['home', 'articles', 'novels'].includes(
-    item.key)))
+const dockItems = computed(() => items.value.filter(item => ['home', 'articles', 'novels', 'friends'].includes(item.key)))
 const moreOpen = ref(false)
 </script>
 
@@ -24,8 +22,6 @@ const moreOpen = ref(false)
                 :item="item"
                 variant="mobile"
         />
-
-        <SettingsButton variant="mobile"/>
 
         <button
                 :aria-label="t('common.more')"

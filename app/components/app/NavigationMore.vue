@@ -13,8 +13,7 @@ const rssHref = computed(() => `/${locale.value}/rss.xml`)
 
 const moreItems = computed(() => items.value.filter(item => [
     'tags',
-    'archives',
-    'friends'
+    'archives'
 ].includes(item.key)))
 
 function openSettings() {

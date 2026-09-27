@@ -33,12 +33,11 @@ test.describe(
                 await gotoHydrated(page, '/en')
 
                 const dock = page.locator('.site-nav:visible')
-                await expect(dock.getByRole('button', {name: 'Settings'})).toBeVisible()
+                await expect(dock.getByRole('link', {name: 'Friends'})).toBeVisible()
 
                 await dock.getByRole('button', {name: 'More'}).click()
 
                 const sheet = page.getByRole('dialog')
-                await expect(sheet.getByRole('link', {name: 'Friends'})).toBeVisible()
                 await expect(sheet.getByRole('link', {name: 'Archives'})).toBeVisible()
 
                 await sheet.getByRole('link', {name: 'Archives'}).click()
@@ -426,10 +425,11 @@ test.describe(
                 await gotoHydrated(page, '/en')
 
                 await page.locator('.site-nav:visible')
-                    .getByRole('button', {name: 'Settings'})
+                    .getByRole('button', {name: 'More'})
                     .click()
+                await page.getByRole('dialog').getByRole('button', {name: 'Settings'}).click()
 
-                const dialog = page.getByRole('dialog')
+                const dialog = page.locator('[role="dialog"]').filter({has: page.locator('#settings-panel-general')})
                 const box = await dialog.boundingBox()
                 expect(box?.width).toBe(mobile.width)
 
