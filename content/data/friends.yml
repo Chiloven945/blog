@@ -1,4 +1,12 @@
 items:
+  - id: bigcake
+    name: 晓雨杂记
+    url: https://www.notbigcake.net
+    avatar: https://objects.notbigcake.net/bigcake-blog-images/brand/avatar-128x.webp
+    description:
+      zh-cn: 也许我们会分别，但我们将永远不会忘记彼此
+      zh-tw: 也許我們會分別，但我們將永遠不會忘記彼此
+      en: 也许我们会分别，但我们将永远不会忘记彼此
   - id: guaizai
     name: GuaiZai's Blog
     url: https://blog.guaizai.top/

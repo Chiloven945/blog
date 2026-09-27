@@ -22,6 +22,12 @@ const prerenderSeeds = [
     // NSFW pages are not linked from normal HTML while the preference is off,
     // so `crawlLinks` cannot discover them.
     ...discoverNsfwRoutes(),
+    // NSFW data endpoints are fetched only after opt-in, but they are still
+    // emitted as static JSON and gated by the edge Worker.
+    ...localeCodes.flatMap(locale => [
+        `/nsfw-data/content/${locale}.json`,
+        `/nsfw-data/search/${locale}.json`,
+    ]),
 ]
 
 export default defineNuxtConfig({

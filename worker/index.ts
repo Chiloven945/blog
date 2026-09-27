@@ -131,9 +131,79 @@ function redirectLocale(request: Request, locale: Locale): Response {
     })
 }
 
+function nsfwEnabled(request: Request): boolean {
+    return readCookie(request, 'blog_nsfw') === '1'
+}
+
+function isNsfwDocumentPath(pathname: string): boolean {
+    return /^\/(en|zh-cn|zh-tw)\/nsfw(?:\/|$)/.test(pathname)
+}
+
+function isNsfwDataPath(pathname: string): boolean {
+    return pathname.startsWith('/nsfw-data/')
+}
+
+function isNsfwAssetPath(pathname: string): boolean {
+    return pathname.startsWith('/nsfw-assets/')
+}
+
+function notFound(): Response {
+    return new Response('Not Found', {
+        status: 404,
+        headers: {
+            'Cache-Control': 'private, no-store',
+            'Content-Type': 'text/plain; charset=utf-8',
+        },
+    })
+}
+
+// Gated NSFW documents are sent to a public, already-safe page so the client
+// can explain the situation. The response never includes NSFW text.
+function redirectNsfw(url: URL): Response {
+    const match = url.pathname.match(
+        /^\/(en|zh-cn|zh-tw)\/nsfw\/(articles|novels|series)(?:\/|$)/
+    )
+    const locale = match?.[1] ?? DEFAULT_LOCALE
+    const kind = match?.[2]
+    const target = new URL(
+        kind
+            ? `/${locale}/${kind}`
+            : `/${locale}`,
+        url.origin
+    )
+
+    target.searchParams.set('nsfw', 'required')
+    target.searchParams.set('next', url.pathname)
+
+    return new Response(null, {
+        status: 302,
+        headers: {
+            Location: target.toString(),
+            'Cache-Control': 'private, no-store',
+            Vary: 'Cookie',
+        },
+    })
+}
+
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
         const url = new URL(request.url)
+
+        // NSFW must be gated before any localized/asset passthrough, otherwise
+        // the prerendered NSFW documents would be served unprotected.
+        const nsfwDocument = isNsfwDocumentPath(url.pathname)
+
+        if (nsfwDocument
+            || isNsfwDataPath(url.pathname)
+            || isNsfwAssetPath(url.pathname)) {
+            if (nsfwEnabled(request)) {
+                return env.ASSETS.fetch(request)
+            }
+
+            return nsfwDocument
+                ? redirectNsfw(url)
+                : notFound()
+        }
 
         // A localized path reached the Worker only because no static asset exists.
         // Do not rewrite it to another locale; let it become a real 404.

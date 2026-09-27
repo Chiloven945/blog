@@ -8,7 +8,16 @@
     "directory": ".output/public",
     // Prerendered pages live at `<path>/index.html`; dropping the trailing
     // slash keeps the served URL identical to the canonical/sitemap URL.
-    "html_handling": "drop-trailing-slash"
+    "html_handling": "drop-trailing-slash",
+    // Only NSFW documents/data/assets run the Worker first (cookie gate).
+    // Every other request stays asset-first and never consumes a Worker.
+    "run_worker_first": [
+      "/en/nsfw/*",
+      "/zh-cn/nsfw/*",
+      "/zh-tw/nsfw/*",
+      "/nsfw-data/*",
+      "/nsfw-assets/*"
+    ]
   },
   "observability": {
     "enabled": true
