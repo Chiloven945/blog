@@ -24,6 +24,41 @@
     "backHome": "Back home",
     "links": "Links"
   },
+  "settings": {
+    "button": "Settings",
+    "title": "Settings",
+    "subtitle": "Site preferences",
+    "eyebrow": "003 / SITE PREFERENCES",
+    "close": "Close",
+    "categories": {
+      "general": "General",
+      "content": "Content",
+      "features": "Features"
+    },
+    "general": {
+      "language": "Language",
+      "languageHint": "Choose the interface and content language.",
+      "colorMode": "Color mode",
+      "colorModeHint": "Choose how the site looks.",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "content": {
+      "nsfw": "Show NSFW content",
+      "nsfwHint": "Include NSFW entries in browsing, search, tags, archives and recommendations.",
+      "blur": "Blur NSFW content",
+      "blurHint": "Cover NSFW previews while browsing. Reveal individual entries with the Show button.",
+      "confirmTitle": "Show NSFW content?",
+      "confirmBody": "NSFW entries will become visible across the site, including Home, Search, Tags, Archives and recommendations.",
+      "cancel": "Cancel",
+      "enable": "Enable"
+    },
+    "features": {
+      "novelReading": "Novel reading",
+      "reset": "Reset reading settings"
+    }
+  },
   "footer": {
     "rights": "All rights reserved."
   },

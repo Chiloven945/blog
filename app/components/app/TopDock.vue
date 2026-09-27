@@ -3,6 +3,7 @@ import NavigationItem from './NavigationItem.vue'
 import LocaleSwitcher from './LocaleSwitcher.vue'
 import ThemeButton from './ThemeButton.vue'
 import SearchButton from '../search/SearchButton.vue'
+import SettingsButton from '../settings/SettingsButton.vue'
 import {siteConfig} from '#shared/config/site'
 
 const items = useSiteNavigation()
@@ -47,5 +48,6 @@ const {t} = useI18n()
         <SearchButton/>
         <LocaleSwitcher hide-chevron/>
         <ThemeButton/>
+        <SettingsButton/>
     </nav>
 </template>

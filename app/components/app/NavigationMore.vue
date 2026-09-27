@@ -8,12 +8,19 @@ const {t, locale} = useI18n()
 const localePath = useLocalePath()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
+const settings = useSettingsModal()
 const rssHref = computed(() => `/${locale.value}/rss.xml`)
 
 const moreItems = computed(() => items.value.filter(item => [
     'tags',
-    'archives'
+    'archives',
+    'friends'
 ].includes(item.key)))
+
+function openSettings() {
+    emit('navigate')
+    settings.open('general')
+}
 </script>
 
 <template>
@@ -62,6 +69,18 @@ const moreItems = computed(() => items.value.filter(item => [
                 <UIcon class="size-5 shrink-0" name="i-lucide-rss"/>
                 <span>RSS</span>
             </a>
+
+            <button
+                    class="flex w-full items-center justify-between gap-3 rounded-sm px-3 py-2.5 text-sm text-muted transition-ui hover:bg-elevated hover:text-highlighted focus-ring"
+                    type="button"
+                    @click="openSettings"
+            >
+                <span class="flex items-center gap-3">
+                    <UIcon class="size-5 shrink-0" name="i-lucide-settings-2"/>
+                    <span>{{ t('settings.title') }}</span>
+                </span>
+                <UIcon class="size-4 shrink-0" name="i-lucide-chevron-right"/>
+            </button>
         </div>
     </div>
 </template>

@@ -33,11 +33,12 @@ test.describe(
                 await gotoHydrated(page, '/en')
 
                 const dock = page.locator('.site-nav:visible')
-                await expect(dock.getByRole('link', {name: 'Friends'})).toBeVisible()
+                await expect(dock.getByRole('button', {name: 'Settings'})).toBeVisible()
 
                 await dock.getByRole('button', {name: 'More'}).click()
 
                 const sheet = page.getByRole('dialog')
+                await expect(sheet.getByRole('link', {name: 'Friends'})).toBeVisible()
                 await expect(sheet.getByRole('link', {name: 'Archives'})).toBeVisible()
 
                 await sheet.getByRole('link', {name: 'Archives'}).click()
@@ -354,6 +355,87 @@ test.describe(
                 await expect(sheet.getByRole('group', {name: 'Line spacing'})).toBeVisible()
                 await expect(sheet.getByRole('switch', {name: 'Reading mode'})).toBeVisible()
                 await expect(sheet.getByRole('group', {name: 'Column width'})).toHaveCount(0)
+            }
+        )
+    }
+)
+
+test.describe(
+    'global settings',
+    () => {
+        test(
+            'changes the color mode and language from the panel',
+            async ({page}) => {
+                await page.setViewportSize(desktop)
+                await gotoHydrated(page, '/en')
+
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: 'Settings'})
+                    .click()
+
+                const dialog = page.getByRole('dialog')
+                await expect(dialog.getByRole('tab', {name: /General/}))
+                    .toHaveAttribute('aria-selected', 'true')
+
+                await dialog.getByRole('group', {name: 'Color mode'})
+                    .getByRole('button', {name: 'Dark'})
+                    .click()
+                await expect(page.locator('html')).toHaveClass(/dark/)
+
+                await dialog.getByRole('group', {name: 'Language'})
+                    .getByRole('button', {name: '简体中文'})
+                    .click()
+                await expect(page).toHaveURL(/\/zh-cn$/)
+            }
+        )
+
+        test(
+            'enabling NSFW confirms, and disabling from a detail route exits',
+            async ({page}) => {
+                await page.setViewportSize(desktop)
+                await gotoHydrated(page, '/en')
+
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: 'Settings'})
+                    .click()
+                await page.getByRole('tab', {name: /Content/}).click()
+
+                await page.getByRole('switch', {name: 'Show NSFW content'}).click()
+                await page.getByRole('button', {name: 'Enable'}).click()
+                await expect(page.getByRole('switch', {name: 'Show NSFW content'}))
+                    .toHaveAttribute('aria-checked', 'true')
+
+                const cookies = await page.context().cookies()
+                expect(cookies.find(cookie => cookie.name === 'blog_nsfw')?.value).toBe('1')
+
+                await gotoHydrated(page, '/en/nsfw/articles/nsfw-note')
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: 'Settings'})
+                    .click()
+                await page.getByRole('tab', {name: /Content/}).click()
+                await page.getByRole('switch', {name: 'Show NSFW content'}).click()
+
+                await expect(page).toHaveURL(/\/en\/articles$/)
+            }
+        )
+
+        test(
+            'mobile is full screen and hides the novel width control',
+            async ({page}) => {
+                await page.setViewportSize(mobile)
+                await gotoHydrated(page, '/en')
+
+                await page.locator('.site-nav:visible')
+                    .getByRole('button', {name: 'Settings'})
+                    .click()
+
+                const dialog = page.getByRole('dialog')
+                const box = await dialog.boundingBox()
+                expect(box?.width).toBe(mobile.width)
+
+                await dialog.getByRole('tab', {name: /Features/}).click()
+                await expect(dialog.getByRole('group', {name: 'Text size'})).toBeVisible()
+                await expect(dialog.getByRole('group', {name: 'Column width'})).toHaveCount(0)
             }
         )
     }
