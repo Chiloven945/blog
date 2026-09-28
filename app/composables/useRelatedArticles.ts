@@ -8,6 +8,7 @@ import {rankRelated} from '~/utils/related-score'
  */
 export function useRelatedArticles(current: Ref<ArticleDocument | null>, limit = 3) {
     const active = useActiveContentCollection()
+    const {articles: nsfwArticles} = useNsfwContentIndex()
 
     const {data} = useAsyncData(
         () => `related-articles-${active.value.articles}`,
@@ -38,7 +39,10 @@ export function useRelatedArticles(current: Ref<ArticleDocument | null>, limit =
             return []
         }
 
-        const items = (data.value ?? []) as unknown as ArticleCardItem[]
+        const items = [
+            ...((data.value ?? []) as unknown as ArticleCardItem[]),
+            ...nsfwArticles.value,
+        ]
 
         return rankRelated(item, items, limit)
     })

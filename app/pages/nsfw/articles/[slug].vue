@@ -26,6 +26,10 @@ const articleDoc = computed<ArticleDocument | null>(() =>
         : null,
 )
 
+// Related works may mix normal and NSFW candidates while opted in; the
+// ranking still requires a real relation (series, tag, or subtype).
+const {related} = useRelatedArticles(articleDoc)
+
 await articleAsync
 
 if (!article.value
@@ -89,7 +93,7 @@ usePageMeta({
             v-if="articleDoc && surround"
             :article="articleDoc"
             :reading-time="readingTime"
-            :related="[]"
+            :related="related"
             :surround="surround"
     />
 </template>

@@ -2,11 +2,13 @@
 import SearchInput from './SearchInput.vue'
 import SearchResult from './SearchResult.vue'
 import {tokenizeSearchQuery} from '~/utils/search'
+import {nsfwIdentity} from '~/utils/nsfw'
 
 const {t} = useI18n()
 const route = useRoute()
 const {isOpen, close, toggle} = useSearchModal()
 const {query, results, status, ensureIndex} = useSearch()
+const {effectiveBlur, isRevealed, reveal} = useNsfwPreferences()
 
 const isMobile = useMediaQuery('(max-width: 767px)')
 
@@ -43,6 +45,14 @@ watch(query, () => {
     activeIndex.value = 0
 })
 
+// When NSFW results are dropped (preference off) the selection may point past
+// the end; clamp it back to the first visible result.
+watch(() => results.value.length, () => {
+    if (activeIndex.value >= results.value.length) {
+        activeIndex.value = 0
+    }
+})
+
 watch(() => route.fullPath, () => {
     if (isOpen.value) {
         close()
@@ -76,6 +86,14 @@ function select(index = activeIndex.value) {
     const item = results.value[index]
 
     if (!item) {
+        return
+    }
+
+    // A blurred NSFW result reveals first; Enter/click again navigates.
+    const identity = nsfwIdentity({path: item.path})
+
+    if (item.nsfw && effectiveBlur.value && !isRevealed(identity)) {
+        reveal(identity)
         return
     }
 

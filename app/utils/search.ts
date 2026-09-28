@@ -10,6 +10,7 @@ export interface SearchSection {
     subtype?: string
     tags?: string[]
     date?: string
+    nsfw?: boolean
 }
 
 export interface SearchResultItem extends SearchSection {

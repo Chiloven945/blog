@@ -1,7 +1,10 @@
 import type {ArticleCardItem} from '#shared/types/article'
 import type {NovelCardItem} from '#shared/types/novel'
 
-const LIMIT = 3
+// Fetch headroom so that merging opt-in NSFW entries can still produce the
+// correct newest top-N. The database query stays bounded.
+const HOME_QUERY_LIMIT = 6
+const HOME_RENDER_LIMIT = 3
 
 /**
  * Homepage latest writing. Registers both async sources before the first
@@ -33,7 +36,7 @@ export async function useHomeData() {
                 queryCollection(active.value.articles).select(...fields)
             )
                 .order('date', 'DESC')
-                .limit(LIMIT)
+                .limit(HOME_QUERY_LIMIT)
                 .all(),
     )
 
@@ -44,19 +47,28 @@ export async function useHomeData() {
                 queryCollection(active.value.novels).select(...fields)
             )
                 .order('date', 'DESC')
-                .limit(LIMIT)
+                .limit(HOME_QUERY_LIMIT)
                 .all(),
     )
+
+    const {articles: nsfwArticles} = useNsfwContentIndex()
+    const {novels: nsfwNovels} = useNsfwContentIndex()
 
     const {data: articlesData} = await articlesAsync
     const {data: novelsData} = await novelsAsync
 
     const latestArticles = computed(() =>
-        (articlesData.value ?? []) as unknown as ArticleCardItem[],
+        mergeVisibleContent(
+            (articlesData.value ?? []) as unknown as ArticleCardItem[],
+            nsfwArticles.value,
+        ).slice(0, HOME_RENDER_LIMIT),
     )
 
     const latestNovels = computed(() =>
-        (novelsData.value ?? []) as unknown as NovelCardItem[],
+        mergeVisibleContent(
+            (novelsData.value ?? []) as unknown as NovelCardItem[],
+            nsfwNovels.value,
+        ).slice(0, HOME_RENDER_LIMIT),
     )
 
     return {latestArticles, latestNovels}

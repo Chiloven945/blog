@@ -49,6 +49,7 @@ const novelFields = [
 export async function useTagIndex() {
     const active = useActiveContentCollection()
     const {locale} = useI18n()
+    const {articles: nsfwArticles, novels: nsfwNovels} = useNsfwContentIndex()
 
     const {data} = await useAsyncData(
         () => `tag-index-${locale.value}`,
@@ -74,8 +75,12 @@ export async function useTagIndex() {
         {default: () => ({articles: [], novels: []})},
     )
 
-    const articles = computed(() => data.value?.articles ?? [])
-    const novels = computed(() => data.value?.novels ?? [])
+    // Tags are computed from visible content: normal items plus opt-in NSFW
+    // metadata, so NSFW-only tags only appear after the reader opts in.
+    const articles = computed(() =>
+        mergeVisibleContent(data.value?.articles ?? [], nsfwArticles.value))
+    const novels = computed(() =>
+        mergeVisibleContent(data.value?.novels ?? [], nsfwNovels.value))
 
     const tags = computed<TaxonomyTag[]>(() => {
         const map = new Map<string, TaxonomyTag>()

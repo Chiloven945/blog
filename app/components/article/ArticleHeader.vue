@@ -29,6 +29,8 @@ const updated = computed(() =>
         <div
                 class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-[0.2em] uppercase"
         >
+            <NsfwBadge v-if="article.nsfw"/>
+
             <span class="text-primary">{{ t('articles.kind') }}</span>
 
             <template v-if="subtypeLabel">

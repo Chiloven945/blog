@@ -38,7 +38,7 @@ const {data} = await useAsyncData<NovelCardItem[]>(
     },
 )
 
-const novels = computed(() => data.value ?? [])
+const novels = useVisibleNovels(computed(() => data.value ?? []))
 const subtypeOptions = useNovelSubtypes()
 const statusOptions = useNovelStatuses()
 

@@ -7,29 +7,38 @@ defineProps<{
 </script>
 
 <template>
-    <li>
-        <NuxtLink
-                :to="post.path"
-                class="group flex items-baseline gap-4 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    <li class="group flex items-baseline gap-4 py-3">
+        <time
+                :datetime="post.date"
+                class="w-8 shrink-0 font-mono text-sm tabular-nums text-muted"
         >
-            <time
-                    :datetime="post.date"
-                    class="w-8 shrink-0 font-mono text-sm tabular-nums text-muted"
-            >
-                {{ String(post.day).padStart(2, '0') }}
-            </time>
+            {{ String(post.day).padStart(2, '0') }}
+        </time>
 
-            <span
-                    class="min-w-0 flex-1 line-clamp-2 font-medium text-highlighted transition-colors group-hover:text-primary md:line-clamp-1"
+        <NsfwRevealGuard
+                :id="nsfwIdentity(post)"
+                :nsfw="post.nsfw"
+                class="min-w-0 flex-1"
+                mode="row"
+        >
+            <NuxtLink
+                    :to="post.path"
+                    class="group flex items-baseline gap-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
-                {{ post.title }}
-            </span>
+                <NsfwBadge v-if="post.nsfw"/>
 
-            <UIcon
-                    aria-hidden="true"
-                    class="size-4 shrink-0 text-dimmed opacity-0 transition-opacity group-hover:opacity-100"
-                    name="i-lucide-arrow-right"
-            />
-        </NuxtLink>
+                <span
+                        class="min-w-0 flex-1 line-clamp-2 font-medium text-highlighted transition-colors group-hover:text-primary md:line-clamp-1"
+                >
+                    {{ post.title }}
+                </span>
+
+                <UIcon
+                        aria-hidden="true"
+                        class="size-4 shrink-0 text-dimmed opacity-0 transition-opacity group-hover:opacity-100"
+                        name="i-lucide-arrow-right"
+                />
+            </NuxtLink>
+        </NsfwRevealGuard>
     </li>
 </template>

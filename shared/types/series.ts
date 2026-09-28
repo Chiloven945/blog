@@ -11,4 +11,5 @@ export interface SeriesDocument {
     startDate?: string
     endDate?: string
     featured?: boolean
+    nsfw?: boolean
 }

@@ -24,6 +24,10 @@
     "backHome": "返回首页",
     "links": "链接"
   },
+  "nsfw": {
+    "badge": "NSFW 内容",
+    "reveal": "显示"
+  },
   "settings": {
     "button": "设置",
     "title": "设置",

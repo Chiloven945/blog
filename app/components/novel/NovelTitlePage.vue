@@ -30,6 +30,10 @@ const published = computed(() => formatPostDate(props.novel.date, locale.value))
             />
         </figure>
 
+        <p v-if="novel.nsfw" class="font-mono text-xs tracking-[0.3em] text-muted uppercase">
+            <NsfwBadge class="mb-4"/>
+        </p>
+
         <p class="font-mono text-xs tracking-[0.3em] text-muted uppercase">
             <span class="text-primary">{{ t('novels.kind') }}</span>
             <span v-if="subtype"> / {{ t(subtype.labelKey) }}</span>

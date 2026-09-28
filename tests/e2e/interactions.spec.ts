@@ -429,9 +429,9 @@ test.describe(
                     .click()
                 await page.getByRole('dialog').getByRole('button', {name: 'Settings'}).click()
 
-                const dialog = page.locator('[role="dialog"]').filter({has: page.locator('#settings-panel-general')})
-                const box = await dialog.boundingBox()
-                expect(box?.width).toBe(mobile.width)
+                const dialog = page.getByRole('dialog', {name: 'Settings'})
+                await expect.poll(async () => (await dialog.boundingBox())?.width)
+                    .toBe(mobile.width)
 
                 await dialog.getByRole('tab', {name: /Features/}).click()
                 await expect(dialog.getByRole('group', {name: 'Text size'})).toBeVisible()

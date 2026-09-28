@@ -37,7 +37,7 @@ const {data} = await useAsyncData<ArticleCardItem[]>(
     },
 )
 
-const articles = computed(() => data.value ?? [])
+const articles = useVisibleArticles(computed(() => data.value ?? []))
 const subtypeOptions = useArticleSubtypes()
 
 const availableSubtypes = computed(() => {

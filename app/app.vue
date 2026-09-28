@@ -9,6 +9,10 @@ const head = useLocaleHead({seo: false})
 // `useState`, so the settings UI and NSFW surfaces read the same values.
 useNsfwPreferences()
 
+// Once the reader opts in, start loading the lightweight NSFW metadata
+// manifest so browsing surfaces can merge it without layout chaos.
+useNsfwContentIndex()
+
 useHead(() => ({
     htmlAttrs: head.value.htmlAttrs ?? {},
     meta: [

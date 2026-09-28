@@ -24,6 +24,10 @@
     "backHome": "Back home",
     "links": "Links"
   },
+  "nsfw": {
+    "badge": "NSFW content",
+    "reveal": "Reveal"
+  },
   "settings": {
     "button": "Settings",
     "title": "Settings",

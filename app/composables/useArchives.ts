@@ -9,6 +9,7 @@ export interface ArchivePost {
     day: number
     kind: Kind
     subtype?: string
+    nsfw?: boolean
 }
 
 export interface ArchiveMonthGroup {
@@ -89,6 +90,7 @@ export function groupArchives(
 export async function useArchives() {
     const {locale} = useI18n()
     const active = useActiveContentCollection()
+    const {articles: nsfwArticles, novels: nsfwNovels} = useNsfwContentIndex()
     const key = computed(() =>
         `${active.value.articles}-${active.value.novels}-${locale.value}`)
 
@@ -121,8 +123,8 @@ export async function useArchives() {
         },
     )
 
-    const posts = computed<ArchivePost[]>(() =>
-        (data.value ?? [])
+    const posts = computed<ArchivePost[]>(() => {
+        const normal: ArchivePost[] = (data.value ?? [])
             .map(post => (
                 {
                     path: post.path,
@@ -131,9 +133,27 @@ export async function useArchives() {
                     day: parseDate(post.date).getUTCDate(),
                     kind: post.kind,
                     subtype: post.subtype,
+                    nsfw: false,
                 }
-            )),
-    )
+            ))
+
+        const nsfw: ArchivePost[] = [
+            ...nsfwArticles.value.map(item => ({item, kind: 'article' as const})),
+            ...nsfwNovels.value.map(item => ({item, kind: 'novel' as const})),
+        ].map(({item, kind}) => (
+            {
+                path: item.path,
+                title: item.title,
+                date: item.date,
+                day: parseDate(item.date).getUTCDate(),
+                kind,
+                subtype: item.subtype,
+                nsfw: true,
+            }
+        ))
+
+        return [...normal, ...nsfw]
+    })
 
     const years = computed(() =>
         groupArchives(posts.value, locale.value))

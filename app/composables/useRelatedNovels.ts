@@ -9,6 +9,7 @@ import {rankRelated} from '~/utils/related-score'
  */
 export function useRelatedNovels(current: Ref<NovelDocument | null>, limit = 3) {
     const active = useActiveContentCollection()
+    const {novels: nsfwNovels} = useNsfwContentIndex()
 
     const {data} = useAsyncData(
         () => `related-novels-${active.value.novels}`,
@@ -40,7 +41,10 @@ export function useRelatedNovels(current: Ref<NovelDocument | null>, limit = 3) 
             return []
         }
 
-        const items = (data.value ?? []) as unknown as NovelCardItem[]
+        const items = [
+            ...((data.value ?? []) as unknown as NovelCardItem[]),
+            ...nsfwNovels.value,
+        ]
 
         return rankRelated(item, items, limit)
     })

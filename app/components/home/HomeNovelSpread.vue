@@ -53,27 +53,34 @@ function date(item: NovelCardItem): string {
                     v-reveal
                     class="reveal mt-8 border-t border-default pt-8"
             >
-                <NuxtLink
-                        :to="lead.path"
-                        class="group block"
+                <NsfwRevealGuard
+                        :id="nsfwIdentity(lead)"
+                        :nsfw="lead.nsfw"
+                        mode="feature"
                 >
-                    <p class="home-kicker text-primary">{{ subtypeLabel(lead) }} · {{
-                            statusLabel(lead)
-                        }}</p>
-                    <h3 class="mt-3 font-display-serif text-3xl leading-tight font-bold text-highlighted transition-colors group-hover:text-primary lg:text-5xl">
-                        {{ lead.title }}
-                    </h3>
-                    <p
-                            v-if="lead.description"
-                            class="mt-5 line-clamp-4 max-w-2xl font-display-serif text-lg/relaxed text-toned"
+                    <NuxtLink
+                            :to="lead.path"
+                            class="group block"
                     >
-                        {{ lead.description }}
-                    </p>
-                    <div class="mt-5 flex items-center gap-4 font-mono text-xs text-dimmed">
-                        <time>{{ date(lead) }}</time>
-                        <span v-if="lead.series">{{ lead.series }}</span>
-                    </div>
-                </NuxtLink>
+                        <p class="home-kicker text-primary">
+                            <NsfwBadge v-if="lead.nsfw" class="me-2 align-middle"/>
+                            {{ subtypeLabel(lead) }} · {{ statusLabel(lead) }}
+                        </p>
+                        <h3 class="mt-3 font-display-serif text-3xl leading-tight font-bold text-highlighted transition-colors group-hover:text-primary lg:text-5xl">
+                            {{ lead.title }}
+                        </h3>
+                        <p
+                                v-if="lead.description"
+                                class="mt-5 line-clamp-4 max-w-2xl font-display-serif text-lg/relaxed text-toned"
+                        >
+                            {{ lead.description }}
+                        </p>
+                        <div class="mt-5 flex items-center gap-4 font-mono text-xs text-dimmed">
+                            <time>{{ date(lead) }}</time>
+                            <span v-if="lead.series">{{ lead.series }}</span>
+                        </div>
+                    </NuxtLink>
+                </NsfwRevealGuard>
             </article>
 
             <div
@@ -86,27 +93,34 @@ function date(item: NovelCardItem): string {
                         v-reveal="index * 80"
                         class="reveal border-l-4 border-primary pl-5"
                 >
-                    <NuxtLink
-                            :to="novel.path"
-                            class="group block"
+                    <NsfwRevealGuard
+                            :id="nsfwIdentity(novel)"
+                            :nsfw="novel.nsfw"
+                            mode="card"
                     >
-                        <p class="home-kicker text-muted">{{ subtypeLabel(novel) }} · {{
-                                statusLabel(novel)
-                            }}</p>
-                        <h3 class="mt-2 font-display-serif text-xl font-bold text-highlighted transition-colors group-hover:text-primary lg:text-2xl">
-                            {{ novel.title }}
-                        </h3>
-                        <p
-                                v-if="novel.description"
-                                class="mt-2 line-clamp-3 font-display-serif text-sm/relaxed text-muted"
+                        <NuxtLink
+                                :to="novel.path"
+                                class="group block"
                         >
-                            {{ novel.description }}
-                        </p>
-                        <time class="mt-3 block font-mono text-xs text-dimmed">{{
-                                date(novel)
-                            }}
-                        </time>
-                    </NuxtLink>
+                            <p class="home-kicker text-muted">
+                                <NsfwBadge v-if="novel.nsfw" class="me-2 align-middle"/>
+                                {{ subtypeLabel(novel) }} · {{ statusLabel(novel) }}
+                            </p>
+                            <h3 class="mt-2 font-display-serif text-xl font-bold text-highlighted transition-colors group-hover:text-primary lg:text-2xl">
+                                {{ novel.title }}
+                            </h3>
+                            <p
+                                    v-if="novel.description"
+                                    class="mt-2 line-clamp-3 font-display-serif text-sm/relaxed text-muted"
+                            >
+                                {{ novel.description }}
+                            </p>
+                            <time class="mt-3 block font-mono text-xs text-dimmed">{{
+                                    date(novel)
+                                }}
+                            </time>
+                        </NuxtLink>
+                    </NsfwRevealGuard>
                 </article>
             </div>
 

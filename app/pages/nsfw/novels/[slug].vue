@@ -26,6 +26,10 @@ const novelDoc = computed<NovelDocument | null>(() =>
         : null,
 )
 
+// Related works may mix normal and NSFW candidates while opted in; the
+// ranking still requires a real relation (series, tag, or subtype).
+const {related} = useRelatedNovels(novelDoc)
+
 await novelAsync
 
 if (!novel.value
@@ -63,6 +67,6 @@ usePageMeta({
             v-if="novelDoc"
             :novel="novelDoc"
             :reading-time="readingTime"
-            :related="[]"
+            :related="related"
     />
 </template>
