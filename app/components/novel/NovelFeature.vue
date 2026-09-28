@@ -55,7 +55,15 @@ const formatted = computed(() => formatPostDate(props.novel.date, locale.value))
                 </div>
 
                 <figure v-if="novel.cover" class="order-first lg:order-last">
+                    <img
+                            v-if="novel.nsfw"
+                            :alt="novel.coverAlt || novel.title"
+                            :src="novel.cover"
+                            class="w-full rounded-sm border border-default"
+                            loading="lazy"
+                    >
                     <NuxtImg
+                            v-else
                             :alt="novel.coverAlt || novel.title"
                             :src="novel.cover"
                             class="w-full rounded-sm border border-default"

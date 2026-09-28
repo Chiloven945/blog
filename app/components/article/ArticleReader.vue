@@ -38,7 +38,15 @@ const showToc = computed(() =>
         <ArticleHeader :article="article" :reading-time="readingTime"/>
 
         <figure v-if="article.cover" class="mt-8">
+            <img
+                    v-if="article.nsfw"
+                    :alt="article.coverAlt || article.title"
+                    :src="article.cover"
+                    class="w-full rounded-sm border border-default"
+                    loading="lazy"
+            >
             <NuxtImg
+                    v-else
                     :alt="article.coverAlt || article.title"
                     :src="article.cover"
                     class="w-full rounded-sm border border-default"

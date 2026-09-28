@@ -79,7 +79,9 @@ usePageMeta({
     title: () => article.value?.title,
     description: () => article.value?.description,
     type: 'article',
-    image: () => article.value?.cover,
+    robots: 'noindex, nofollow, noarchive',
+    ogTitle: () => t('nsfw.ogTitle'),
+    ogDescription: () => t('nsfw.ogDescription'),
     article: {
         publishedTime: () => article.value?.date,
         modifiedTime: () => article.value?.updated,

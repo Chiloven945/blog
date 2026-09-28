@@ -58,7 +58,15 @@ const formattedDate = computed(() =>
                         v-if="article.cover"
                         class="order-first overflow-hidden border-b border-default bg-elevated lg:order-last lg:border-s lg:border-b-0"
                 >
+                    <img
+                            v-if="article.nsfw"
+                            :alt="article.coverAlt || article.title"
+                            :src="article.cover"
+                            class="h-full max-h-80 w-full object-cover lg:max-h-none"
+                            loading="lazy"
+                    >
                     <NuxtImg
+                            v-else
                             :alt="article.coverAlt || article.title"
                             :src="article.cover"
                             class="h-full max-h-80 w-full object-cover lg:max-h-none"

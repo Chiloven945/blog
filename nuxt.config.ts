@@ -1,7 +1,16 @@
 import {siteConfig} from './shared/config/site'
-import {discoverNsfwRoutes} from './tools/discover-nsfw-routes'
+import {discoverNsfwOnlyTagRoutes, discoverNsfwRoutes} from './tools/discover-nsfw-routes'
 
 const localeCodes = ['en', 'zh-cn', 'zh-tw'] as const
+
+// Tag pages that only exist in opt-in NSFW content resolve while the
+// preference is off, but must not be listed in the public sitemap. Both the
+// encoded and decoded forms are excluded because the sitemap matcher may see
+// either one.
+const nsfwOnlyTagExcludes = [
+    ...discoverNsfwOnlyTagRoutes(),
+    ...discoverNsfwOnlyTagRoutes().map(path => decodeURIComponent(path)),
+]
 
 // Every indexable page is prerendered to a static file. The feeds and the
 // static search indexes have no inbound links during the crawl, so they are
@@ -148,6 +157,7 @@ export default defineNuxtConfig({
             '/zh-tw/nsfw/**',
             '/nsfw-data/**',
             '/nsfw-assets/**',
+            ...nsfwOnlyTagExcludes,
         ],
     },
 

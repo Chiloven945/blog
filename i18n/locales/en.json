@@ -26,7 +26,9 @@
   },
   "nsfw": {
     "badge": "NSFW content",
-    "reveal": "Reveal"
+    "reveal": "Reveal",
+    "ogTitle": "NSFW content",
+    "ogDescription": "This page contains NSFW content. Enable NSFW in the site settings to view it."
   },
   "settings": {
     "button": "Settings",
@@ -256,7 +258,6 @@
     "backHome": "Back home",
     "genericTitle": "Something went wrong.",
     "postNotFound": "Post not found.",
-    "pageNotFound": "Page not found.",
-    "tagNotFound": "Tag not found."
+    "pageNotFound": "Page not found."
   }
 }

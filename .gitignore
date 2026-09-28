@@ -32,6 +32,12 @@ tmp-screenshots/
 # Development-only planning
 blog-NSFW-SETTINGS-IMPLEMENTATION.md
 
+# Local-only NSFW content. Real works and their protected assets never enter
+# git; the harmless placeholder article keeps the NSFW pipeline testable.
+content/nsfw/novels/
+content/nsfw/series/
+public/nsfw-assets/novels/
+
 # IDE / OS
 .DS_Store
 .idea/

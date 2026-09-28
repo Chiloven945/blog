@@ -26,7 +26,9 @@
   },
   "nsfw": {
     "badge": "NSFW 內容",
-    "reveal": "顯示"
+    "reveal": "顯示",
+    "ogTitle": "NSFW 內容",
+    "ogDescription": "此頁面包含 NSFW 內容，請在站點設定中啟用後檢視。"
   },
   "settings": {
     "button": "設定",
@@ -256,7 +258,6 @@
     "backHome": "返回首頁",
     "genericTitle": "出了點問題。",
     "postNotFound": "找不到這篇文章。",
-    "pageNotFound": "找不到這個頁面。",
-    "tagNotFound": "找不到這個標籤。"
+    "pageNotFound": "找不到這個頁面。"
   }
 }

@@ -6,12 +6,17 @@ const props = defineProps<{
     height?: string | number
 }>()
 
-const isRemote = computed(() => /^https?:\/\//i.test(props.src))
+// Remote images are never mirrored, and NSFW assets must keep their
+// protected `/nsfw-assets/*` namespace (Nuxt Image would emit an
+// unprotected `/_ipx/` copy).
+const isExternal = computed(() =>
+    /^https?:\/\//i.test(props.src) || props.src.startsWith('/nsfw-assets/'),
+)
 </script>
 
 <template>
     <img
-            v-if="isRemote"
+            v-if="isExternal"
             :alt="alt ?? ''"
             :height="height"
             :src="src"

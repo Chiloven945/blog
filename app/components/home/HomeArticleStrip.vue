@@ -85,8 +85,15 @@ function pad(value: number): string {
                             >#{{ tag }}</span>
                         </div>
 
+                        <img
+                                v-if="lead.cover && lead.nsfw"
+                                :alt="lead.coverAlt || lead.title"
+                                :src="lead.cover"
+                                class="mt-6 aspect-video w-full rounded-sm border border-default object-cover"
+                                loading="lazy"
+                        >
                         <NuxtImg
-                                v-if="lead.cover"
+                                v-else-if="lead.cover"
                                 :alt="lead.coverAlt || lead.title"
                                 :src="lead.cover"
                                 class="mt-6 aspect-video w-full rounded-sm border border-default object-cover"

@@ -53,7 +53,9 @@ usePageMeta({
     title: () => novel.value?.title,
     description: () => novel.value?.description,
     type: 'article',
-    image: () => novel.value?.cover,
+    robots: 'noindex, nofollow, noarchive',
+    ogTitle: () => t('nsfw.ogTitle'),
+    ogDescription: () => t('nsfw.ogDescription'),
     article: {
         publishedTime: () => novel.value?.date,
         modifiedTime: () => novel.value?.updated,

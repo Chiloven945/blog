@@ -19,7 +19,15 @@ const published = computed(() => formatPostDate(props.novel.date, locale.value))
 <template>
     <header class="novel-title-page px-6 py-20 text-center lg:py-28">
         <figure v-if="novel.cover" class="mx-auto mb-12 max-w-xs">
+            <img
+                    v-if="novel.nsfw"
+                    :alt="novel.coverAlt || novel.title"
+                    :src="novel.cover"
+                    class="w-full rounded-sm border border-default"
+                    loading="lazy"
+            >
             <NuxtImg
+                    v-else
                     :alt="novel.coverAlt || novel.title"
                     :src="novel.cover"
                     class="w-full rounded-sm border border-default"

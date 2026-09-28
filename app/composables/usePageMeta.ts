@@ -16,6 +16,11 @@ interface PageMetaOptions {
     type?: MaybeRefOrGetter<PageMetaType | undefined>
     image?: MaybeRefOrGetter<string | undefined>
     article?: PageMetaArticle
+    // NSFW pages set a robots directive and generic Open Graph text so a
+    // social preview never leaks protected titles or descriptions.
+    robots?: MaybeRefOrGetter<string | undefined>
+    ogTitle?: MaybeRefOrGetter<string | undefined>
+    ogDescription?: MaybeRefOrGetter<string | undefined>
 }
 
 const HREFLANG: Record<string, string> = {
@@ -55,6 +60,8 @@ export function usePageMeta(options: PageMetaOptions = {}) {
     const description = computed(() => toValue(options.description))
     const type = computed<PageMetaType>(() => toValue(options.type) ?? 'website')
     const image = computed(() => absolute(toValue(options.image)) ?? absolute(DEFAULT_OG_IMAGE))
+    const ogTitle = computed(() => toValue(options.ogTitle) ?? title.value)
+    const ogDescription = computed(() => toValue(options.ogDescription) ?? description.value)
 
     const alternates = computed(() => {
         const links: Array<{ rel: 'alternate'; type: string; hreflang: string; href: string }> = []
@@ -98,8 +105,9 @@ export function usePageMeta(options: PageMetaOptions = {}) {
     useSeoMeta({
         title,
         description,
-        ogTitle: title,
-        ogDescription: description,
+        robots: () => toValue(options.robots),
+        ogTitle,
+        ogDescription,
         ogType: type,
         ogUrl: canonical,
         ogImage: image,
