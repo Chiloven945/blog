@@ -39,6 +39,12 @@ function setLeading(value: NovelLeading) {
 function setWidth(value: NovelWidth) {
     prefs.value.width = value
 }
+
+const tabUi = {
+    list: 'w-full rounded-sm',
+    indicator: 'rounded-sm shadow-none',
+    trigger: 'min-h-11 rounded-sm',
+} as const
 </script>
 
 <template>
@@ -47,57 +53,45 @@ function setWidth(value: NovelWidth) {
             <p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">
                 {{ t('novel.reading.size') }}
             </p>
-            <div class="mt-2 flex gap-1">
-                <UButton
-                        v-for="option in sizeOptions"
-                        :key="option.value"
-                        :aria-pressed="prefs.size === option.value"
-                        :color="prefs.size === option.value ? 'primary' : 'neutral'"
-                        :variant="prefs.size === option.value ? 'solid' : 'soft'"
-                        class="min-h-11 flex-1 justify-center"
-                        @click="setSize(option.value)"
-                >
-                    {{ option.label }}
-                </UButton>
-            </div>
+            <UTabs
+                    class="mt-2"
+                    :content="false"
+                    :items="sizeOptions"
+                    :model-value="prefs.size"
+                    :ui="tabUi"
+                    variant="pill"
+                    @update:model-value="value => setSize(String(value) as 's' | 'm' | 'l')"
+            />
         </div>
 
         <div :aria-label="t('novel.reading.leading')" role="group">
             <p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">
                 {{ t('novel.reading.leading') }}
             </p>
-            <div class="mt-2 flex gap-1">
-                <UButton
-                        v-for="option in leadingOptions"
-                        :key="option.value"
-                        :aria-pressed="prefs.leading === option.value"
-                        :color="prefs.leading === option.value ? 'primary' : 'neutral'"
-                        :variant="prefs.leading === option.value ? 'solid' : 'soft'"
-                        class="min-h-11 flex-1 justify-center"
-                        @click="setLeading(option.value)"
-                >
-                    {{ option.label }}
-                </UButton>
-            </div>
+            <UTabs
+                    class="mt-2"
+                    :content="false"
+                    :items="leadingOptions"
+                    :model-value="prefs.leading"
+                    :ui="tabUi"
+                    variant="pill"
+                    @update:model-value="value => setLeading(String(value) as NovelLeading)"
+            />
         </div>
 
         <div v-if="includeWidth" :aria-label="t('novel.reading.width')" role="group">
             <p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">
                 {{ t('novel.reading.width') }}
             </p>
-            <div class="mt-2 flex gap-1">
-                <UButton
-                        v-for="option in widthOptions"
-                        :key="option.value"
-                        :aria-pressed="prefs.width === option.value"
-                        :color="prefs.width === option.value ? 'primary' : 'neutral'"
-                        :variant="prefs.width === option.value ? 'solid' : 'soft'"
-                        class="min-h-11 flex-1 justify-center"
-                        @click="setWidth(option.value)"
-                >
-                    {{ option.label }}
-                </UButton>
-            </div>
+            <UTabs
+                    class="mt-2"
+                    :content="false"
+                    :items="widthOptions"
+                    :model-value="prefs.width"
+                    :ui="tabUi"
+                    variant="pill"
+                    @update:model-value="value => setWidth(String(value) as NovelWidth)"
+            />
         </div>
 
         <div class="flex items-center justify-between gap-4">

@@ -17,7 +17,7 @@ const blurred = computed(() =>
 </script>
 
 <template>
-    <div :class="`nsfw-guard--${mode}`" class="nsfw-guard">
+    <div :class="[`nsfw-guard--${mode}`, 'nsfw-guard', blurred && 'nsfw-guard--blurred']">
         <!-- `inert` keeps the obscured links out of the pointer and tab order
              while the guard is active. -->
         <div

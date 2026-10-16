@@ -64,7 +64,7 @@ const modalUi = computed(() => ({
                         <section
                                 v-if="activeSection === 'general'"
                                 id="settings-panel-general"
-                                aria-labelledby="settings-tab-general"
+                                :aria-label="t('settings.categories.general')"
                                 role="tabpanel"
                         >
                             <h3 class="mb-1 font-display-sans text-lg font-bold text-highlighted">
@@ -77,7 +77,7 @@ const modalUi = computed(() => ({
                         <section
                                 v-if="activeSection === 'content'"
                                 id="settings-panel-content"
-                                aria-labelledby="settings-tab-content"
+                                :aria-label="t('settings.categories.content')"
                                 role="tabpanel"
                         >
                             <h3 class="mb-1 font-display-sans text-lg font-bold text-highlighted">
@@ -89,7 +89,7 @@ const modalUi = computed(() => ({
                         <section
                                 v-if="activeSection === 'features'"
                                 id="settings-panel-features"
-                                aria-labelledby="settings-tab-features"
+                                :aria-label="t('settings.categories.features')"
                                 role="tabpanel"
                         >
                             <h3 class="mb-1 font-display-sans text-lg font-bold text-highlighted">

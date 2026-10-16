@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type {SettingsSection} from '~/composables/useSettingsModal'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     variant?: 'rail' | 'strip'
 }>(), {
     variant: 'rail',
@@ -9,7 +9,6 @@ withDefaults(defineProps<{
 
 const {t} = useI18n()
 const {activeSection, setSection} = useSettingsModal()
-const {enabled} = useNsfwPreferences()
 
 const categories: { key: SettingsSection; index: string }[] = [
     {key: 'general', index: '01'},
@@ -17,54 +16,49 @@ const categories: { key: SettingsSection; index: string }[] = [
     {key: 'features', index: '03'},
 ]
 
-function isActive(section: SettingsSection) {
-    return activeSection.value === section
-}
+const items = computed(() => categories.map(category => ({
+    value: category.key,
+    label: t(`settings.categories.${category.key}`),
+    index: category.index,
+})))
+
+const isRail = computed(() => props.variant === 'rail')
+
+const navUi = computed(() => isRail.value
+    ? {
+        root: 'w-44 shrink-0 items-start border-r border-default p-3 sm:w-48',
+        list: 'w-full flex-col gap-1 rounded-sm',
+        indicator: 'rounded-sm shadow-none',
+        trigger: 'w-full justify-start rounded-sm',
+    }
+    : {
+        root: 'border-b border-default px-3 py-2',
+        list: 'w-full rounded-sm',
+        indicator: 'rounded-sm shadow-none',
+        trigger: 'flex-none rounded-sm',
+    })
 </script>
 
 <template>
-    <div
-            :aria-orientation="variant === 'rail' ? 'vertical' : 'horizontal'"
-            :class="variant === 'rail'
-                ? 'flex w-44 shrink-0 flex-col gap-1 border-r border-default p-3 sm:w-48'
-                : 'flex gap-1 overflow-x-auto border-b border-default px-3 py-2'"
-            role="tablist"
+    <UTabs
+            :content="false"
+            :items="items"
+            :model-value="activeSection"
+            :orientation="isRail ? 'vertical' : 'horizontal'"
+            :ui="navUi"
+            variant="pill"
+            @update:model-value="value => setSection(value as SettingsSection)"
     >
-        <button
-                v-for="category in categories"
-                :id="`settings-tab-${category.key}`"
-                :key="category.key"
-                :aria-controls="`settings-panel-${category.key}`"
-                :aria-selected="isActive(category.key)"
-                :class="[
-                    variant === 'rail'
-                        ? 'flex flex-col items-start gap-0.5 rounded-sm px-3 py-2 text-left'
-                        : 'flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-3 py-2 text-sm',
-                    isActive(category.key)
-                        ? 'bg-primary text-inverted'
-                        : 'text-muted transition-ui hover:bg-elevated hover:text-highlighted',
-                    'focus-ring',
-                ]"
-                role="tab"
-                type="button"
-                @click="setSection(category.key)"
-        >
+        <template #default="{ item }">
             <span
-                    :class="isActive(category.key) ? 'text-inverted/70' : 'text-dimmed'"
-                    class="font-mono text-[0.625rem] tracking-[0.2em]"
+                    :class="isRail ? 'flex-col items-start gap-0.5' : 'flex-row items-center gap-1.5'"
+                    class="flex"
             >
-                {{ category.index }}
+                <span class="font-mono text-[0.625rem] tracking-[0.2em] opacity-70">
+                    {{ item.index }}
+                </span>
+                <span class="text-sm font-medium">{{ item.label }}</span>
             </span>
-
-            <span class="flex items-center gap-1.5 text-sm font-medium">
-                {{ t(`settings.categories.${category.key}`) }}
-                <span
-                        v-if="category.key === 'content' && enabled"
-                        :class="isActive(category.key) ? 'bg-inverted' : 'bg-primary'"
-                        aria-hidden="true"
-                        class="size-1.5 rounded-full"
-                />
-            </span>
-        </button>
-    </div>
+        </template>
+    </UTabs>
 </template>

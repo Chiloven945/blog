@@ -3,6 +3,7 @@ import {siteConfig} from '#shared/config/site'
 import {fontPreloadLink, resolveFontFiles} from '~/utils/fonts'
 
 const {t, locale} = useI18n()
+const route = useRoute()
 const head = useLocaleHead({seo: false})
 
 // Restore the NSFW preference after hydration. The state is shared via
@@ -12,6 +13,18 @@ useNsfwPreferences()
 // Once the reader opts in, start loading the lightweight NSFW metadata
 // manifest so browsing surfaces can merge it without layout chaos.
 useNsfwContentIndex()
+
+// Explain a blocked NSFW deep link after hydration: the edge Worker says which
+// protected path was requested, and the reader opts in from Settings -> Content.
+const {handle: handleNsfwHandoff} = useNsfwLinkHandoff()
+
+onMounted(() => {
+    handleNsfwHandoff()
+})
+
+watch(() => route.query.nsfw, () => {
+    handleNsfwHandoff()
+})
 
 useHead(() => ({
     htmlAttrs: head.value.htmlAttrs ?? {},

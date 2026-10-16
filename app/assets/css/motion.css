@@ -27,6 +27,23 @@
     }
 }
 
+/* Sliding indicator behind the floating navigation's active link. Mirrors the
+   UTabs pill indicator but keeps real `<a>` navigation. */
+@layer components {
+    .nav-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        border-radius: var(--radius-sm);
+        background-color: var(--ui-primary);
+        pointer-events: none;
+        transition-property: transform, width, height;
+        transition-duration: var(--duration-base);
+        transition-timing-function: var(--ease-out);
+    }
+}
+
 /* --------------------------------------------------------------------------
    Reveal primitives.
    The `<noscript>` rule in app.vue keeps content visible without JS, and the
@@ -106,6 +123,10 @@
         opacity: 1;
         transform: none;
         clip-path: none;
+        transition: none;
+    }
+
+    .nav-indicator {
         transition: none;
     }
 }

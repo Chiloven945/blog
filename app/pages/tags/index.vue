@@ -1,8 +1,19 @@
 <script lang="ts" setup>
 import TagTile from '~/components/taxonomy/TagTile.vue'
+import {hashString, stratifiedShuffle} from '~/utils/shuffle'
+import {tagTier, tagTierCount} from '~/utils/tag-tiles'
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
 const {tags} = await useTagIndex()
+
+// Stable per-locale shuffle: seeded so server render and hydration match,
+// stratified so the large bricks spread across the mosaic.
+const orderedTags = computed(() => stratifiedShuffle(
+    tags.value,
+    tag => tagTier(tag.count),
+    tagTierCount,
+    hashString(`tags:${locale.value}`),
+))
 
 usePageMeta({
     title: () => t('tags.title'),
@@ -25,12 +36,13 @@ usePageMeta({
         </header>
 
         <div
-                v-if="tags.length"
-                class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
+                v-if="orderedTags.length"
+                class="tag-mosaic mt-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
         >
             <TagTile
-                    v-for="tag in tags"
+                    v-for="(tag, index) in orderedTags"
                     :key="tag.key"
+                    :index="index"
                     :tag="tag"
             />
         </div>

@@ -377,12 +377,12 @@ test.describe(
                     .toHaveAttribute('aria-selected', 'true')
 
                 await dialog.getByRole('group', {name: 'Color mode'})
-                    .getByRole('button', {name: 'Dark'})
+                    .getByRole('tab', {name: 'Dark'})
                     .click()
                 await expect(page.locator('html')).toHaveClass(/dark/)
 
                 await dialog.getByRole('group', {name: 'Language'})
-                    .getByRole('button', {name: '简体中文'})
+                    .getByRole('tab', {name: '简体中文'})
                     .click()
                 await expect(page).toHaveURL(/\/zh-cn$/)
             }
@@ -400,6 +400,7 @@ test.describe(
                 await page.getByRole('tab', {name: /Content/}).click()
 
                 await page.getByRole('switch', {name: 'Show NSFW content'}).click()
+                await page.getByTestId('nsfw-consent').check()
                 await page.getByRole('button', {name: 'Enable'}).click()
                 await expect(page.getByRole('switch', {name: 'Show NSFW content'}))
                     .toHaveAttribute('aria-checked', 'true')

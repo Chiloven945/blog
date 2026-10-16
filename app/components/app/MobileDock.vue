@@ -1,12 +1,17 @@
 <script lang="ts" setup>
-import NavigationItem from './NavigationItem.vue'
+import NavigationList from './NavigationList.vue'
 import NavigationMore from './NavigationMore.vue'
 
 const {t} = useI18n()
 const items = useSiteNavigation()
 const activeKey = useActiveNavKey()
 
-const dockItems = computed(() => items.value.filter(item => ['home', 'articles', 'novels', 'friends'].includes(item.key)))
+const dockItems = computed(() => items.value.filter(item => [
+    'home',
+    'articles',
+    'novels',
+    'friends'
+].includes(item.key)))
 const moreOpen = ref(false)
 </script>
 
@@ -15,13 +20,7 @@ const moreOpen = ref(false)
             :aria-label="t('nav.primary')"
             class="site-nav fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-50 flex items-stretch gap-1 rounded-md border border-default bg-default p-1.5 shadow-sm md:hidden"
     >
-        <NavigationItem
-                v-for="item in dockItems"
-                :key="item.key"
-                :active="item.key === activeKey"
-                :item="item"
-                variant="mobile"
-        />
+        <NavigationList :active-key="activeKey" :items="dockItems" variant="mobile"/>
 
         <button
                 :aria-label="t('common.more')"

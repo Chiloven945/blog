@@ -9,7 +9,7 @@ interface Env {
 const LOCALES = new Set<Locale>(['en', 'zh-cn', 'zh-tw'])
 const DEFAULT_LOCALE: Locale = 'en'
 
-function readCookie(request: Request, name: string): string | null {
+export function readCookie(request: Request, name: string): string | null {
     const header = request.headers.get('Cookie')
 
     if (!header) {
@@ -131,19 +131,19 @@ function redirectLocale(request: Request, locale: Locale): Response {
     })
 }
 
-function nsfwEnabled(request: Request): boolean {
+export function nsfwEnabled(request: Request): boolean {
     return readCookie(request, 'blog_nsfw') === '1'
 }
 
-function isNsfwDocumentPath(pathname: string): boolean {
+export function isNsfwDocumentPath(pathname: string): boolean {
     return /^\/(en|zh-cn|zh-tw)\/nsfw(?:\/|$)/.test(pathname)
 }
 
-function isNsfwDataPath(pathname: string): boolean {
+export function isNsfwDataPath(pathname: string): boolean {
     return pathname.startsWith('/nsfw-data/')
 }
 
-function isNsfwAssetPath(pathname: string): boolean {
+export function isNsfwAssetPath(pathname: string): boolean {
     return pathname.startsWith('/nsfw-assets/')
 }
 

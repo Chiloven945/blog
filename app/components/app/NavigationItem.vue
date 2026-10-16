@@ -4,9 +4,11 @@ import type {NavigationItem} from '#shared/types/navigation'
 const props = withDefaults(defineProps<{
     item: NavigationItem
     active?: boolean
+    indicator?: boolean
     variant?: 'rail' | 'dock' | 'mobile' | 'row'
 }>(), {
     active: false,
+    indicator: false,
     variant: 'rail',
 })
 
@@ -29,7 +31,9 @@ const variantClass = computed(() => {
 
 const stateClass = computed(() => {
     if (props.active) {
-        return 'bg-primary text-inverted'
+        return props.indicator
+            ? 'text-inverted'
+            : 'bg-primary text-inverted'
     }
 
     if (!props.item.available) {
@@ -56,7 +60,8 @@ const labelClass = computed(() => {
             v-if="item.available"
             :aria-current="active ? 'page' : undefined"
             :aria-label="item.label"
-            :class="[base, variantClass, stateClass]"
+            :class="[base, variantClass, stateClass, indicator && 'z-10']"
+            :data-nav-key="item.key"
             :to="item.to"
     >
         <UIcon v-if="item.icon" class="size-5 shrink-0" :name="item.icon"/>
@@ -67,7 +72,8 @@ const labelClass = computed(() => {
             v-else
             :aria-disabled="true"
             :aria-label="`${item.label} · ${t('common.comingSoon')}`"
-            :class="[base, variantClass, stateClass]"
+            :class="[base, variantClass, stateClass, indicator && 'z-10']"
+            :data-nav-key="item.key"
             :title="`${item.label} · ${t('common.comingSoon')}`"
     >
         <UIcon v-if="item.icon" class="size-5 shrink-0" :name="item.icon"/>

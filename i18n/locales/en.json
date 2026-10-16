@@ -28,7 +28,8 @@
     "badge": "NSFW content",
     "reveal": "Reveal",
     "ogTitle": "NSFW content",
-    "ogDescription": "This page contains NSFW content. Enable NSFW in the site settings to view it."
+    "ogDescription": "This page contains NSFW content. Enable NSFW in the site settings to view it.",
+    "required": "NSFW content is hidden. Enable “Show NSFW content” to open this link."
   },
   "settings": {
     "button": "Settings",
@@ -55,8 +56,12 @@
       "nsfwHint": "Include NSFW entries in browsing, search, tags, archives and recommendations.",
       "blur": "Blur NSFW content",
       "blurHint": "Cover NSFW previews while browsing. Reveal individual entries with the Show button.",
-      "confirmTitle": "Show NSFW content?",
-      "confirmBody": "NSFW entries will become visible across the site, including Home, Search, Tags, Archives and recommendations.",
+      "confirmEyebrow": "18+ · Adult content",
+      "confirmTitle": "Enable NSFW content?",
+      "confirmBody": "This site will begin displaying adult (NSFW) content across lists, search, tags, archives and recommendations.",
+      "legalNotice": "Not Safe for Work (NSFW) content is made available exclusively to adults. By enabling this setting, you represent and warrant that you have attained the age of majority in the jurisdiction in which you reside, that you are in no event younger than eighteen (18) years of age, and that access to adult material is lawful for you in that jurisdiction.",
+      "legalDisclaimer": "The material made accessible by enabling this setting consists of fictional works created for a mature readership. It is solely the product of the author's invention, does not represent the views or positions of this website or its operator, and is accessed at your sole initiative. Accordingly, you assume full responsibility for your decision to access it and for any consequences arising from that access. To the maximum extent permitted by applicable law, this website and its operator disclaim all liability for any loss, damage, liability, cost, expense, or legal consequence resulting from such access. You remain responsible for ensuring that your use is lawful and that such material is not made accessible to any person who is not legally permitted to view it. Your choice is stored solely on this device and may be revoked at any time.",
+      "acknowledge": "I confirm that I am of legal age and I accept the terms set forth above.",
       "cancel": "Cancel",
       "enable": "Enable"
     },

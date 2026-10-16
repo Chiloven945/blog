@@ -21,10 +21,6 @@ function blockClass(link: LinkItem, index: number): string {
         ? 'col-span-2'
         : 'col-span-1'
 
-    if (link.id === 'underground') {
-        return `${span} home-tone-deep`
-    }
-
     return `${span} ${index % 2 === 0
         ? 'home-tone-soft'
         : 'home-tone-faint'}`
@@ -60,7 +56,7 @@ function blockClass(link: LinkItem, index: number): string {
                         :href="localizeInternalUrl(link.url, locale)"
                         :rel="isExternal(link) ? 'noopener noreferrer' : undefined"
                         :target="isExternal(link) ? '_blank' : undefined"
-                        class="reveal group flex min-h-[4.5rem] flex-col justify-between p-5 lg:min-h-[7rem]"
+                        class="reveal group flex min-h-18 flex-col justify-between p-5 lg:min-h-28"
                 >
                     <div class="flex items-center justify-between gap-3">
                         <span class="text-base font-bold">{{ link.label }}</span>

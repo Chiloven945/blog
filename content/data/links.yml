@@ -60,16 +60,6 @@ items:
       zh-tw: "基本上什麼也沒有。"
       en: "Nothing much here."
 
-  - id: facebook
-    label: "Facebook"
-    url: "https://www.facebook.com/100093362991435"
-    image: "/images/links/facebook.png"
-    order: 70
-    description:
-      zh-cn: "你可以在这里加我好友。"
-      zh-tw: "你可以在這裡加我好友。"
-      en: "You can friend me here."
-
   - id: telegram
     label: "Telegram"
     url: "https://t.me/chiloven945"
@@ -90,17 +80,6 @@ items:
       zh-cn: "我的 QQ，欢迎扩列！"
       zh-tw: "我的 QQ，歡迎擴列！"
       en: "My QQ account, feel free to friend me."
-
-  - id: underground
-    label: "Underground"
-    url: "https://underground.chiloven.top"
-    icon: "i-lucide-gauge"
-    featured: true
-    order: 100
-    description:
-      zh-cn: "Secret basement."
-      zh-tw: "Secret basement."
-      en: "Secret basement."
 
   - id: rss
     label: "RSS"

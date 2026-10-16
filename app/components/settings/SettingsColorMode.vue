@@ -7,6 +7,12 @@ const options = computed(() => [
     {value: 'dark', label: t('settings.general.dark')},
     {value: 'system', label: t('settings.general.system')},
 ])
+
+const tabUi = {
+    list: 'w-auto rounded-sm',
+    indicator: 'rounded-sm shadow-none',
+    trigger: 'rounded-sm',
+} as const
 </script>
 
 <template>
@@ -14,17 +20,15 @@ const options = computed(() => [
             :description="t('settings.general.colorModeHint')"
             :label="t('settings.general.colorMode')"
     >
-        <div :aria-label="t('settings.general.colorMode')" class="flex gap-1" role="group">
-            <UButton
-                    v-for="option in options"
-                    :key="option.value"
-                    :aria-pressed="colorMode.preference === option.value"
-                    :color="colorMode.preference === option.value ? 'primary' : 'neutral'"
-                    :variant="colorMode.preference === option.value ? 'solid' : 'soft'"
-                    @click="colorMode.preference = option.value"
-            >
-                {{ option.label }}
-            </UButton>
+        <div :aria-label="t('settings.general.colorMode')" role="group">
+            <UTabs
+                    :content="false"
+                    :items="options"
+                    :model-value="colorMode.preference"
+                    :ui="tabUi"
+                    variant="pill"
+                    @update:model-value="value => colorMode.preference = String(value)"
+            />
         </div>
     </SettingsRow>
 </template>

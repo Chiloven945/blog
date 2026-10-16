@@ -8,7 +8,7 @@
         border-radius: 2px;
         background: color-mix(in oklab, var(--ui-primary) 12%, var(--ui-bg));
         color: var(--ui-text-highlighted);
-        font-family: var(--font-mono);
+        font-family: var(--font-mono), monospace;
         font-size: 0.625rem;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -24,6 +24,19 @@
 
     .nsfw-guard__content {
         display: block;
+        /* Blurring the content itself (not only the overlay's backdrop) keeps
+           the preview obscured while lazy covers decode during scroll, when
+           `backdrop-filter` can transiently fail to sample the new pixels. */
+        transition: filter var(--duration-base) var(--ease-out);
+    }
+
+    /* Clipping the blurred content also hides the filter's outward bleed. */
+    .nsfw-guard--blurred {
+        overflow: hidden;
+    }
+
+    .nsfw-guard--blurred .nsfw-guard__content {
+        filter: blur(12px) saturate(0.7);
     }
 
     .nsfw-guard__overlay {

@@ -11,6 +11,18 @@ const {t} = useI18n()
 const modalOpen = ref(false)
 const inputValue = ref('')
 
+const tabValue = ref('one')
+const tabDemoItems = [
+    {value: 'one', label: 'One', count: 3},
+    {value: 'two', label: 'Two', count: 7},
+    {value: 'three', label: 'Three', count: 1},
+]
+const tabDemoUi = {
+    list: 'w-full overflow-x-auto rounded-sm',
+    indicator: 'rounded-sm shadow-none',
+    trigger: 'flex-none rounded-sm',
+} as const
+
 // Simulated NSFW preference controls used to verify the composable. No real
 // NSFW content is referenced here.
 const {
@@ -219,6 +231,27 @@ const licenseList = licenseKeys.map((key) => {
                     Disabled
                 </UButton>
             </div>
+        </section>
+
+        <section class="space-y-4">
+            <h2 class="text-xl font-bold text-highlighted">
+                Tabs / pills
+            </h2>
+            <UTabs
+                    :content="false"
+                    :items="tabDemoItems"
+                    :model-value="tabValue"
+                    :ui="tabDemoUi"
+                    variant="pill"
+                    @update:model-value="value => tabValue = String(value)"
+            >
+                <template #default="{ item }">
+                    {{ item.label }}
+                    <span
+                            v-if="item.count !== undefined"
+                            class="ms-1.5 tabular-nums opacity-60">{{ item.count }}</span>
+                </template>
+            </UTabs>
         </section>
 
         <section class="space-y-4">

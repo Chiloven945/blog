@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import NavigationItem from './NavigationItem.vue'
+import NavigationList from './NavigationList.vue'
 import LocaleSwitcher from './LocaleSwitcher.vue'
 import ThemeButton from './ThemeButton.vue'
 
@@ -25,11 +25,9 @@ function openSettings() {
 <template>
     <div class="flex flex-col gap-6 pb-2">
         <div class="flex flex-col gap-1">
-            <NavigationItem
-                    v-for="item in moreItems"
-                    :key="item.key"
-                    :active="item.key === activeKey"
-                    :item="item"
+            <NavigationList
+                    :active-key="activeKey"
+                    :items="moreItems"
                     variant="row"
                     @click="emit('navigate')"
             />
