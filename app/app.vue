@@ -62,7 +62,10 @@ useHead(() => ({
             <NuxtPage/>
         </NuxtLayout>
 
-        <SearchModal/>
-        <SettingsModal/>
+        <!-- Lazy components keep the modal-only code out of the first-load
+             module graph; the global Cmd/Ctrl+K listener lives in SearchModal,
+             so it is still mounted (just loaded asynchronously). -->
+        <LazySearchModal/>
+        <LazySettingsModal/>
     </UApp>
 </template>

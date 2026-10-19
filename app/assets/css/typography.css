@@ -10,31 +10,14 @@
       serif → Libre Baskerville  → system serif → Source Han Serif
       mono  → Cascadia Code      → system mono  → Sarasa Mono CL
 
-   All bundled families are SIL OFL 1.1 (licenses in public/fonts/). Sarasa
-   Mono CL is a subsetted Sarasa Gothic web font, so CJK glyphs in code
-   always resolve to it.
+   All bundled families are SIL OFL 1.1 (licenses in assets/font-sources/
+   and public/fonts/). The CJK faces are split into unicode-range chunks by
+   tools/split-fonts.mjs; their @font-face rules live in fonts.generated.css
+   and are imported from main.css. A page only downloads the chunks it uses.
 
    @font-face files are never all preloaded. Only one small Latin face per
    route is preloaded (see app/utils/fonts.ts and app/app.vue).
    ========================================================================== */
-
-/* --- Source Han Sans (CJK) --- */
-@font-face {
-    font-family: "Source Han Sans CN";
-    src: url("/fonts/source-han-sans/SourceHanSansCN-VF.woff2") format("woff2");
-    font-weight: 250 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* --- Source Han Serif (CJK) --- */
-@font-face {
-    font-family: "Source Han Serif CN";
-    src: url("/fonts/source-han-serif/SourceHanSerifCN-VF.woff2") format("woff2");
-    font-weight: 250 900;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* --- Latin / mono --- */
 @font-face {
@@ -86,15 +69,6 @@
     font-display: swap;
 }
 
-/* --- Sarasa Mono CL (CJK mono fallback) --- */
-@font-face {
-    font-family: "Sarasa Mono CL";
-    src: url("/fonts/sarasa-mono-cl/SarasaMonoCL-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* ==========================================================================
    Semantic font tokens (locale-independent)
    ========================================================================== */
@@ -110,14 +84,17 @@
     BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-fallback-serif: ui-serif, Georgia, "Times New Roman", serif;
     --font-fallback-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas,
-    "Liberation Mono", Menlo, monospace;
+    "Liberation Mono", Menlo;
 
     --font-ui-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
     --font-display-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
     --font-display-serif: var(--font-latin-serif), var(--font-cjk-serif), var(--font-fallback-serif);
     --font-reading-sans: var(--font-latin-sans), var(--font-cjk-sans), var(--font-fallback-sans);
     --font-reading-serif: var(--font-latin-serif), var(--font-cjk-serif), var(--font-fallback-serif);
-    --font-code: var(--font-latin-mono), var(--font-cjk-mono), var(--font-fallback-mono);
+    /* Named system monospace fonts come before the CJK mono face so symbols
+       such as "←" render from the system font instead of downloading the
+       (large) CJK mono chunks. CJK code still falls through to Sarasa. */
+    --font-code: var(--font-latin-mono), var(--font-fallback-mono), var(--font-cjk-mono), monospace;
 }
 
 /* Tailwind utilities follow the same unified tokens. */

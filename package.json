@@ -8,6 +8,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
+    "fonts:split": "node tools/split-fonts.mjs",
     "check:static": "bun tools/check-static-output.ts",
     "preview": "nuxt preview",
     "preview:cf": "bun run generate && wrangler dev --config wrangler.jsonc",
@@ -22,7 +23,6 @@
   "dependencies": {
     "@giscus/vue": "^3.1.1",
     "@nuxt/content": "^3.16.0",
-    "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.1.0",
     "@nuxt/ui": "^4.11.1",
     "@nuxtjs/i18n": "^10.6.0",
@@ -41,8 +41,10 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.132",
+    "@iconify-json/simple-icons": "^1.2.100",
     "@nuxt/eslint": "^1.17.0",
     "@playwright/test": "^1.63.0",
+    "cn-font-split": "^7.4.3",
     "eslint": "^10.10.0",
     "typescript": "6",
     "vitest": "^5.0.0",
@@ -52,6 +54,7 @@
   },
   "trustedDependencies": [
     "better-sqlite3",
+    "cn-font-split",
     "esbuild",
     "unrs-resolver",
     "vue-demi"

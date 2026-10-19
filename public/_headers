@@ -1,0 +1,23 @@
+# Cloudflare Workers static assets custom headers.
+# Generated asset names under /_nuxt and /fonts/slices are content-hashed, so
+# they can be cached forever. The original Latin font filenames are stable and
+# only get a shorter TTL. More specific rules come last so they win.
+#
+# See https://developers.cloudflare.com/workers/static-assets/headers/
+
+/fonts/*
+  Cache-Control: public, max-age=604800
+
+/images/*
+  Cache-Control: public, max-age=604800
+
+/_nuxt/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# IPX output is derived from the source filename (not hashed), so revalidate
+# eventually when an image changes.
+/_ipx/*
+  Cache-Control: public, max-age=604800
+
+/fonts/slices/*
+  Cache-Control: public, max-age=31536000, immutable

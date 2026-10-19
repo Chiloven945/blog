@@ -1,7 +1,10 @@
+import {fileURLToPath} from 'node:url'
 import {siteConfig} from './shared/config/site'
 import {discoverNsfwOnlyTagRoutes, discoverNsfwRoutes} from './tools/discover-nsfw-routes'
 
 const localeCodes = ['en', 'zh-cn', 'zh-tw'] as const
+// Comma-separated IPX modifiers avoid Cloudflare's `&` -> `%26` redirect.
+const ipxCommaProvider = fileURLToPath(new URL('./app/image-providers/ipx-comma.ts', import.meta.url))
 
 // Tag pages that only exist in opt-in NSFW content resolve while the
 // preference is off, but must not be listed in the public sitemap. Both the
@@ -47,7 +50,6 @@ export default defineNuxtConfig({
         '@nuxt/ui',
         '@nuxt/content',
         '@nuxt/image',
-        '@nuxt/fonts',
         '@nuxtjs/i18n',
         '@nuxtjs/sitemap',
         '@nuxtjs/robots',
@@ -117,14 +119,30 @@ export default defineNuxtConfig({
         },
     },
 
-    fonts: {
-        providers: {
-            adobe: false,
-            fontshare: false,
-            fontsource: false,
-            google: false,
-            googleicons: false,
-            npm: false,
+    // Icons are bundled at build time. Without this, @nuxt/icon falls back to
+    // the Iconify API at runtime (an extra third-party request that is slow or
+    // unavailable in some regions).
+    icon: {
+        serverBundle: {
+            collections: ['lucide', 'simple-icons'],
+            remote: false,
+        },
+        clientBundle: {
+            scan: true,
+            // Icons referenced through data (`item.icon`, links.yml) are not
+            // literal usages, so list them explicitly. Otherwise the client
+            // falls back to the Iconify API at runtime.
+            icons: [
+                'lucide:archive',
+                'lucide:book-open',
+                'lucide:file-text',
+                'lucide:house',
+                'lucide:rss',
+                'lucide:tag',
+                'lucide:users',
+                'simple-icons:github',
+            ],
+            sizeLimitKb: 512,
         },
     },
 
@@ -134,6 +152,15 @@ export default defineNuxtConfig({
     },
 
     image: {
+        // Comma-separated modifiers keep prerendered IPX URLs free of `&`,
+        // which Cloudflare otherwise redirects to `%26` on every request.
+        provider: 'ipxComma',
+        providers: {
+            ipxComma: {provider: ipxCommaProvider},
+        },
+        // Register the built-in IPX static route (the custom provider only
+        // changes URL formatting; the image transformation is still IPX).
+        ipx: {},
         // Third-party friend avatars stay remote. Add their
         // hosts here to route them through Nuxt Image; other remote avatars
         // are rendered with <img> so nothing is mirrored without permission.
